@@ -1,0 +1,18 @@
+#! /usr/bin/env bash
+
+dir="${HOME}/Downloads/screenshots"
+file="${dir}/screenshot_$(date +%s).jpg"
+mkdir -p "${dir}"
+
+export DISPLAY=:0
+
+# imagemagick command to select area on screen and take screenshot saved to file
+import "${file}" 
+
+# open dir
+xdg-open "${dir}" &
+
+# copy to clipboard
+xclip -selection clipboard -t image/png -i "${file}"
+
+notify-send "📋 copied ${file}"

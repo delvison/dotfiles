@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+node="$(tailscale status | grep "exit node" | grep -v offline | awk '{print $2}' | fzf --prompt 'Choose tailscale exit node > ')"
+
+set -xe
+[[ $node ]] && tailscale set --exit-node="${node}"

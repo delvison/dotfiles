@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+ip addr | grep inet | grep -E "wlp|eth|eno" | awk '{print $2}' | cut -d'/' -f1 || true
+
+curl -sSL ip.me

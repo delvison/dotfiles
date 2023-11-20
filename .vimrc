@@ -1,0 +1,359 @@
+let g:polyglot_disabled = ['markdown']
+" plugins
+" install vim :PlugInstall with vim-plug
+" $ vim +PlugInstall +qall
+  call plug#begin('~/.vim/plugged')
+    " for dev
+    Plug 'jvirtanen/vim-hcl'
+    Plug 'fatih/vim-go' 
+    Plug 'airblade/vim-gitgutter'     " git diffs on left
+    Plug 'w0rp/ale'                   " syntax linter
+    Plug 'sheerun/vim-polyglot'
+    Plug 'Yggdroot/indentLine'
+
+    " QOL
+    Plug 'ryanoasis/vim-devicons' 
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/goyo.vim'
+    Plug 'chrisbra/Colorizer'         " hilights colors
+    Plug 'ap/vim-buftabline'          " buffer tabs
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'scrooloose/nerdtree'
+    Plug 'tpope/vim-commentary'
+    Plug 'unkiwii/vim-nerdtree-sync'
+
+    " THEMES
+    Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+    " Plug 'rebelot/kanagawa.nvim'
+    " Plug 'lighthaus-theme/vim-lighthaus'
+    " Plug 'wadackel/vim-dogrun'
+  call plug#end()
+
+  " bootstrap vim-plug
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+
+  set updatetime=100
+  set backspace=start,eol,indent
+  set termguicolors
+  set background=dark
+  set hidden
+  set t_Co=256
+  set ai                              " indent on enter
+  set autoread                        " reload file if changed externally
+  set cc=80                         " col 80
+  set colorcolumn=+1
+  set copyindent                    " autoindent when pasting code
+  set cursorline
+  set cursorcolumn
+  set enc=utf-8 nobomb              " encoding
+  set expandtab
+  set fillchars+=vert:#               " vertical char fill
+  set hlsearch                      " highlight search terms
+  set ignorecase
+  set incsearch                     " incremental search
+  set list
+  set listchars=tab:.\ ,eol:¬       " showing hidden chars
+  set mat=1
+  set matchpairs+=<:>	               " html pair highlight
+  set matchtime=3
+  set mouse=a
+  set nobackup                      " rm backups
+  set nocompatible
+  set nostartofline                   " don't reset cursor to start of line when moving around
+  set noswapfile
+  " set number
+  set relativenumber
+  set pastetoggle=<f2>                " toggle paste mode with f2
+  set ruler
+  set shiftwidth=2
+  set showmatch
+  set showtabline=2
+  set smartcase                     " smartcase for search
+  set softtabstop=2
+  set splitbelow
+  set splitright
+  set tabstop=2                     " tabs = 2 spaces
+  set textwidth=80                  " text width
+  set tw=80
+  set wildignore=*.swp,*.bak,*.pyc,*.class " ignore files
+  set wildmenu                      " completion on mode-line
+  set wrap                            " Wrap lines
+
+" map leader to Space
+  let mapleader = " "
+
+" leader shortcuts
+  map <leader>\ :Magit<CR>
+  map <leader>t :tabnew<CR>
+  map <leader>f :%s///g
+  map <leader>q :q<CR>
+
+" yank to system clipboard
+  if has("clipboard")
+    set clipboard=unnamed " copy to the system clipboard
+    if has("unnamedplus") " X11 support
+      set clipboard+=unnamedplus
+      noremap <Leader>y "*y
+      noremap <Leader>p "*p
+      noremap <Leader>Y "+y
+      noremap <Leader>P "+p
+    endif
+  endif
+
+" copy/paste for x11 vim
+  vmap <C-c> "+y
+  nmap <C-b> "+p
+
+" custom highlight color
+  function! MyHighlights() abort
+    highlight Visual     cterm=NONE ctermbg=76  ctermfg=16  gui=NONE guibg=#9999ff guifg=#000000
+    highlight search     cterm=NONE ctermbg=76  ctermfg=16  gui=NONE guibg=#33cc33 guifg=#000000
+  endfunction
+  augroup MyColors
+    autocmd!
+    autocmd ColorScheme * call MyHighlights()
+  augroup END
+
+" theme
+  colorscheme catppuccin_frappe
+  " colorscheme kanagawa
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" mapping for viewing open buffers
+  nnoremap <F5> :buffers<CR>:buffer<Space>
+  nnoremap Q <nop> " disable ex-mode
+
+" grep
+  vnoremap <F8> y:vimgrep "<c-r>"" %<CR>
+
+" vim pane navigation
+  nnoremap <C-J> <C-W><C-J>
+  nnoremap <C-K> <C-W><C-K>
+  nnoremap <C-L> <C-W><C-L>
+  nnoremap <C-H> <C-W><C-H>
+
+" split shortcuts
+  nnoremap ,v <C-w>v
+  nnoremap ,h <C-w>s
+
+" Visually select the text that was last edited/pasted
+  nnoremap gV `[v`]
+
+" selelct what you've just pasted
+  nnoremap gp `[v`]
+
+"" tab navigation
+  nnoremap tn   :tabnew<Space>
+  nnoremap tk		:tabnext<CR>
+  nnoremap tj		:tabprev<CR>
+  nnoremap tl		:tablast<CR>
+
+"" buffer navigation
+  nnoremap <C-N> :bnext<CR>
+  nnoremap <C-P> :bprev<CR>
+
+" color config
+  highlight NonText ctermbg=none
+  highlight NonText guifg=#4a4a59
+  highlight SpecialKey guifg=#4a4a59
+  highlight Comment cterm=italic
+  highlight ColorColumn ctermbg=0 guibg=black
+  highlight ruler guibg=#00EE00
+
+" syntax hilighting
+  syntax sync fromstart
+  syntax enable
+
+" AUTO MATCHING BRACKETS, PARENS
+  " inoremap (  ()<Esc>i
+  " inoremap [  []<Esc>i
+  " inoremap '  ''<Esc>i
+  " inoremap "  ""<Esc>i
+  " inoremap {  {}<Esc>i
+  " inoremap {<CR> {<CR>}<C-o>O
+  " vnoremap . :normal .<CR>>
+  " vnoremap # :s#^#\##<cr>
+  " vnoremap -# :s#^\###<cr>
+  " vnoremap <c>/ :s/^#\//<cr>
+  " vnoremap <c>-/ :s/^\///<cr>
+
+" PASTE MODE F5
+  function! HasPaste()
+    if &paste
+      return 'PASTE MODE  '
+    en
+    return ''
+  endfunction
+
+" load plugins for files
+  filetype plugin on
+  filetype indent on
+
+" alias w with W and q with Q to catch mistakes
+  cnoreabbrev W w
+  cnoreabbrev Wqa wqa
+  cnoreabbrev Q q
+
+" sudo catch mistakakes
+  cnoremap w!! %!sudo tee > /dev/null %
+
+" Treat JSON files like JavaScript
+  au BufNewFile,BufRead *.json setf javascript
+" python
+  au FileType python set sts=4 ts=4 sw=4 tw=79
+  autocmd BufWritePre *.py :%s/\s\+$//e
+" Make sure all markdown files have the correct filetype
+  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
+" Make those debugger statements painfully obvious
+  au BufEnter *.rb syn match error contained "\<binding.pry\>"
+  au BufEnter *.rb syn match error contained "\<debugger\>"
+
+" tmux
+  " play nice with tmux
+  autocmd BufLeave,FocusLost * silent! update
+  " resize with tmux
+  autocmd VimResized * :wincmd =
+
+  noremap <F3> :Autoformat<CR>
+  noremap <C-up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR> " move line up
+  noremap <C-down> ddp                " move line down
+
+" reselect visual block after indent/outdent
+    vnoremap < <gv
+    vnoremap > >gv
+
+" NERDTree
+  " AUTO reload nerdtree
+  au CursorHold * if exists("t:NerdTreeBufName") | call <SNR>15_refreshRoot() | endif
+  " shortcut for nerdtree
+  map <silent> <C-\> :NERDTreeFocus<CR>
+  " autoreload nerdtree on focus
+   " autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
+" let g:NERDTreeWinPos = "right"
+
+" tagbar toggle
+  nmap <F8> :TagbarToggle<CR>
+
+" auto load vimrc on changes
+  augroup myvimrc
+      au!
+      au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+  augroup END
+
+" move among buffers with CTRL
+    " map <C-S-J> :bnext<CR>
+    " map <C-S-K> :bprev<CR>
+    " mini buffer explorer
+    nmap <C-E> <C-^>
+
+" minibufferexplorer
+    let g:miniBufExplMapWindowNavArrows = 1
+
+" colorcode less files
+    au BufNewFile,BufRead *.less set filetype=css
+    let $PAGER=''
+
+" markdown viewer
+    noremap <silent> <leader>om :call OpenMarkdownPreview()<cr>
+
+    function! OpenMarkdownPreview() abort
+      if exists('s:markdown_job_id') && s:markdown_job_id > 0
+        call jobstop(s:markdown_job_id)
+        unlet s:markdown_job_id
+      endif
+      let s:markdown_job_id = jobstart('grip ' . shellescape(expand('%:p')))
+      if s:markdown_job_id <= 0 | return | endif
+      call system('open http://localhost:6419')
+    endfunction
+
+au BufNewFile,BufRead *.bats set filetype=bash
+
+" tmux italics...https://gist.github.com/gutoyr/4192af1aced7a1b555df06bd3781a722
+set t_ZH=[3
+set t_ZR=[23m
+
+" for fixing home and end keys in mac
+map  <C-A> <Home>
+imap <C-A> <Home>
+vmap <C-A> <Home>
+map  <C-E> <End>
+imap <C-E> <End>
+vmap <C-E> <End>
+map <DEL> <BS>
+
+" nerdtree hilight
+let g:NERDTreeHighlightCursorline = 1
+let g:nerdtree_sync_cursorline = 1
+
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+" Status Line Custom
+let g:currentmode={
+    \ 'n'  : 'Normal',
+    \ 'no' : 'Normal·Operator Pending',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V·Line',
+    \ '^V' : 'V·Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S·Line',
+    \ '^S' : 'S·Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'Replace',
+    \ 'Rv' : 'V·Replace',
+    \ 'c'  : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r'  : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
+    \}
+
+" statusline
+au InsertEnter * hi statusline guifg=black guibg=#d7afff ctermfg=black ctermbg=magenta
+au InsertLeave * hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
+hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
+
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%0*%{StatuslineGit()}
+set statusline+=%#CursorColumn#
+set statusline+=%1*\ %<%F%m%r%h%w\                       " File path, modified, readonly, helpfile, preview
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#PmenuSel#
+set statusline+=\ %y
+set statusline+=%#CursorColumn#
+set statusline+=%2*\ col:\ %02v\                         " Colomn number
+set statusline+=%1*\ ln:\ %02l/%L\ (%3p%%)\              " Line number / total lines, percentage of document
+
+" syntax hilighting for notes
+augroup vimrc_todo
+    au!
+    au Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX):/
+          \ containedin=.*Comment,vimCommentTitle
+augroup END
+hi def link MyTodo Todo
+
+" file fuzzy finder
+nnoremap <C-p> :Files<CR>
+nnoremap ,b :Buffers<CR>
+nnoremap ,c :Commits<CR>
+
+" autostart NERDTree
+autocmd VimEnter * NERDTree
+autocmd VimEnter * 2wincmd w

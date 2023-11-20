@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+# /home/npc/.nix-profile/bin/rofi-sensible-terminal -e /home/npc/.config/dotfiles/scripts/p "${@}"
+
+[[ $1 == "otp" ]] && cmd="otp"
+
+rofi-sensible-terminal -e "/run/current-system/sw/bin/bash ${HOME}/.config/dotfiles/scripts/p $cmd -c"

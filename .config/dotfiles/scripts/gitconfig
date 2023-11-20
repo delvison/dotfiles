@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# info: set gitconfig locally from credentials in password-store.
+
+[[ $1 ]] && num="${1}" || num="01"
+
+set -xe
+git config user.name "$(pass git/gitconfig${num} | grep name | awk '{print $2}')"
+git config user.email "$(pass git/gitconfig${num} | grep email | awk '{print $2}')"
+git config user.signingkey "$(pass git/gitconfig${num} | grep signingkey | awk '{print $2}')"

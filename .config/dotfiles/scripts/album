@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# info: plays out full albums in mpv
+# https://mpv.io/installation/
+
+ mpv "$(find ~/Music -type d | fzf)"
