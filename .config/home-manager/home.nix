@@ -53,6 +53,7 @@
     gopass
     firefox
     imagemagick
+    keepassxc
     libsForQt5.kdeconnect-kde
     libnotify
     protonmail-bridge
