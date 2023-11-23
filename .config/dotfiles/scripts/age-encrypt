@@ -18,7 +18,7 @@ single-encrypt() {
 }
 
 if [ -n "${1}" ]; then 
-  single-encrypt "${1}"
+  [ -f "${1}" ] && single-encrypt "${1}"
 else
   echo "No file given."
   echo "Press [ENTER] to encrypt all files in directory."
