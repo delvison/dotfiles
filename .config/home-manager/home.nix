@@ -50,7 +50,9 @@
 
     # utils
     alacritty
+    bat
     gopass
+    gparted
     firefox
     imagemagick
     keepassxc
@@ -86,10 +88,12 @@
     gajim
     signal-desktop
     slack
+    telegram-desktop
     thunderbird
     zoom-us
 
     # dev
+    ansible
     bats
     gh
     git

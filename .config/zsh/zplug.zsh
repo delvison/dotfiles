@@ -14,6 +14,7 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "rimraf/k"
+zplug "unixorn/fzf-zsh-plugin"
 zplug 'plugins/git', from:oh-my-zsh
 
 # Install packages that have not been installed yet
