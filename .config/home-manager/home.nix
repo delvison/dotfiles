@@ -57,6 +57,7 @@
     imagemagick
     keepassxc
     libsForQt5.kdeconnect-kde
+    libsForQt5.krdc
     libnotify
     protonmail-bridge
     protonvpn-gui
@@ -97,6 +98,8 @@
     bats
     gh
     git
+    git-annex
+    git-remote-gcrypt
     go
     gopls
     gnumake
@@ -139,6 +142,11 @@
     [credential "https://github.com"]
       helper = "!f() { test \"$1\" = get && echo \"username=$(pass github.com/personal | grep login | awk '{print $2}')\npassword=$(pass github.com/personal | grep api-key | awk '{print $2}')\"; }; f"
     '';
+
+    ".config/git-annex/autostart".text = ''
+      ~/.electrum
+      ~/.password-store
+    '';
   };
 
   # You can also manage environment variables but you will have to manually
@@ -153,6 +161,14 @@
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     EDITOR = "nvim";
+  };
+
+  # libvirt
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
+    };
   };
 
   # Let Home Manager install and manage itself.
