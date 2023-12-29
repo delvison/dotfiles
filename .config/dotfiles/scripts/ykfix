@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# info: sometimes yubikey stops working and only gets fixed when pcscd is killed
+
+sudo kill -9 $(pgrep pcscd)

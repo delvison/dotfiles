@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# info: dumps clipboard out to qr code
+
+xclip -o - | qrencode -t ANSIUTF8 -o-
+xclip -o -
+echo
+echo "clearing in 10 sec..."
+sleep 10
+clear

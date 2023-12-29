@@ -1,7 +1,26 @@
 #!/usr/bin/env bash
+# info: catch all script for lazy commands
 
 function fkit(){
   echo "fk it"
+}
+
+# create sane directories
+function skaffold() {
+  mkdir -p 00_USER/{01_Identification,02_Finance,03_Medical,04_Work,05_Housing,06_Pets}
+  mkdir -p 10_Data/{11_Credentials,12_Config}
+  mkdir -p 20_Software/{21_Code,22_Assets,23_pkg,24_Apps}
+  mkdir -p 30_Media/{31_Images,32_Film,34_Audio}
+  mkdir -p 40_Documents/{41_Notes,42_Tickets,43_Receipts}
+  mkdir -p 100_Archive
+  mkdir -p 110_Backups/
+}
+
+# make a scratch directory
+function mkscratch(){
+  echo "creating ~/scratch/$(date +"%Y%m%d")"
+  mkdir -p ~/scratch/$(date +"%Y%m%d")
+  cd ~/scratch/$(date +"%Y%m%d")
 }
 
 :(){

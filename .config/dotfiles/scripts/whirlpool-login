@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# info: login to samourai whirlpool
+
+apikey=$(pass blockchain/bitcoin/samourai/whirlpool/no-kyc | head -1)
+host=$(pass blockchain/bitcoin/samourai/whirlpool/no-kyc | grep host | awk '{print $2}')
+passphrase=$(pass blockchain/bitcoin/samourai/whirlpool/no-kyc | grep Passphrase | awk '{print $2}')
+
+echo "checking ${host}..."
+check=$(curl -sk -H "apiKey: ${apikey}" "${host}/rest/mix")
+
+if echo "${check}" | grep -q "No wallet opened."; then
+  echo "Logging in..."
+  curl -k -H "Content-Type: application/json" \
+    -H "apiVersion: 0.10" \
+    -H "apiKey: ${apikey}" \
+    -d "{\"seedPassphrase\": \"${passphrase}\"}" \
+    "${host}/rest/cli/login"
+else
+  echo "${check}"
+fi
