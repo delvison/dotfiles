@@ -10,6 +10,9 @@ let g:polyglot_disabled = ['markdown']
     Plug 'w0rp/ale'                   " syntax linter
     Plug 'sheerun/vim-polyglot'
     Plug 'Yggdroot/indentLine'
+    Plug 'williamboman/mason.nvim'
+    Plug 'williamboman/mason-lspconfig.nvim'
+    Plug 'neovim/nvim-lspconfig'
 
     " QOL
     Plug 'ryanoasis/vim-devicons' 
@@ -355,5 +358,5 @@ nnoremap ,b :Buffers<CR>
 nnoremap ,c :Commits<CR>
 
 " autostart NERDTree
-autocmd VimEnter * NERDTree
-autocmd VimEnter * 2wincmd w
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * 2wincmd w
