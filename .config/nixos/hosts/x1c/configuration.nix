@@ -58,8 +58,23 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   # enable docker
   virtualisation.docker.enable = true;
+
+  # enable waydroid for android emulation
+  # https://nixos.wiki/wiki/WayDroid
+  virtualisation.waydroid.enable = true;
+
+  # Enable cron service
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "@reboot      npc    git annex assistant --autostart"
+    ];
+  };
 
   services.xserver = {
     enable = true;

@@ -33,6 +33,7 @@
     cascadia-code
     fira
     iosevka
+    jetbrains-mono
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
@@ -51,20 +52,22 @@
     # utils
     alacritty
     bat
+    firefox
+    fprintd
     gopass
     gparted
-    firefox
     imagemagick
     keepassxc
+    libnotify
     libsForQt5.kdeconnect-kde
     libsForQt5.krdc
-    libnotify
     protonmail-bridge
     protonvpn-gui
+    qrencode
+    ranger
     rclone
     syncthing-tray
     tailscale
-    qrencode
     xclip
     zbar
 
@@ -83,6 +86,7 @@
     mpv
     picard
     vlc
+    yt-dlp
 
     # communication
     cinny-desktop
