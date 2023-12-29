@@ -1,4 +1,4 @@
-plugins=(git)
+plugins=(git fzf-zsh-plugin)
 set -g default-terminal "xterm-256color"
 
 # ------------------------------------------------------------------------------

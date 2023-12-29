@@ -10,6 +10,9 @@ alias eI="$EDITOR ~/.config/i3/config"
 alias eT="$EDITOR ~/.config/tmux/tmux.conf"
 alias eS="$EDITOR ~/.ssh/config"
 
+alias today='date +"%Y%m%d"'
+alias weather="curl wttr.in/nyc"
+
 alias tmux="tmux -2"
 alias dotfiles="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias "tmux ls"="tmux list-sessions"

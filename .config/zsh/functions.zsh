@@ -20,6 +20,10 @@ cdp () {
     OLDPWD=$TEMP_PWD
 }
 
+edotfiles() {
+  $EDITOR $(dotfiles ls-tree -r master --name-only | fzf)
+}
+
 loop() {
   while :; do "$@"; [ -z $WAIT ] && sleep 60 || sleep $WAIT; clear; done
 }
