@@ -26,6 +26,7 @@ let g:polyglot_disabled = ['markdown']
     Plug 'scrooloose/nerdtree'
     Plug 'tpope/vim-commentary'
     Plug 'unkiwii/vim-nerdtree-sync'
+    Plug 'jasonccox/vim-wayland-clipboard'
 
     " THEMES
     Plug 'catppuccin/vim', { 'as': 'catppuccin' }

@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 
+# convert usd to sats and vice-versa
+
 p=$(wget -T2 -qO- https://blockchain.info/ticker | jq .USD.last)
 if [ -z $1 ]; then echo "${p}" && exit 0; fi
+input=$(echo "${1}"|tr -d ',')
 
-if [[ "${1}" == *"."* ]]; then
-  btc="${1}"
-  sats=$(echo "print((${1}*100000000))" | python3)
+if [[ "${input}" == *"usd" ]]; then
+  usd=$(echo "${input}" | grep -o -E '[0-9]+')
+  btc=$(echo "print('{0:.08f}'.format(${usd}/${p}))" | python3)
+  sats=$(echo "print((${btc}*100000000))" | python3)
+elif [[ "${input}" == *"."* ]]; then
+  btc="${input}"
+  sats=$(echo "print((${btc}*100000000))" | python3)
 else
-  sats="${1}"
+  sats="${input}"
   btc=$(echo "print('{0:.08f}'.format(${sats}/100000000))" | python3)
 fi
 
