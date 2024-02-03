@@ -124,6 +124,7 @@
       "libvirtd"
       "plugdev"
       "docker"
+      "keyd"
     ];
     packages = with pkgs; [
     ];

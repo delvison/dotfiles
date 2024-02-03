@@ -18,4 +18,28 @@ let
     '';
 in {
   services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
+
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = ["*"];
+        settings = {
+          main = {
+            capslock = "layer(capslock)";
+          };
+          capslock = {
+            h = "left";
+            l = "right";
+            k = "up";
+            j = "down";
+            u = "prior";
+            i = "home";
+            o = "end";
+            p = "next";
+          };
+        };
+      };
+    };
+  };
 }
