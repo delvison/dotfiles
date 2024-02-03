@@ -13,6 +13,7 @@ alias eS="$EDITOR ~/.ssh/config"
 alias today='date +"%Y%m%d"'
 alias weather="curl wttr.in/nyc"
 
+alias qr-read="zbarcam --raw -1 | vim -"
 alias tmux="tmux -2"
 alias dotfiles="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias "tmux ls"="tmux list-sessions"
