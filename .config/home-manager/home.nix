@@ -69,6 +69,8 @@
     syncthing-tray
     tailscale
     xclip
+    virt-viewer
+    wl-clipboard
     zbar
 
     # office
@@ -83,6 +85,7 @@
     calibre
     feh
     nicotine-plus
+    kdenlive
     mpv
     picard
     vlc
@@ -134,6 +137,14 @@
     rofi
     rofi-emoji
     rofi-pass
+
+    # gstreamer packages need for sound streaming while using SPICE on
+    # virt-viewer
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-plugins-bad
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
