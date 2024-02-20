@@ -23,6 +23,7 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 alias ncmpcpp='ncmpcpp -b .config/ncmpcpp/bindings'
 alias "git log"="git log --show-signature"
 alias open="xdg-open"
+alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
 
 # Enable Ctrl-x-e to edit command line
 autoload -U edit-command-line
