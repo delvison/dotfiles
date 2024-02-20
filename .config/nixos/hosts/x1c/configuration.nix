@@ -9,15 +9,22 @@
       # /etc/nixos/network-drives.nix
       /etc/nixos/xfce.nix
       /etc/nixos/yubikey.nix
+      /etc/nixos/users.nix
     ];
 
   # Bootloader.
+  boot.kernelParams = ["quiet"];
+  boot.plymouth.enable = true;
+  boot.initrd.systemd.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-149b0f5b-4c66-4d9e-9d48-72174467ed87".device = "/dev/disk/by-uuid/149b0f5b-4c66-4d9e-9d48-72174467ed87";
 
   boot.extraModprobeConfig = "options kvm_intel nested=1";
+
+  # enable flakes
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -43,6 +50,13 @@
     ];  
   };
 
+# Automatic Garbage Collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+
   time.timeZone = "America/New_York";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -66,7 +80,7 @@
 
   # enable waydroid for android emulation
   # https://nixos.wiki/wiki/WayDroid
-  virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.enable = true;
 
   # Enable cron service
   services.cron = {
@@ -113,29 +127,17 @@
 
   xdg.portal.enable = true;
 
-  users.defaultUserShell = pkgs.zsh;
-  users.groups.plugdev = {};
-  users.users.npc = {
-    isNormalUser = true;
-    description = "npc";
-    extraGroups = [ 
-      "networkmanager" 
-      "wheel"
-      "libvirtd"
-      "plugdev"
-      "docker"
-      "keyd"
-    ];
-    packages = with pkgs; [
-    ];
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; 
+    let myPkgs = import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/9957cd48326fe8dbd52fdc50dd2502307f188b0d.tar.gz";
+    }) {};  in [
+    myPkgs.signal-desktop
     # pass
     passExtensions.pass-audit
     passExtensions.pass-genphrase
@@ -235,6 +237,10 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # Auto system update
+  system.autoUpgrade = {
+    enable = true;
+  };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
