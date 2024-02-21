@@ -8,14 +8,20 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./fw13-fingerprint-reader.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/ledger.nix
       ../../modules/nixos/yubikey.nix
+      ../../modules/nixos/users.nix
       # ../../modules/nixos/framework13-amd-power.nix
       inputs.home-manager.nixosModules.default
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  hardware = {
+    bluetooth.enable = true;
+  };
 
   # Bootloader.
   boot = {
@@ -77,30 +83,14 @@
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
-  users = {
-  defaultUserShell = pkgs.zsh;
-  groups.plugdev = {};
-    users.npc = {
-      isNormalUser = true;
-      description = "npc";
-      extraGroups = [ 
-        "networkmanager" 
-        "wheel"
-        "libvirtd"
-        "plugdev"
-        "docker"
-        "keyd"
-      ];
-      packages = with pkgs; [];
-    };
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    fusuma
+    xdotool
     power-profiles-daemon
     fprintd
     # pass
@@ -153,8 +143,6 @@
     fira-code
   ];
 
-  hardware.bluetooth.enable = true;
-
   programs = {
     gnupg.agent = {
       enable = true;
@@ -167,6 +155,7 @@
   };
 
   services = {
+    fwupd.enable = true;
     flatpak.enable = true;
     # Enable CUPS to print documents.
     printing.enable = true;
@@ -225,9 +214,9 @@
     # enable fingerprint sensor
     fprintd = {
       enable = true;
-      tod.enable = true;
-      tod.driver = pkgs.libfprint-2-tod1-vfs0090;
-      # tod.driver = pkgs.libfprint-2-tod1-goodix;
+    #   tod.enable = true;
+    #   # tod.driver = pkgs.libfprint-2-tod1-vfs0090;
+    #   # tod.driver = pkgs.libfprint-2-tod1-goodix;
     };
 
     # Enable thermal data
