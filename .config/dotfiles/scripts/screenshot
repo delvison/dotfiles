@@ -6,13 +6,17 @@ mkdir -p "${dir}"
 
 export DISPLAY=:0
 
-# imagemagick command to select area on screen and take screenshot saved to file
-import "${file}" 
+if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
+  # imagemagick command to select area on screen and take screenshot saved to file
+  import "${file}" 
 
-# open dir
-xdg-open "${dir}" &
+  # open dir
+  xdg-open "${dir}" &
 
-# copy to clipboard
-xclip -selection clipboard -t image/png -i "${file}"
+  # copy to clipboard
+  xclip -selection clipboard -t image/png -i "${file}"
 
-notify-send "📋 copied ${file}"
+  notify-send "📋 copied ${file}"
+else
+  echo "sorry, nothing for wayland yet."
+fi
