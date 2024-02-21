@@ -5,5 +5,5 @@ This is configuration for [NixOS](https://nixos.org/).
 ## Usage
 
 ```
-./symlink.sh
+sudo nixos-rebuild switch --flake ~/.config/nixos#$HOST
 ```
