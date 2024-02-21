@@ -11,15 +11,18 @@ git clone --bare https://github.com/delvison/dotfiles.git $HOME/.dotfiles
 2. Setup `dotfiles` alias command.
 
 ```sh
-alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME" \
-&& dotfiles config status.showUntrackedFiles no \
+alias dotfiles="$(which git) --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+```
+
+```sh
+dotfiles config status.showUntrackedFiles no \
 && dotfiles checkout
 ```
 
 3. Run `install.sh`
 
 ```sh
-./.config/dotfiles/install.sh
+./~/.config/dotfiles/install_dotfiles.sh
 ```
 
 ---
