@@ -8,7 +8,9 @@
   imports =
     [
       ./hardware-configuration.nix
+        <nixos-hardware/framework/13-inch/7040-amd>
       ./fw13-fingerprint-reader.nix
+      ./fw13-palm-rejection.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/ledger.nix
       ../../modules/nixos/yubikey.nix
@@ -89,6 +91,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    usbutils
     fusuma
     xdotool
     power-profiles-daemon
