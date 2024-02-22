@@ -49,7 +49,7 @@ white = "#B8C0E0"
 yellow = "#EED49F"
 
 [colors.primary]
-background = "#24273A"
+background = "#13141d"
 bright_foreground = "#CAD3F5"
 dim_foreground = "#CAD3F5"
 foreground = "#CAD3F5"
@@ -63,11 +63,11 @@ foreground = "#24273A"
 # foreground = "#24273A"
 
 [colors.search.matches]
-background = "#A5ADCB"
+background = "#575657"
 foreground = "#24273A"
 
 [colors.selection]
-background = "#F4DBD6"
+background = "#00b61a"
 text = "#24273A"
 
 [colors.vi_mode_cursor]
