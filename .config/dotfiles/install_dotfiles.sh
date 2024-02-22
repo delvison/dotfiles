@@ -51,7 +51,18 @@ install_yq() {
   fi
 }
 
+install_flathub() {
+  if uname | grep -q "Linux"; then
+    if ! flatpak remotes | grep -q "flathub"; then
+      echo "flatpak: adding flathub as a remote..."
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+      flatpak update
+    fi
+  fi
+}
+
 install_vim_plugs
 install_omz
 install_themes
 install_yq
+install_flathub
