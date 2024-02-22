@@ -13,6 +13,7 @@ let g:polyglot_disabled = ['markdown']
     Plug 'williamboman/mason.nvim'
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'neovim/nvim-lspconfig'
+    Plug 'lilydjwg/colorizer'
 
     " QOL
     Plug 'ryanoasis/vim-devicons' 
@@ -125,7 +126,7 @@ let g:polyglot_disabled = ['markdown']
   augroup END
 
 " theme
-  colorscheme catppuccin_frappe
+  colorscheme catppuccin_macchiato
   " colorscheme kanagawa
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
