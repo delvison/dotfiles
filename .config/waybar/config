@@ -1,0 +1,92 @@
+{
+    "layer": "top", 
+    "position": "top",
+    "height": 26,
+    "modules-left": [
+        "hyprland/window", 
+        "hyprland/submap"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network", 
+        "custom/vpn", 
+        "battery",  
+        "custom/energy", 
+        "tray", 
+        "clock"
+    ],
+    "hyprland/workspaces": {
+        "all-outputs": false,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "format": " {name} "
+    },
+    "hyprland/submap": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "{usage}% "
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "battery": {
+        "bat": "BAT1",
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        "interface": "wlp1s0", 
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-disconnected": "Disconnected ⚠",
+        "on-click": "alacritty -e nmtui"
+    },
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/vpn":{
+        "format": "{icon}",
+        "tooltip-format": "{icon}",
+        "exec": "$HOME/.config/waybar/scripts/check_vpn.sh",
+        "return-type": "json",
+        "interval": 5,
+        "format-icons": ["",""]
+    },
+    "custom/energy":{
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/scripts/check_energy.sh",
+        "return-type": "json",
+        "interval": 30,
+    }
+}
