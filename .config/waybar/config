@@ -1,8 +1,9 @@
 {
     "layer": "top", 
     "position": "top",
-    "height": 26,
+    "height": 32,
     "modules-left": [
+        "wlr/taskbar", 
         "hyprland/window", 
         "hyprland/submap"
     ],
@@ -20,12 +21,25 @@
     ],
     "hyprland/workspaces": {
         "all-outputs": false,
+        "on-click": "activate",
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1",
-        "format": " {name} "
+        "format": " {icon} "
     },
     "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>"
+    },
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 20,
+        "icon-theme": "Numix-Circle",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": [
+           "Alacritty",
+           "KeePassXC"
+        ]
     },
     "tray": {
         // "icon-size": 21,
@@ -44,8 +58,8 @@
         "bat": "BAT1",
         "states": {
             "good": 95,
-            "warning": 30,
-            "critical": 15
+            "warning": 20,
+            "critical": 10
         },
         "format": "{capacity}% {icon}",
         // "format-good": "", // An empty format will hide the module
@@ -74,6 +88,15 @@
             "default": ["", ""]
         },
         "on-click": "pavucontrol"
+    },
+    "hyprland/window": {
+        "format": "{}",
+        "rewrite": {
+            "(.*) — Mozilla Firefox": "🌎 $1",
+            "(.*) — LibreWolf": "🌎 $1",
+            "(.*) - fish": "> [$1]"
+        },
+        "separate-outputs": true
     },
     "custom/vpn":{
         "format": "{icon}",

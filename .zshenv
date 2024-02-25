@@ -27,3 +27,5 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color=dark,bg+:000099,fg+:232 --ans
 
 export ZPLUG_HOME=${HOME}/.zplug
 export XDG_CONFIG_HOME="${HOME}/.config"
+GPG_TTY=$(tty)
+export GPG_TTY
