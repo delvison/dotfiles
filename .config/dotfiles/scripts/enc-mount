@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+sudo lsblk
+choice=$(sudo blkid | grep "crypto_LUKS" | fzf --prompt="choose a drive to mount" --height=30)
+drive=$(echo "${choice}" | awk '{print $1}' | tr -d ':')
+label=$(sudo blkid | grep "${drive}" | grep -oE PARTLABEL=".* " | cut -f 2 -d "=" | tr -d '"' | tr -d ' ')
+[ -z "${label}" ] && label="enc_drive"
+
+echo "mounting ${drive} as ${label}"
+
+sudo cryptsetup luksOpen "${drive}" "${label}"
+mkdir -p "${HOME}/mnt/${label}" 
+sudo mount "/dev/mapper/${label}" "${HOME}/mnt/${label}"
+
+echo "${drive} has been decrypted and mounted to ${HOME}/mnt/${label}"

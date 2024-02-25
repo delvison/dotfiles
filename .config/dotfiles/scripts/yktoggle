@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo "$(lsusb | grep Yubico | cut -d' ' -f2,4 | tr -d '0:' | sed 's/ /-/g')" | sudo tee /sys/bus/usb/drivers/usb/unbind

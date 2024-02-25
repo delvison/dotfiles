@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+if [ "${XDG_BACKEND}" == "wayland" ]; then
+  cliphist list | rofi -dmenu | cliphist decode | wl-copy
+  notify-send "  Copied to clipboard" -u low
+fi

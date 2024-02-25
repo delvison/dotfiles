@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+sudo kill -9 $(pgrep waybar)
+waybar &
