@@ -4,9 +4,12 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    # fonts
     (pkgs.nerdfonts.override { fonts = [ "CascadiaCode" "FiraMono" "Ubuntu" ]; })
     cascadia-code
     fira
+    fira-code
+    fira-mono
     iosevka
     jetbrains-mono
     noto-fonts
@@ -25,27 +28,53 @@
     sparrow
 
     # utils
+    acpi
     alacritty
     bat
+    blueman
+    brightnessctl
+    cliphist
+    dunst
     firefox
     fprintd
     gopass
     gparted
+    grim
     imagemagick
     keepassxc
+    kwallet-pam
+    libnotify
     libnotify
     libsForQt5.kdeconnect-kde
     libsForQt5.krdc
+    libsForQt5.qt5ct
+    networkmanagerapplet
+    pavucontrol
+    pinentry-rofi
     protonmail-bridge
     protonvpn-gui
     qrencode
     ranger
     rclone
+    # rofi
+    rofi-emoji
+    # rofi-pass
+    rofi-pass-wayland
+    rofi-power-menu
+    rofi-wayland
+    slurp
+    swayidle
+    swaylock-effects
+    swww
     syncthing-tray
     tailscale
-    xclip
     virt-viewer
+    waybar
     wl-clipboard
+    wlsunset
+    xclip
+    xdg-utils
+    xfce.thunar
     zbar
 
     # office
@@ -73,6 +102,7 @@
     slack
     telegram-desktop
     thunderbird
+    webcord # discord
     zoom-us
 
     # dev
@@ -92,7 +122,6 @@
     python3
     python311Packages.pip
     tree
-    vim 
     vscode
     yq
 
@@ -100,9 +129,7 @@
     catppuccin-gtk
     catppuccin-kvantum
     catppuccin-papirus-folders
-    elementary-xfce-icon-theme
     libsForQt5.qtstyleplugin-kvantum
-    nordic
     nordzy-icon-theme
     tela-circle-icon-theme
     vimix-icon-theme
@@ -110,9 +137,6 @@
 
     # desktop QOL
     digikam
-    rofi
-    rofi-emoji
-    rofi-pass
 
     # gstreamer packages need for sound streaming while using SPICE on
     # virt-viewer

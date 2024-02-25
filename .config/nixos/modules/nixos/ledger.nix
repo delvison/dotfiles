@@ -1,4 +1,3 @@
-# path: /etc/nixos/ledger.nix
 # info: ledger nano udev rules
 {
   # Required for Ledger Live to detect Ledger Nano S via USB

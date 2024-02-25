@@ -61,8 +61,16 @@ install_flathub() {
   fi
 }
 
+install_rofi() {
+  mkdir -p ~/.local/share/rofi/themes/
+  [ ! -f "~/.local/share/rofi/themes/rounded-gray-dark.rasi" ] &&\
+    wget -q https://raw.githubusercontent.com/newmanls/rofi-themes-collection/master/themes/rounded-gray-dark.rasi -O ~/.local/share/rofi/themes/rounded-gray-dark.rasi &&\
+    wget -q https://raw.githubusercontent.com/newmanls/rofi-themes-collection/master/themes/rounded-common.rasi -O ~/.local/share/rofi/themes/rounded-common.rasi
+}
+
 install_vim_plugs
 install_omz
 install_themes
 install_yq
 install_flathub
+install_rofi

@@ -6,8 +6,16 @@
   services.pcscd.enable = true;
 
   environment.systemPackages = with pkgs; [
+    age-plugin-yubikey
     gnupg
+    libykclient
+    libyubikey
+    yubico-pam
+    yubico-piv-tool
+    yubikey-agent
+    yubikey-manager
     yubikey-personalization
+    yubikey-touch-detector
   ];
 
   environment.shellInit = ''

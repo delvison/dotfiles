@@ -120,7 +120,7 @@ mouse = "Middle"
 history = 5000
 
 [window]
-opacity = 0.95
+opacity = 0.85
 title = "Alacritty"
 
 [window.class]

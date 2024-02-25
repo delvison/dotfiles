@@ -1,4 +1,3 @@
-# path: /etc/nixos/xfce.nix
 { pkgs, ... }:
 
 {

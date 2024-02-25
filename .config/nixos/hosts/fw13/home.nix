@@ -38,14 +38,15 @@
       helper = "!f() { test \"$1\" = get && echo \"username=$(pass github.com/personal | grep login | awk '{print $2}')\npassword=$(pass github.com/personal | grep api-key | awk '{print $2}')\"; }; f"
     '';
 
-    ".config/git-annex/autostart".text = ''
-      ~/.electrum
-      ~/.password-store
-    '';
+    # ".config/git-annex/autostart".text = ''
+    #   ~/.electrum
+    #   ~/.password-store
+    # '';
   };
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    OBSIDIAN_USE_WAYLAND = "1"; 
   };
 
   # libvirt
@@ -56,26 +57,26 @@
     };
   };
 
-  services.fusuma = {
-    enable = true;
-    extraPackages = with pkgs; [ xdotool ];
-    settings = {
-      threshold = { swipe = 0.1; };
-      interval = { swipe = 0.7; };
-      swipe = {
-        "3" = {
-          left = {
-            # GNOME: Switch to left workspace
-            command = "xdotool key ctrl+alt+Left";
-          };
-          right = {
-            # GNOME: Switch to right workspace
-            command = "xdotool key ctrl+alt+Right";
-          };
-        };
-      };
-    };
-  };
+  # services.fusuma = {
+  #   enable = true;
+  #   extraPackages = with pkgs; [ xdotool ];
+  #   settings = {
+  #     threshold = { swipe = 0.1; };
+  #     interval = { swipe = 0.7; };
+  #     swipe = {
+  #       "3" = {
+  #         left = {
+  #           # GNOME: Switch to left workspace
+  #           command = "xdotool key ctrl+alt+Left";
+  #         };
+  #         right = {
+  #           # GNOME: Switch to right workspace
+  #           command = "xdotool key ctrl+alt+Right";
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

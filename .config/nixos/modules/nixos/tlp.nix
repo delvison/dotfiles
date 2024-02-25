@@ -1,12 +1,12 @@
-# path: /etc/nixos/laptop.nix
-
 { pkgs, ... }:
 
 {
   powerManagement.powertop.enable = true;
-  services.thermald.enable = true;
 
-  services.tlp = {
+  services = {
+    power-profiles-daemon.enable = false;
+    thermald.enable = true;
+    tlp = {
       enable = true;
       settings = {
         CPU_SCALING_GOVERNOR_ON_AC = "performance";
@@ -20,5 +20,6 @@
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 20;
       };
+    };
   };
 }

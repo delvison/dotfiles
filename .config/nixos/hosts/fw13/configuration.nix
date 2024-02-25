@@ -1,35 +1,67 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, inputs, ... }:
 
 {
   imports =
     [
       ./hardware-configuration.nix
-        <nixos-hardware/framework/13-inch/7040-amd>
+        # <nixos-hardware/framework/13-inch/7040-amd>
       ./fw13-fingerprint-reader.nix
       ./fw13-palm-rejection.nix
+      ./fw13-amd-power.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/ledger.nix
       ../../modules/nixos/yubikey.nix
       ../../modules/nixos/users.nix
-      # ../../modules/nixos/framework13-amd-power.nix
+      ../../modules/nixos/tlp.nix
       inputs.home-manager.nixosModules.default
     ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    settings = {
+      experimental-features = [ 
+        "nix-command" 
+        "flakes" 
+      ];
+    };
+
+    # Automatic Garbage Collection
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
 
   hardware = {
-    bluetooth.enable = true;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = false;
+      settings = {
+        General = {
+		      Experimental = true;
+	      };
+      };
+    };
   };
 
   # Bootloader.
   boot = {
+    loader = {
+      systemd-boot.enable = false;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/EFI"; 
+      };
+      grub = {
+        efiSupport = true;
+        device = "nodev";
+        darkmatter-theme = {
+          enable = true;
+          style = "nixos";
+        };
+      };
+    };
     initrd.systemd.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    loader.systemd-boot.enable = true;
     plymouth.enable = true;
 
     # kernelParams = ["quiet"];
@@ -55,13 +87,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Automatic Garbage Collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
-
   virtualisation = {
     libvirtd.enable = true;
 
@@ -83,68 +108,27 @@
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
+
+  security = {
+    rtkit.enable = true;
+    pam.services.kwallet = {
+      name = "kwallet";
+      enableKwallet = true;
+    };
+    pam.services.swaylock = {};
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    usbutils
-    fusuma
-    xdotool
-    power-profiles-daemon
-    fprintd
-    # pass
-    passExtensions.pass-audit
-    passExtensions.pass-genphrase
-    passExtensions.pass-import
-    passExtensions.pass-otp
-    passExtensions.pass-tomb
-    passExtensions.pass-update
-    (pass.withExtensions (ext: with ext; [ pass-audit pass-otp pass-import pass-genphrase pass-update pass-tomb]))
-    pass
-
-    # utils
-    curl
-    flatpak
-    fzf
-    gnome.gnome-software
-    htop
-    restic
-    socat
-    tmux
-    torsocks
-    wget
-    zsh
-    plasma5Packages.plasma-thunderbolt
-
-    # security
-    age
-    librewolf
-    openssh
-    openvpn
-    sshfs
-    tor-browser-bundle-bin
-    mullvad-browser
-
-    # yubikey packages
-    age-plugin-yubikey
-    libykclient
-    libyubikey
-    yubico-pam
-    yubico-piv-tool
-    yubikey-agent
-    yubikey-manager
-    yubikey-personalization
-    yubikey-touch-detector
-
-    # fonts
-    fira
-    fira-mono
-    fira-code
+    vim
   ];
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 
   programs = {
     gnupg.agent = {
@@ -152,31 +136,44 @@
       enableSSHSupport = true;
     };
 
+    hyprland = {
+      enable = true;
+      xwayland.enable = true;
+    };
+
     zsh.enable = true;
     dconf.enable = true;
     virt-manager.enable = true;
+    thunar = {
+      enable = true;
+      plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-media-tags-plugin
+        thunar-volman
+      ];
+    };
   };
 
   services = {
+    blueman.enable = true;
     fwupd.enable = true;
     flatpak.enable = true;
-    # Enable CUPS to print documents.
     printing.enable = true;
 
-    # Enable cron service
     cron = {
       enable = true;
       systemCronJobs = [
         "@reboot      npc    git annex assistant --autostart"
+        "*/5 * * * *  npc    /home/npc/.config/dotfiles/scripts/battery-alert"
       ];
     };
 
     # access syncthing via http://localhost:8384/
     syncthing = {
-        enable = true;
-        user = "npc";
-        dataDir = "/home/npc/Syncthing";
-        configDir = "/home/npc/.config/syncthing";
+      enable = true;
+      user = "npc";
+      dataDir = "/home/npc/Syncthing";
+      configDir = "/home/npc/.config/syncthing";
     };
 
     tor = {
@@ -185,8 +182,11 @@
     };
 
     openssh = {
-      enable = true;
-      settings.PasswordAuthentication = true;
+      enable = false;
+      settings = {
+        PasswordAuthentication = true;
+        PermitRootLogin = "no";     
+      };
     };
 
     tailscale = {
@@ -206,22 +206,30 @@
       # Enable the X11 windowing system.
       enable = true;
       # Configure keymap in X11
-      layout = "us";
-      xkbVariant = "";
+      xkb= {
+        variant = "";
+        layout = "us";
+      };
 
-      # Enable the KDE Plasma Desktop Environment.
-      displayManager.sddm.enable = true;
-      desktopManager.plasma5.enable = true;
+      displayManager = {
+        sddm.enable = true;
+      };
+      desktopManager = {
+        plasma5.enable = true;
+      };
     };
 
     # enable fingerprint sensor
     fprintd = {
       enable = true;
     };
-
-    # Enable thermal data
-    thermald.enable = true;
   };
+
+  # qt = {
+  #   enable = true;
+  #   platformTheme = "gnome";
+  #   style = "adwaita-dark";
+  # };
 
   networking = {
     networkmanager.enable = true;
