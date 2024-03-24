@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+md=$1
+target=$(dirname "${md}")/pdf
+output="$(basename "${md}").pdf"
+
+mkdir -p ${target}
+
+pandoc \
+  --pdf-engine=wkhtmltopdf \
+  -V "geometry:margin=1in" \
+  -V "mainfont:FiraSans" \
+  -V "sansfont:FiraSans" \
+  -V "monofont:CascadiaCode" \
+  -o "${target}/${output}" "${md}" &

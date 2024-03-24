@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # info: encrypts files using age.
 # https://github.com/FiloSottile/age
@@ -6,7 +6,7 @@
 recipients="${HOME}/.age/age-recipients"
 
 [[ ! -f "${recipients}" ]] \
-  && echo "${recipients} not found." \
+  && print -P "%F{red}${recipients} not found.%F{reset}\n" \
   && exit 1
 
 single-encrypt() {
@@ -14,7 +14,7 @@ single-encrypt() {
   age --encrypt \
     -R "${recipients}" \
     -o "${target}.age" "${target}"
-  echo "🔐 Encrypted to ${target}.age"
+  print -P -n "🔐%F{green}Encrypted to ${target}.age %F{reset}\n"
 }
 
 if [ -n "${1}" ]; then 

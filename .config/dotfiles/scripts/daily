@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+notes_dir=${NOTES_DIR:-$HOME/Documents}
+ds=$(date +%Y-%m-%d)
+note="${notes_dir}/${ds}.md"
+
+if [ ! -f "${note}" ]; then
+  echo "# ${ds}" > ${note}
+fi
+
+nvim -c "norm Go" \
+  -c "norm Go- $(date +%H:%M)" \
+  -c "norm zz" \
+  -c "norm Go  -  " \
+  -c "startinsert" "${note}"

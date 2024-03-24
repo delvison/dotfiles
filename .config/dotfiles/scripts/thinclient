@@ -23,12 +23,14 @@ PROXY=$(pass show homelab/proxmox/user01 | grep node | awk '{print $2}')
 #Strip the DNS name to get the node name
 NODE="${NODE%%\.*}"
 
+echo "[*] Authenticating to ${PROXY}..."
+
 #Authenticate to the API and get a ticket and CSRF token
 DATA="$(curl -f -s -S -k --data-urlencode "username=$USERNAME" \
   --data-urlencode "password=$PASSWORD" \
   "https://$PROXY:8006/api2/json/access/ticket")"
 
-echo "✅ AUTH OK"
+echo "[*] AUTH OK"
 
 #Extract the ticket an CSRF token from the returned data
 TICKET="${DATA//\"/}"
@@ -45,7 +47,7 @@ CSRF="${CSRF%%\}*}"
 # curl -f -s -S -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" "https://$PROXY:8006/api2/spiceconfig/nodes/$NODE/qemu/$VMID/spiceproxy" -X POST > spiceproxy
 curl -f -s -S -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" "https://$PROXY:8006/api2/spiceconfig/nodes/$NODE/qemu/$VMID/spiceproxy" -X POST -d "proxy=$PROXY" > spiceproxy
 
-echo "connecting..."
+echo "[*] Connecting..."
 
 # Launch remote-viewer with spiceproxy file, in full screen mode
-remote-viewer -f spiceproxy
+remote-viewer -f spiceproxy &
