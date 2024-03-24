@@ -28,6 +28,8 @@ let g:polyglot_disabled = ['markdown']
     Plug 'tpope/vim-commentary'
     Plug 'unkiwii/vim-nerdtree-sync'
     Plug 'jasonccox/vim-wayland-clipboard'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 
     " THEMES
     Plug 'catppuccin/vim', { 'as': 'catppuccin' }
@@ -358,6 +360,12 @@ hi def link MyTodo Todo
 nnoremap <C-p> :Files<CR>
 nnoremap ,b :Buffers<CR>
 nnoremap ,c :Commits<CR>
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+
+" shortcuts for notetaking
+map <leader>d :put =strftime('%Y-%m-%d')<CR>
+inoremap <C-l> - [ ]
+inoremap <C-k> []()
 
 " autostart NERDTree
 " autocmd VimEnter * NERDTree
