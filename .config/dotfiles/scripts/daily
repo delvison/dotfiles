@@ -1,8 +1,10 @@
 #!/usr/bin/env zsh
 
-notes_dir=${NOTES_DIR:-$HOME/Documents}
+notes_dir=${NOTES_DIR:-$HOME/Documents/Notes}
 ds=$(date +%Y-%m-%d)
 note="${notes_dir}/${ds}.md"
+
+mkdir -p "${notes_dir}"
 
 if [ ! -f "${note}" ]; then
   echo "# ${ds}" > ${note}

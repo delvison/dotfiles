@@ -1,4 +1,7 @@
 #!/usr/bin/env zsh
+#
+# dependencies:
+# - https://github.com/raghur/mermaid-filter
 
 md=$1
 target=$(dirname "${md}")/pdf
@@ -8,6 +11,7 @@ mkdir -p ${target}
 
 pandoc \
   --pdf-engine=wkhtmltopdf \
+  -F mermaid-filter \
   -V "geometry:margin=1in" \
   -V "mainfont:FiraSans" \
   -V "sansfont:FiraSans" \
