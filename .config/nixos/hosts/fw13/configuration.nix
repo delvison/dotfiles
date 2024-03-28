@@ -1,27 +1,33 @@
-{ config, pkgs, inputs, ... }:
-
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports =
     [
       ./hardware-configuration.nix
-        # <nixos-hardware/framework/13-inch/7040-amd>
       ./fw13-fingerprint-reader.nix
       ./fw13-palm-rejection.nix
-      ./fw13-amd-power.nix
       ../../modules/nixos/keyboard.nix
-      ../../modules/nixos/ledger.nix
       ../../modules/nixos/yubikey.nix
       ../../modules/nixos/users.nix
-      ../../modules/nixos/tlp.nix
+      # ../../modules/nixos/tlp.nix
+      # ./fw13-amd-power.nix
+      # ../../modules/nixos/ledger.nix
+      # <nixos-hardware/framework/13-inch/7040-amd>
       inputs.home-manager.nixosModules.default
     ];
 
   nix = {
     settings = {
-      experimental-features = [ 
-        "nix-command" 
-        "flakes" 
+      experimental-features = [
+        "nix-command"
+        "flakes"
       ];
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
 
     # Automatic Garbage Collection
@@ -33,6 +39,7 @@
   };
 
   hardware = {
+    ledger.enable = true;
     bluetooth = {
       enable = true;
       powerOnBoot = false;
@@ -47,19 +54,19 @@
   # Bootloader.
   boot = {
     loader = {
-      systemd-boot.enable = false;
+      systemd-boot.enable = true;
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/EFI"; 
+        # efiSysMountPoint = "/boot/EFI";
       };
-      grub = {
-        efiSupport = true;
-        device = "nodev";
-        darkmatter-theme = {
-          enable = true;
-          style = "nixos";
-        };
-      };
+      # grub = {
+      #   efiSupport = true;
+      #   device = "nodev";
+      #   darkmatter-theme = {
+      #     enable = true;
+      #     style = "nixos";
+      #   };
+      # };
     };
     initrd.systemd.enable = true;
     plymouth.enable = true;
@@ -88,6 +95,7 @@
   };
 
   virtualisation = {
+    # https://libvirt.org/manpages/libvirtd.html
     libvirtd.enable = true;
 
     # enable docker
@@ -115,15 +123,21 @@
       name = "kwallet";
       enableKwallet = true;
     };
+    # swaylock is used in hyprland
     pam.services.swaylock = {};
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    vim
-  ];
+  environment.systemPackages = with pkgs;
+  let
+    unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  in [
+      # unstable.power-profiles-daemon
+      vim
+      pinentry-curses
+    ];
 
   xdg.portal = {
     enable = true;
@@ -133,12 +147,13 @@
   programs = {
     gnupg.agent = {
       enable = true;
+      # pinentryFlavor = "curses";
       enableSSHSupport = true;
     };
 
     hyprland = {
       enable = true;
-      xwayland.enable = true;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
 
     zsh.enable = true;
@@ -155,14 +170,19 @@
   };
 
   services = {
+    atuin = {
+      enable = true;
+    };
     blueman.enable = true;
     fwupd.enable = true;
     flatpak.enable = true;
     printing.enable = true;
+    power-profiles-daemon.enable = true;
 
     cron = {
       enable = true;
       systemCronJobs = [
+        "@reboot      root   kill -9 $(pgrep pcscd)"  # for yubikey
         "@reboot      npc    git annex assistant --autostart"
         "*/5 * * * *  npc    /home/npc/.config/dotfiles/scripts/battery-alert"
       ];
@@ -185,7 +205,7 @@
       enable = false;
       settings = {
         PasswordAuthentication = true;
-        PermitRootLogin = "no";     
+        PermitRootLogin = "no";
       };
     };
 
@@ -234,21 +254,21 @@
   networking = {
     networkmanager.enable = true;
     hostName = "fw13";
-    nameservers = [ 
+    nameservers = [
       "100.100.100.100" # https://tailscale.com/kb/1063/install-nixos/#using-magicdns
-      "192.168.50.3" 
-      "192.168.1.224" 
+      "192.168.50.3"  # pi-hole
+      "192.168.1.224"  # pi-hole
       "192.168.1.1"
-      "9.9.9.9" 
+      "9.9.9.9"
     ];
-    firewall = { 
+    firewall = {
       enable = true;
-      allowedTCPPortRanges = [ 
+      allowedTCPPortRanges = [
         { from = 1714; to = 1764; } # KDE Connect
-      ];  
-      allowedUDPPortRanges = [ 
+      ];
+      allowedUDPPortRanges = [
         { from = 1714; to = 1764; } # KDE Connect
-      ];  
+      ];
     };
   };
 

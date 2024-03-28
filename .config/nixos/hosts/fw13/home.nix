@@ -1,33 +1,29 @@
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [
+  config,
+  pkgs,
+  lib,
+  flake-inputs,
+  ...
+}: {
+  imports = [
+      # flake-inputs.nix-flatpak.homeManagerModules.nix-flatpak
       ../../modules/home-manager/packages.nix
-    ];
-  home.username = "npc";
-  home.homeDirectory = "/home/npc";
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1w"
-    "electron-24.8.6"
-    "electron-25.9.0"
   ];
 
-  fonts.fontconfig.enable = true;
-  gtk.font = "Fira";
+  home = {
+    stateVersion = "23.11";
+    username = "npc";
+    homeDirectory = "/home/npc";
+  };
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  nixpkgs = {
+    config.allowUnfree = true;
+    config.permittedInsecurePackages = [
+      "openssl-1.1.1w"
+      "electron-24.8.6"
+      "electron-25.9.0"
+    ];
+  };
 
   home.file = {
     ".gitconfig".text = ''
@@ -46,7 +42,8 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    OBSIDIAN_USE_WAYLAND = "1"; 
+    OBSIDIAN_USE_WAYLAND = "1";
+    _JAVA_OPTIONS = "-Dsun.security.smartcardio.library=${lib.getLib pkgs.pcsclite}/lib/libpcsclite.so";
   };
 
   # libvirt
@@ -57,26 +54,37 @@
     };
   };
 
-  # services.fusuma = {
-  #   enable = true;
-  #   extraPackages = with pkgs; [ xdotool ];
-  #   settings = {
-  #     threshold = { swipe = 0.1; };
-  #     interval = { swipe = 0.7; };
-  #     swipe = {
-  #       "3" = {
-  #         left = {
-  #           # GNOME: Switch to left workspace
-  #           command = "xdotool key ctrl+alt+Left";
-  #         };
-  #         right = {
-  #           # GNOME: Switch to right workspace
-  #           command = "xdotool key ctrl+alt+Right";
-  #         };
-  #       };
-  #     };
-  #   };
-  # };
+  fonts.fontconfig.enable = true;
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    # x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.nightfox-gtk-theme;
+      name = "Nightfox-Dusk-BL";
+    };
+
+    iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
+    };
+
+    font = {
+      name = "Fira Sans";
+      size = 11;
+    };
+  };
+
+  # services.flatpak.packages = [
+  #   "com.protonvpn.www"
+  # ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

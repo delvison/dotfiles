@@ -3,7 +3,7 @@
 { config, pkgs, inputs, ... }:
 
 {
-  nixpkgs.overlays = [ 
+  nixpkgs.overlays = [
     (final: prev: {
       power-profiles-daemon = prev.power-profiles-daemon.overrideAttrs(
         old: {
@@ -18,15 +18,15 @@
 
           patches = (old.patches or []) ++ [
              (prev.fetchpatch {
-                url = "https://gitlab.freedesktop.org/upower/power-profiles-daemon/-/merge_requests/127.patch"; 
+                url = "https://gitlab.freedesktop.org/upower/power-profiles-daemon/-/merge_requests/127.patch";
                 sha256= "sha256-CneqixlpZx9iZ0PM5MFIutsvnqKrLlM7FHOHUA/MK6g=";
              })
              # (prev.fetchpatch {
-             #    url = "https://gitlab.freedesktop.org/upower/power-profiles-daemon/-/merge_requests/128.patch"; 
+             #    url = "https://gitlab.freedesktop.org/upower/power-profiles-daemon/-/merge_requests/128.patch";
              #    sha256 = "sha256-1QrrSqsbtiQ9skZBsGfOV2qnhnUC2fhIR9BOGch4Cg8=";
              # })
              (prev.fetchpatch {
-                url = "https://gitlab.freedesktop.org/upower/power-profiles-daemon/-/merge_requests/129.patch"; 
+                url = "https://gitlab.freedesktop.org/upower/power-profiles-daemon/-/merge_requests/129.patch";
                 sha256 = "sha256-h806OQTYbxlUB44NunbPm8MOOVjlg9eB3TWx3TzEE6M=";
              })
           ];

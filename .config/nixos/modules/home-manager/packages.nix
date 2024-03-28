@@ -1,5 +1,14 @@
-{ config, pkgs, ... }:
-
+{
+  config,
+  pkgs,
+  ...
+}:
+  let
+    unstable = import
+      (builtins.fetchTarball https://github.com/nixos/nixpkgs/tarball/68e06b5c7298cad3993b27cf60c67c80edbb3c2d)
+      # reuse the current configuration
+      { config = config.nixpkgs.config; };
+  in
 {
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -25,57 +34,7 @@
     monero-cli
     monero-gui
     python311Packages.ckcc-protocol
-    sparrow
-
-    # utils
-    acpi
-    alacritty
-    bat
-    blueman
-    brightnessctl
-    cliphist
-    dunst
-    firefox
-    fprintd
-    gopass
-    gparted
-    grim
-    imagemagick
-    keepassxc
-    kwallet-pam
-    libnotify
-    libnotify
-    libsForQt5.kdeconnect-kde
-    libsForQt5.krdc
-    libsForQt5.qt5ct
-    networkmanagerapplet
-    pavucontrol
-    pinentry-rofi
-    protonmail-bridge
-    protonvpn-gui
-    qrencode
-    ranger
-    rclone
-    # rofi
-    rofi-emoji
-    # rofi-pass
-    rofi-pass-wayland
-    rofi-power-menu
-    rofi-wayland
-    slurp
-    swayidle
-    swaylock-effects
-    swww
-    syncthing-tray
-    tailscale
-    virt-viewer
-    waybar
-    wl-clipboard
-    wlsunset
-    xclip
-    xdg-utils
-    xfce.thunar
-    zbar
+    unstable.sparrow
 
     # office
     gnome-decoder
@@ -83,7 +42,7 @@
     logseq
     mupdf
     nextcloud-client
-    obsidian
+    unstable.obsidian
 
     # media
     calibre
@@ -98,7 +57,7 @@
     # communication
     cinny-desktop
     gajim
-    signal-desktop
+    # signal-desktop
     slack
     telegram-desktop
     thunderbird
@@ -121,25 +80,26 @@
     openssl
     python3
     python311Packages.pip
+    sops
     tree
     vscode
     yq
+    virt-manager
 
     # theme
     catppuccin-gtk
+    nightfox-gtk-theme
     catppuccin-kvantum
-    catppuccin-papirus-folders
     libsForQt5.qtstyleplugin-kvantum
+    papirus-icon-theme
     nordzy-icon-theme
-    tela-circle-icon-theme
     vimix-icon-theme
     zuki-themes
 
     # desktop QOL
     digikam
 
-    # gstreamer packages need for sound streaming while using SPICE on
-    # virt-viewer
+    # gstreamer packages need for sound streaming while using SPICE on virt-viewer
     gst_all_1.gstreamer
     gst_all_1.gst-plugins-base
     gst_all_1.gst-plugins-good

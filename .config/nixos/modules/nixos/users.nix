@@ -29,22 +29,72 @@
           pass
 
           # utils
+          acpi
+          alacritty
+          atuin
+          bat
+          bc
+          btop
+          blueman
+          brightnessctl
+          cliphist
           curl
+          dunst
+          firefox
           flatpak
           fprintd
           fusuma
           fzf
           gnome.gnome-software
+          gopass
+          gparted
+          grim
           htop
+          imagemagick
+          keepassxc
+          kwallet-pam
+          libnotify
+          libsForQt5.kdeconnect-kde
+          libsForQt5.krdc
+          libsForQt5.qt5ct
+          localsend
+          networkmanagerapplet
+          pavucontrol
+          pinentry-rofi
           plasma5Packages.plasma-thunderbolt
-          power-profiles-daemon
+          # power-profiles-daemon
+          # protonmail-bridge
+          # protonvpn-gui
+          qrencode
+          ranger
+          rclone
           restic
+          # rofi
+          rofi-emoji
+          # rofi-pass
+          rofi-pass-wayland
+          rofi-power-menu
+          rofi-wayland
+          slurp
           socat
+          swayidle
+          swaylock-effects
+          swww
+          syncthing-tray
+          tailscale
           tmux
           torsocks
           usbutils
+          virt-viewer
+          waybar
           wget
+          wl-clipboard
+          wlsunset
+          xclip
+          xdg-utils
           xdotool
+          # xfce.thunar
+          zbar
           zsh
 
           # security
@@ -54,6 +104,7 @@
           openvpn
           sshfs
           tor-browser-bundle-bin
+          tomb
           mullvad-browser
         ];
       };
