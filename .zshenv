@@ -25,6 +25,8 @@ export NVM_DIR="$HOME/.nvm"
 # fzf configuration
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color=dark,bg+:000099,fg+:232 --ansi"
 
+export BROWSER=librewolf
+
 export ZPLUG_HOME=${HOME}/.zplug
 export XDG_CONFIG_HOME="${HOME}/.config"
 GPG_TTY=$(tty)

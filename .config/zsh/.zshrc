@@ -29,3 +29,5 @@ fi
 source $ZSH/oh-my-zsh.sh
 source $HOME/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.oh-my-zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# npm packages
+export PATH="$HOME/.local/.share/.npm-packages/bin:$PATH"

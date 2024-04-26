@@ -2,6 +2,7 @@
 if [ "$1" == "close" ]; then
   if [ "$(hyprctl monitors all | grep Monitor | wc -l)" == 1 ]; then
     swaylock -f &
+    aplay ~/.config/hypr/assets/pop2.wav
     sleep 5
     systemctl suspend
   else

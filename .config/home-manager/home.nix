@@ -161,6 +161,7 @@
     ".config/git-annex/autostart".text = ''
       ~/.electrum
       ~/.password-store
+      ~/FILES
     '';
   };
 

@@ -10,6 +10,9 @@
       ./hardware-configuration.nix
       ./fw13-fingerprint-reader.nix
       ./fw13-palm-rejection.nix
+      ./nix.nix
+      ./networking.nix
+      ./services.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/yubikey.nix
       ../../modules/nixos/users.nix
@@ -20,25 +23,16 @@
       inputs.home-manager.nixosModules.default
     ];
 
-  nix = {
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  nixpkgs.overlays = [ (final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      system = final.system;
+      config.allowUnfree = true;
     };
-
-    # Automatic Garbage Collection
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-  };
+    }) 
+  ];
 
   hardware = {
+    pulseaudio.enable = false;
     ledger.enable = true;
     bluetooth = {
       enable = true;
@@ -50,6 +44,9 @@
       };
     };
   };
+
+  # Enable sound with pipewire.
+  sound.enable = true;
 
   # Bootloader.
   boot = {
@@ -81,7 +78,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -113,11 +109,8 @@
 	  };
   };
 
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-
   security = {
+    sudo.execWheelOnly = true;
     rtkit.enable = true;
     pam.services.kwallet = {
       name = "kwallet";
@@ -131,10 +124,9 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs;
-  let
-    unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  in [
-      # unstable.power-profiles-daemon
+    [
+      unstable.power-profiles-daemon
+      unstable.python3
       vim
       pinentry-curses
     ];
@@ -145,6 +137,7 @@
   };
 
   programs = {
+    adb.enable = true;
     gnupg.agent = {
       enable = true;
       # pinentryFlavor = "curses";
@@ -169,108 +162,11 @@
     };
   };
 
-  services = {
-    atuin = {
-      enable = true;
-    };
-    blueman.enable = true;
-    fwupd.enable = true;
-    flatpak.enable = true;
-    printing.enable = true;
-    power-profiles-daemon.enable = true;
-
-    cron = {
-      enable = true;
-      systemCronJobs = [
-        "@reboot      root   kill -9 $(pgrep pcscd)"  # for yubikey
-        "@reboot      npc    git annex assistant --autostart"
-        "*/5 * * * *  npc    /home/npc/.config/dotfiles/scripts/battery-alert"
-      ];
-    };
-
-    # access syncthing via http://localhost:8384/
-    syncthing = {
-      enable = true;
-      user = "npc";
-      dataDir = "/home/npc/Syncthing";
-      configDir = "/home/npc/.config/syncthing";
-    };
-
-    tor = {
-      enable = true;
-      client.enable = true;
-    };
-
-    openssh = {
-      enable = false;
-      settings = {
-        PasswordAuthentication = true;
-        PermitRootLogin = "no";
-      };
-    };
-
-    tailscale = {
-      enable = true;
-      # allow use of exit nodes on tailscale
-      useRoutingFeatures = "client";
-    };
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
-
-    xserver = {
-      # Enable the X11 windowing system.
-      enable = true;
-      # Configure keymap in X11
-      xkb= {
-        variant = "";
-        layout = "us";
-      };
-
-      displayManager = {
-        sddm.enable = true;
-      };
-      desktopManager = {
-        plasma5.enable = true;
-      };
-    };
-
-    # enable fingerprint sensor
-    fprintd = {
-      enable = true;
-    };
-  };
-
   # qt = {
   #   enable = true;
   #   platformTheme = "gnome";
   #   style = "adwaita-dark";
   # };
-
-  networking = {
-    networkmanager.enable = true;
-    hostName = "fw13";
-    nameservers = [
-      "100.100.100.100" # https://tailscale.com/kb/1063/install-nixos/#using-magicdns
-      "192.168.50.3"  # pi-hole
-      "192.168.1.224"  # pi-hole
-      "192.168.1.1"
-      "9.9.9.9"
-    ];
-    firewall = {
-      enable = true;
-      allowedTCPPortRanges = [
-        { from = 1714; to = 1764; } # KDE Connect
-      ];
-      allowedUDPPortRanges = [
-        { from = 1714; to = 1764; } # KDE Connect
-      ];
-    };
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

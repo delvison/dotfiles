@@ -2,4 +2,5 @@
 # info: plays out full albums in mpv
 # https://mpv.io/installation/
 
- mpv "$(find ~/Music -type d | fzf)"
+album="$(find ~/Music -type d | fzf)"
+ mpv "${album}" &

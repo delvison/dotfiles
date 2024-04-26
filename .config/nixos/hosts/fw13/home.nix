@@ -34,10 +34,9 @@
       helper = "!f() { test \"$1\" = get && echo \"username=$(pass github.com/personal | grep login | awk '{print $2}')\npassword=$(pass github.com/personal | grep api-key | awk '{print $2}')\"; }; f"
     '';
 
-    # ".config/git-annex/autostart".text = ''
-    #   ~/.electrum
-    #   ~/.password-store
-    # '';
+    ".config/git-annex/autostart".text = ''
+      ~/FILES
+    '';
   };
 
   home.sessionVariables = {
@@ -59,21 +58,21 @@
   home.pointerCursor = {
     gtk.enable = true;
     # x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
+    package = pkgs.simp1e-cursors;
+    name = "Simp1e-Gruvbox-Dark";
     size = 16;
   };
 
   gtk = {
     enable = true;
     theme = {
-      package = pkgs.nightfox-gtk-theme;
-      name = "Nightfox-Dusk-BL";
+      package = pkgs.palenight-theme;
+      name = "palenight";
     };
 
     iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus-Dark";
+      package = pkgs.vimix-icon-theme;
+      name = "Vimix-Beryl";
     };
 
     font = {

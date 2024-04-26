@@ -1,0 +1,93 @@
+{ pkgs,... }:
+
+{
+  services = {
+    atuin = {
+      enable = true;
+    };
+    blueman.enable = true;
+    fwupd.enable = true;
+    flatpak.enable = true;
+    printing.enable = true;
+    power-profiles-daemon.enable = true;
+
+    cron = {
+      enable = true;
+      systemCronJobs = [
+        "@reboot      root   kill -9 $(pgrep pcscd)"  # for yubikey
+        # "@reboot      npc    git annex assistant --autostart"
+        "*/5 * * * *  npc    /home/npc/.config/dotfiles/scripts/battery-alert"
+      ];
+    };
+
+    # access syncthing via http://localhost:8384/
+    syncthing = {
+      enable = true;
+      user = "npc";
+      dataDir = "/home/npc/Syncthing";
+      configDir = "/home/npc/.config/syncthing";
+    };
+
+    tor = {
+      enable = true;
+      client.enable = true;
+    };
+
+    openssh = {
+      enable = false;
+      settings = {
+        PasswordAuthentication = true;
+        PermitRootLogin = "no";
+      };
+    };
+
+    tailscale = {
+      enable = true;
+      # allow use of exit nodes on tailscale
+      useRoutingFeatures = "client";
+    };
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+
+    xserver = {
+      # Enable the X11 windowing system.
+      enable = true;
+      # Configure keymap in X11
+      xkb= {
+        variant = "";
+        layout = "us";
+      };
+
+      displayManager = {
+        sddm.enable = true;
+      };
+      desktopManager = {
+        plasma5.enable = true;
+      };
+    };
+
+    # enable fingerprint sensor
+    fprintd = {
+      enable = true;
+    };
+  };
+
+  systemd.services.git-annex-assistant = {
+    enable = false;
+    description = "git annex assistant";
+    unitConfig = {
+      Type = "simple";
+    };
+    serviceConfig = {
+      User = "npc";
+      ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart";
+    };
+    wantedBy = [ "multi-user.target" ];
+    # ...
+  };
+}

@@ -95,6 +95,7 @@
     nordzy-icon-theme
     vimix-icon-theme
     zuki-themes
+    ocs-url
 
     # desktop QOL
     digikam
@@ -105,5 +106,13 @@
     gst_all_1.gst-plugins-good
     gst_all_1.gst-plugins-ugly
     gst_all_1.gst-plugins-bad
+
+    # util
+    bashmount
+    dig
+    gvfs
+    magic-wormhole
+    sensible-utils
+    udisks2 
   ];
 }

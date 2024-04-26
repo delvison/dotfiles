@@ -32,7 +32,8 @@ let g:polyglot_disabled = ['markdown']
     Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 
     " THEMES
-    Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+    Plug 'sainnhe/everforest'
+    " Plug 'catppuccin/vim', { 'as': 'catppuccin' }
     " Plug 'rebelot/kanagawa.nvim'
     " Plug 'lighthaus-theme/vim-lighthaus'
     " Plug 'wadackel/vim-dogrun'
@@ -86,8 +87,8 @@ let g:polyglot_disabled = ['markdown']
   set splitbelow
   set splitright
   set tabstop=2                     " tabs = 2 spaces
-  set textwidth=80                  " text width
-  set tw=80
+  " set textwidth=80                  " text width
+  " set tw=80
   set wildignore=*.swp,*.bak,*.pyc,*.class " ignore files
   set wildmenu                      " completion on mode-line
   set wrap                            " Wrap lines
@@ -128,9 +129,16 @@ let g:polyglot_disabled = ['markdown']
   augroup END
 
 " theme
-  colorscheme catppuccin_macchiato
-  " colorscheme kanagawa
+  if has('termguicolors')
+    set termguicolors
+  endif
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  let g:everforest_background = 'medium'
+  let g:everforest_better_performance = 1
+  let g:airline_theme = 'everforest'
+  colorscheme everforest
+  " colorscheme catppuccin_macchiato
+  " colorscheme kanagawa
 
 " mapping for viewing open buffers
   nnoremap <F5> :buffers<CR>:buffer<Space>
@@ -370,3 +378,7 @@ inoremap <C-k> []()
 " autostart NERDTree
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * 2wincmd w
+augroup my_markdown
+    autocmd!
+    autocmd FileType markdown nnoremap <F9> :<c-u>silent call system('mdtopdf '.expand('%:p:S'))<cr>
+augroup END
