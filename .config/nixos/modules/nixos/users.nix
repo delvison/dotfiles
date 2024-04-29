@@ -30,7 +30,7 @@
 
           # utils
           acpi
-          alacritty
+          # alacritty
           atuin
           bat
           bc
