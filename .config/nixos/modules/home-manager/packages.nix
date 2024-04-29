@@ -112,6 +112,8 @@
     dig
     gvfs
     magic-wormhole
+    opensnitch
+    opensnitch-ui
     sensible-utils
     udisks2 
   ];
