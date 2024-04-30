@@ -2,12 +2,11 @@
 
 {
   services = {
-    atuin = {
-      enable = true;
-    };
+    atuin.enable = true;
     blueman.enable = true;
     fwupd.enable = true;
     flatpak.enable = true;
+    fail2ban.enable = true;
     printing.enable = true;
     power-profiles-daemon.enable = true;
 
