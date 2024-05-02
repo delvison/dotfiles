@@ -86,6 +86,7 @@
         };
         serviceConfig = {
           User = "npc";
+          ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/npc/FILES"; 
           ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart";
         };
         wantedBy = [ "multi-user.target" ];
