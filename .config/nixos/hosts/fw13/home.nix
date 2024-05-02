@@ -34,8 +34,9 @@
       helper = "!f() { test \"$1\" = get && echo \"username=$(pass github.com/personal | grep login | awk '{print $2}')\npassword=$(pass github.com/personal | grep api-key | awk '{print $2}')\"; }; f"
     '';
 
+    # directories for git-annex assistant to monitor
     ".config/git-annex/autostart".text = ''
-      ~/FILES
+      /home/npc/FILES
     '';
   };
 
