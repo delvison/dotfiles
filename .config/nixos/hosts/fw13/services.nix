@@ -79,7 +79,7 @@
   systemd = {
     services = {
       git-annex-assistant = {
-        enable = false;
+        enable = true;
         description = "git annex assistant";
         unitConfig = {
           Type = "simple";
