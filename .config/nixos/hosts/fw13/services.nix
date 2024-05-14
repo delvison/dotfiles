@@ -14,8 +14,7 @@
     cron = {
       enable = true;
       systemCronJobs = [
-        "@reboot      root   kill -9 $(pgrep pcscd)"  # for yubikey
-        # "@reboot      npc    git annex assistant --autostart"
+        "@reboot      npc    kill -9 $(pgrep pcscd)"  # for yubikey
         "*/5 * * * *  npc    /home/npc/.config/dotfiles/scripts/battery-alert"
       ];
     };
