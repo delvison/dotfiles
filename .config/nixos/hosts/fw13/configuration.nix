@@ -125,7 +125,7 @@
 
   environment.systemPackages = with pkgs;
     [
-      unstable.power-profiles-daemon
+      # power-profiles-daemon
       unstable.python3
       vim
       pinentry-curses

@@ -27,6 +27,10 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color=dark,bg+:000099,fg+:232 --ans
 
 export BROWSER=librewolf
 
+export PASSWORD_STORE_DIR=${HOME}/.password-store
+export PASSWORD_STORE_TOMB_FILE=${HOME}/FILES/10_Data/11_Credentials/tomb/pass.tomb
+export PASSWORD_STORE_TOMB_KEY=${HOME}/FILES/10_Data/11_Credentials/tomb/.pass.tomb.key
+
 export ZPLUG_HOME=${HOME}/.zplug
 export XDG_CONFIG_HOME="${HOME}/.config"
 GPG_TTY=$(tty)

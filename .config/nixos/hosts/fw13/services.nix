@@ -4,11 +4,12 @@
   services = {
     atuin.enable = true;
     blueman.enable = true;
-    fwupd.enable = true;
-    flatpak.enable = true;
     fail2ban.enable = true;
-    printing.enable = true;
+    flatpak.enable = true;
+    fwupd.enable = true;
+    pcscd.enable = true;
     power-profiles-daemon.enable = true;
+    printing.enable = true;
 
     cron = {
       enable = true;
@@ -67,6 +68,7 @@
       };
       desktopManager = {
         plasma5.enable = true;
+        xfce.enable = true;
       };
     };
 

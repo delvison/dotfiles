@@ -116,5 +116,8 @@
     opensnitch-ui
     sensible-utils
     udisks2 
+    # smartcard utils
+    pcsctools
+    pcsclite
   ];
 }
