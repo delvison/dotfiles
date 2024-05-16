@@ -29,6 +29,7 @@
         "org.ppsspp.PPSSPP"  # psp emulator
         "org.signal.Signal"
         "org.keepassxc.KeePassXC"
+        "io.github.sigmasd.stimulator"  # keep desktop awake
       ];
     };
 
