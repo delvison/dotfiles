@@ -13,6 +13,9 @@
           extraGroups = [ 
             "networkmanager" 
           ];
+          packages = with pkgs; [
+            firefox-esr
+          ];
         };
 
         npc = {
@@ -60,7 +63,7 @@
             grim
             htop
             imagemagick
-            keepassxc
+            # keepassxc
             kwallet-pam
             libnotify
             # libsForQt5.kdeconnect-kde

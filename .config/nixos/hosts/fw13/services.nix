@@ -5,11 +5,32 @@
     atuin.enable = true;
     blueman.enable = true;
     fail2ban.enable = true;
-    flatpak.enable = true;
     fwupd.enable = true;
     pcscd.enable = true;
     power-profiles-daemon.enable = true;
     printing.enable = true;
+
+    # https://github.com/gmodena/nix-flatpak
+    flatpak = {
+      enable = true;
+      update.onActivation = true;
+      packages = [
+        "com.belmoussaoui.Decoder"  # QR scanner
+        "com.github.iwalton3.jellyfin-media-player"
+        "com.ktechpit.whatsie"  # whatsapp
+        "com.obsproject.Studio"
+        "in.srev.guiscrcpy"  # android screen mirroring
+        "io.freetubeapp.FreeTube"
+        "io.github.martinrotter.rssguard"
+        "md.obsidian.Obsidian"
+        "org.DolphinEmu.dolphin-emu"  # gamecube emulator
+        # "org.fkoehler.KTailctl"
+        "org.kde.neochat"
+        "org.ppsspp.PPSSPP"  # psp emulator
+        "org.signal.Signal"
+        "org.keepassxc.KeePassXC"
+      ];
+    };
 
     cron = {
       enable = true;
@@ -107,6 +128,19 @@
           RestartSec = 30;
         };
         enable = true;
+      };
+      flatpak-update = {
+        enable = false;
+        description = "update flatpaks";
+        unitConfig = {
+          Type = "simple";
+        };
+        serviceConfig = {
+          User = "npc";
+          ExecStartPre = "${pkgs.bash}/bin/bash -c 'until ping -c 1 ip.me; do sleep 10; done;'";
+          ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
+        };
+        wantedBy = [ "multi-user.target" ];
       };
     };
   };

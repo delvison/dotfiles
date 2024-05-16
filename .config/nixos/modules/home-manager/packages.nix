@@ -42,7 +42,6 @@
     logseq
     mupdf
     nextcloud-client
-    unstable.obsidian
 
     # media
     calibre
@@ -67,6 +66,7 @@
     # dev
     ansible
     bats
+    distrobox
     gh
     git
     git-annex

@@ -7,6 +7,6 @@ if [ -f "/tmp/.nightlight" ]; then
   notify-send -t 1000 "Nightlight" "off" -u low -r 9000
 else
   touch /tmp/.nightlight
-   wlsunset -T 6500 &
+  wlsunset -T 6500 &
   notify-send -t 1000 "Nightlight" "on" -u low -r 9000
 fi
