@@ -1,5 +1,5 @@
 export XDG_CONFIG_HOME="$HOME/.config"
-export TERMINAL=alacritty
+export TERMINAL=kitty
 export ZDOTDIR="$HOME/.config/zsh"
 
 if [ -n "$(which nvim)" ]; then 

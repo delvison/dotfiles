@@ -101,7 +101,7 @@
             waybar
             wget
             wl-clipboard
-            wlsunset
+            gammastep
             xclip
             xdg-utils
             xdotool
