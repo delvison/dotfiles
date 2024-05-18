@@ -13,14 +13,13 @@ let g:polyglot_disabled = ['markdown']
     Plug 'williamboman/mason.nvim'
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'neovim/nvim-lspconfig'
-    Plug 'lilydjwg/colorizer'
 
     " QOL
     Plug 'ryanoasis/vim-devicons' 
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/goyo.vim'
-    Plug 'chrisbra/Colorizer'         " hilights colors
+    Plug 'ap/vim-css-color'
     Plug 'ap/vim-buftabline'          " buffer tabs
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'jiangmiao/auto-pairs'
@@ -382,3 +381,4 @@ augroup my_markdown
     autocmd!
     autocmd FileType markdown nnoremap <F9> :<c-u>silent call system('mdtopdf '.expand('%:p:S'))<cr>
 augroup END
+
