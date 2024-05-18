@@ -51,10 +51,10 @@
   # Bootloader.
   boot = {
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot.enable = false;
       efi = {
         canTouchEfiVariables = true;
-        # efiSysMountPoint = "/boot/EFI";
+        efiSysMountPoint = "/boot/efi";
       };
       grub = {
         efiSupport = true;
