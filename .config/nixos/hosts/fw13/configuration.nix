@@ -56,14 +56,14 @@
         canTouchEfiVariables = true;
         # efiSysMountPoint = "/boot/EFI";
       };
-      # grub = {
-      #   efiSupport = true;
-      #   device = "nodev";
-      #   darkmatter-theme = {
-      #     enable = true;
-      #     style = "nixos";
-      #   };
-      # };
+      grub = {
+        efiSupport = true;
+        device = "nodev";
+        darkmatter-theme = {
+          enable = true;
+          style = "nixos";
+        };
+      };
     };
     initrd.systemd.enable = true;
     plymouth.enable = true;
@@ -160,6 +160,7 @@
         thunar-volman
       ];
     };
+
     firejail = {
       enable = true;
       wrappedBinaries = {
