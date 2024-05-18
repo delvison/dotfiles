@@ -57,6 +57,8 @@
         efiSysMountPoint = "/boot/efi";
       };
       grub = {
+        enable = true;
+        useOSProber = true;
         efiSupport = true;
         device = "nodev";
         darkmatter-theme = {
