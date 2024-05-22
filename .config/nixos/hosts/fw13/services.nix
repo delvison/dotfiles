@@ -5,10 +5,17 @@
     atuin.enable = true;
     blueman.enable = true;
     fail2ban.enable = true;
-    fwupd.enable = true;
     pcscd.enable = true;
     power-profiles-daemon.enable = true;
     printing.enable = true;
+    upower.enable = true;
+
+    fwupd = {
+      enable = true;
+      daemonSettings = {
+        OnlyTrusted = false;
+      };
+    };
 
     # https://github.com/gmodena/nix-flatpak
     flatpak = {

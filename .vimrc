@@ -14,6 +14,8 @@ let g:polyglot_disabled = ['markdown']
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'neovim/nvim-lspconfig'
 
+    Plug 'mhinz/vim-startify'
+
     " QOL
     Plug 'ryanoasis/vim-devicons' 
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -373,6 +375,8 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 map <leader>d :put =strftime('%Y-%m-%d')<CR>
 inoremap <C-l> - [ ]
 inoremap <C-k> []()
+" file history in fzf
+map <leader>h :History<CR>  
 
 " autostart NERDTree
 " autocmd VimEnter * NERDTree
