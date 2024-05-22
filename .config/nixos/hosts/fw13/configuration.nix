@@ -50,27 +50,27 @@
 
   # Bootloader.
   boot = {
-    # kernelPackages = pkgs.linuxPackages_6_9;
+    kernelPackages = pkgs.linuxPackages_latest;
     loader = {
-      # systemd-boot.enable = false;
+      systemd-boot.enable = true;
       efi = {
-        # canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
+        canTouchEfiVariables = true;
+        # efiSysMountPoint = "/boot/EFI";
       };
-      grub = {
-        enable = true;
-        # useOSProber = true;
-        efiSupport = true;
-        efiInstallAsRemovable = true;
-        device = "nodev";
-        # darkmatter-theme = {
-        #   enable = true;
-        #   style = "nixos";
-        # };
-      };
+      # grub = {
+      #   enable = true;
+      #   # useOSProber = true;
+      #   efiSupport = true;
+      #   efiInstallAsRemovable = true;
+      #   device = "nodev";
+      #   darkmatter-theme = {
+      #     enable = true;
+      #     style = "nixos";
+      #   };
+      # };
     };
     initrd.systemd.enable = true;
-    # plymouth.enable = true;
+    plymouth.enable = true;
 
     # kernelParams = ["quiet"];
     kernelParams = [ "mem_sleep_default=deep" ];
