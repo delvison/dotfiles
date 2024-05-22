@@ -148,10 +148,10 @@
       enableSSHSupport = true;
     };
 
-    # hyprland = {
-    #   enable = true;
-    #   package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    # };
+    hyprland = {
+      enable = true;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    };
 
     zsh.enable = true;
     dconf.enable = true;
