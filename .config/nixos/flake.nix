@@ -3,9 +3,9 @@
 
   inputs = {
     darkmatter.url = "gitlab:VandalByte/darkmatter-grub-theme";
-    hyprland.url = "github:hyprwm/Hyprland";
-    hypridle.url = "github:hyprwm/hypridle";
-    hyprlock.url = "github:hyprwm/hyprlock";
+    # hyprland.url = "github:hyprwm/Hyprland?ref=v0.40.0";
+    hypridle.url = "github:hyprwm/hypridle/?ref=v0.1.2";
+    hyprlock.url = "github:hyprwm/hyprlock/?ref=v0.3.0";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.3.0";
 
     nixpkgs = {

@@ -50,7 +50,7 @@
 
   # Bootloader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_7;
+    # kernelPackages = pkgs.linuxPackages_6_9;
     loader = {
       # systemd-boot.enable = false;
       efi = {
@@ -59,7 +59,7 @@
       };
       grub = {
         enable = true;
-        useOSProber = true;
+        # useOSProber = true;
         efiSupport = true;
         efiInstallAsRemovable = true;
         device = "nodev";
@@ -148,10 +148,10 @@
       enableSSHSupport = true;
     };
 
-    hyprland = {
-      enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    };
+    # hyprland = {
+    #   enable = true;
+    #   package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # };
 
     zsh.enable = true;
     dconf.enable = true;
