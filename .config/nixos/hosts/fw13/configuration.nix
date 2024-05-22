@@ -50,7 +50,7 @@
 
   # Bootloader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_8;
     loader = {
       systemd-boot.enable = true;
       efi = {
