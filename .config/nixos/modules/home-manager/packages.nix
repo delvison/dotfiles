@@ -57,34 +57,11 @@
     cinny-desktop
     gajim
     # signal-desktop
-    slack
-    telegram-desktop
+    # slack
+    # telegram-desktop
     thunderbird
-    webcord # discord
+    # webcord # discord
     zoom-us
-
-    # dev
-    ansible
-    bats
-    distrobox
-    gh
-    git
-    git-annex
-    git-remote-gcrypt
-    go
-    gopls
-    gnumake
-    jq
-    just
-    neovim
-    openssl
-    python3
-    python311Packages.pip
-    sops
-    tree
-    vscode
-    yq
-    virt-manager
 
     # theme
     catppuccin-gtk
@@ -119,5 +96,6 @@
     # smartcard utils
     pcsctools
     pcsclite
+    unstable.hyprlock
   ];
 }

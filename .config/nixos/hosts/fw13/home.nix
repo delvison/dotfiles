@@ -6,7 +6,6 @@
   ...
 }: {
   imports = [
-      # flake-inputs.nix-flatpak.homeManagerModules.nix-flatpak
       ../../modules/home-manager/packages.nix
       ../../modules/home-manager/packages-dev.nix
   ];

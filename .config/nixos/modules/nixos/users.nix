@@ -51,7 +51,7 @@
             brightnessctl
             cliphist
             curl
-            dunst
+            dunst  # notifications
             firefox
             flatpak
             fprintd

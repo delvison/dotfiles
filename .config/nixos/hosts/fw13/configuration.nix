@@ -129,7 +129,6 @@
 
   environment.systemPackages = with pkgs;
     [
-      # power-profiles-daemon
       unstable.python3
       vim
       pinentry-curses
@@ -196,11 +195,11 @@
     };
   };
 
-  # qt = {
-  #   enable = true;
-  #   platformTheme = "gnome";
-  #   style = "adwaita-dark";
-  # };
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
