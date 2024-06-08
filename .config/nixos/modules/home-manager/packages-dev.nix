@@ -14,6 +14,7 @@
     # dev
     ansible
     bats
+    delta  # pager for git
     distrobox
     gh
     git

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Send a notification if the laptop battery is either low or is fully charged.
 # Set on a systemd timer (~/.config/systemd/user/battery-alert.timer).
@@ -17,15 +17,9 @@ FULL_FILE=/tmp/batteryfull
 EMPTY_FILE=/tmp/batteryempty
 CRITICAL_FILE=/tmp/batterycritical
 
-# Reset notifications if the computer is charging/discharging
-if [ "$BATTERY_DISCHARGING" -eq 1 ] && [ -f $FULL_FILE ]; then
-	rm $FULL_FILE
-elif [ "$BATTERY_DISCHARGING" -eq 0 ] && [ -f $EMPTY_FILE ]; then
-	rm $EMPTY_FILE
-fi
 
 # If the battery is charging and is full (and has not shown notification yet)
-if [ "$BATTERY_LEVEL" -gt 99 ] && [ "$BATTERY_DISCHARGING" -eq 0 ] && [ ! -f $FULL_FILE ]; then
+if [ "$BATTERY_LEVEL" -gt 98 ] && [ "$BATTERY_DISCHARGING" -eq 0 ] && [ ! -f $FULL_FILE ]; then
 	notify-send "Battery Charged" "Battery is fully charged." -i "battery" -r 9991
 	touch $FULL_FILE
 	# If the battery is low and is not charging (and has not shown notification yet)
@@ -37,3 +31,10 @@ elif [ "$BATTERY_LEVEL" -le $CRITICAL_LEVEL ] && [ "$BATTERY_DISCHARGING" -eq 1 
 	notify-send "Battery Critical" "The computer will shutdown soon." -u critical -i "~/.config/dotfiles/assets/batt_critical.svg" -r 9991
 	touch $CRITICAL_FILE
 	fi
+
+# Reset notifications if the computer is charging/discharging
+if [ "$BATTERY_DISCHARGING" -eq 1 ] && [ -f $FULL_FILE ]; then
+	rm $FULL_FILE
+elif [ "$BATTERY_DISCHARGING" -eq 0 ] && [ -f $EMPTY_FILE ]; then
+	rm $EMPTY_FILE
+fi

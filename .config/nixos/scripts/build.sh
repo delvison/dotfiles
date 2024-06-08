@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
-set -e
+set -eu
 
 pushd ~/.config/nixos
-git --git-dir=$HOME/.dotfiles --work-tree=$HOME diff .
+git --git-dir=$HOME/.dotfiles --work-tree=$HOME diff . | delta --side-by-side
 sudo nixos-rebuild switch --impure --flake ~/.config/nixos#$HOST
 print -P -n "%F{green}✅ Nix config successfully built.%F{reset}\n"
 echo "💽 committing diff..."

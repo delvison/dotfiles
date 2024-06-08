@@ -40,14 +40,6 @@
       ];
     };
 
-    cron = {
-      enable = true;
-      systemCronJobs = [
-        "@reboot      npc    kill -9 $(pgrep pcscd)"  # for yubikey
-        "*/5 * * * *  npc    /home/npc/.config/dotfiles/scripts/battery-alert"
-      ];
-    };
-
     # access syncthing via http://localhost:8384/
     syncthing = {
       enable = true;
@@ -107,6 +99,16 @@
   };
 
   systemd = {
+    timers = {
+      "battery-alert" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnBootSec = "5m";
+          OnUnitActiveSec = "5m";
+          Unit = "battery-alert.service";
+        };
+      };
+    };
     services = {
       git-annex-assistant = {
         enable = true;
@@ -149,6 +151,18 @@
           ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
         };
         wantedBy = [ "multi-user.target" ];
+      };
+      "battery-alert" = {
+        enable = true;
+        description = "battery alert notifications";
+        script = ''
+          set -eu
+          ${pkgs.bash}/bin/bash -c '/home/npc/.config/dotfiles/scripts/battery-alert'
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+        };
       };
     };
   };
