@@ -74,6 +74,9 @@
       pulse.enable = true;
     };
 
+    displayManager = {
+      sddm.enable = true;
+    };
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
@@ -83,12 +86,9 @@
         layout = "us";
       };
 
-      displayManager = {
-        sddm.enable = true;
-      };
       desktopManager = {
         plasma5.enable = true;
-        xfce.enable = true;
+        # xfce.enable = true;
       };
     };
 
@@ -137,7 +137,7 @@
           Restart = "always";
           RestartSec = 30;
         };
-        enable = true;
+        enable = false;
       };
       flatpak-update = {
         enable = false;
