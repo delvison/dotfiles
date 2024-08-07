@@ -50,6 +50,7 @@
     kdenlive
     mpv
     picard
+    rhythmbox
     vlc
     yt-dlp
 

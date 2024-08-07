@@ -8,6 +8,6 @@ if [ -f "/tmp/.nightlight" ]; then
 else
   touch /tmp/.nightlight
   # wlsunset -T 6500 &
-  gammastep -O 4500 &
+  gammastep -O 2500 &
   notify-send -t 1000 "Nightlight" "on" -u low -r 9000
 fi

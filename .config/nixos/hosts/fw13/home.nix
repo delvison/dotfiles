@@ -38,6 +38,11 @@
     ".config/git-annex/autostart".text = ''
       /home/npc/FILES
     '';
+
+    ".config/xdg-desktop-portal/hyprland-portals.conf".text = ''
+      [preferred]
+      default=hyprland;gtk
+    '';
   };
 
   home.sessionVariables = {

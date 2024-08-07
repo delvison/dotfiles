@@ -75,8 +75,14 @@
     };
 
     displayManager = {
-      sddm.enable = true;
+      sddm.enable = false;
+      # sddm.wayland.enable = true;
     };
+
+    desktopManager = {
+      plasma6.enable = false;
+    };
+
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
@@ -87,8 +93,11 @@
       };
 
       desktopManager = {
-        plasma5.enable = true;
-        # xfce.enable = true;
+        xfce.enable = false;
+        gnome.enable = true;
+      };
+      displayManager = {
+        gdm.enable = true;
       };
     };
 
@@ -153,7 +162,7 @@
         wantedBy = [ "multi-user.target" ];
       };
       "battery-alert" = {
-        enable = true;
+        enable = false;
         description = "battery alert notifications";
         script = ''
           set -eu
@@ -166,4 +175,11 @@
       };
     };
   };
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    konsole
+  ];
+  environment.systemPackages = (with pkgs.gnomeExtensions; [
+    blur-my-shell
+    pop-shell
+  ]);
 }
