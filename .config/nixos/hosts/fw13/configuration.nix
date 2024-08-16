@@ -46,7 +46,7 @@
   };
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
 
   # Bootloader.
   boot = {

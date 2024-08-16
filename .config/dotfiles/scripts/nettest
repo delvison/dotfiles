@@ -1,27 +1,3 @@
 #!/usr/bin/env bash
 
-local_port=5900
-
-tmux new-window
-tmux rename-window 'VNC'
-
-tmux send-keys "ssh -N -L $local_port:localhost:5900 workstation1-yk" C-m
-
-sleep 5
-
-tmux split-window -h
-tmux send-keys "krdc vnc://$vnc_host:$local_port" C-m
-
-
-# window=1
-# tmux new-window -t $session:$window -n 'vim'
-# tmux send-keys -t $session:$window 'vim package.json'
-
-# window=2
-# tmux new-window -t $session:$window -n 'run'
-
-# window=3
-# tmux new-window -t $session:$window -n 'serve'
-# tmux send-keys -t $session:$window 'npm run serve'
-
-# tmux attach-session -t $session
+bats ~/.config/dotfiles/test/network.bats

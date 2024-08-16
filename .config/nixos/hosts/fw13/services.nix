@@ -67,11 +67,33 @@
       useRoutingFeatures = "client";
     };
 
+    # sound
     pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      jack.enable = true;
+
+      # this config is needed to output hi-res audio to USB DAC
+      extraConfig.pipewire.adjust-sample-rate = {
+        "context.properties" = {
+          "default.clock.rate" = 192000;
+          "defautlt.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
+          #"default.clock.quantum" = 32;
+          #"default.clock.min-quantum" = 32;
+          #"default.clock.max-quantum" = 32;
+        };
+      };
+
+      wireplumber.extraConfig.bluetoothEnhancements = {
+        "monitor.bluez.properties" = {
+          "bluez5.enable-sbc-xq" = true;
+          "bluez5.enable-msbc" = true;
+          "bluez5.enable-hw-volume" = true;
+          "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+        };
+      };
     };
 
     displayManager = {
