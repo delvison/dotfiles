@@ -127,6 +127,11 @@
     fprintd = {
       enable = true;
     };
+
+    mpd = {
+      enable = true;
+      musicDirectory = "/home/npc/Music";
+    };
   };
 
   systemd = {

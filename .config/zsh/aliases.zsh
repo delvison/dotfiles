@@ -21,6 +21,7 @@ alias reload="source $ZDOTDIR/.zshrc"
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 # Force ncmpcpp to use sane bindings
 alias ncmpcpp='ncmpcpp -b .config/ncmpcpp/bindings'
+alias music='tmux new-session -s $$ "tmux source-file ~/.config/ncmpcpp/tsession"'
 alias "git log"="git log --show-signature"
 alias open="xdg-open"
 alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
