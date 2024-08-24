@@ -46,9 +46,11 @@
     # media
     calibre
     feh
-    nicotine-plus
     kdenlive
+    mpd
     mpv
+    ncmpcpp
+    nicotine-plus
     picard
     rhythmbox
     vlc
