@@ -130,6 +130,7 @@
 
     mpd = {
       enable = true;
+      user = "npc";
       musicDirectory = "/home/npc/Music";
       extraConfig = ''
         audio_output {
