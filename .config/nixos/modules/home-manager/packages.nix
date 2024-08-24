@@ -48,7 +48,6 @@
     feh
     kdenlive
     mpc-cli
-    mpd
     mpv
     ncmpcpp
     nicotine-plus
