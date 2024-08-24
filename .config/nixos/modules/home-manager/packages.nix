@@ -47,12 +47,14 @@
     calibre
     feh
     kdenlive
+    mpc-cli
     mpd
     mpv
     ncmpcpp
     nicotine-plus
     picard
     rhythmbox
+    ueberzug
     vlc
     yt-dlp
 
