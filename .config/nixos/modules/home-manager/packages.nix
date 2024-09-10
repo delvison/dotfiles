@@ -41,6 +41,7 @@
     libreoffice
     logseq
     mupdf
+    pandoc
     nextcloud-client
 
     # media
