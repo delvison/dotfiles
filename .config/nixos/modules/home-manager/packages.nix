@@ -101,5 +101,7 @@
     pcsctools
     pcsclite
     unstable.hyprlock
+    wine64
+    winetricks
   ];
 }

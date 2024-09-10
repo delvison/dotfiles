@@ -20,9 +20,10 @@
     git
     git-annex
     git-remote-gcrypt
+    glow  # markdown preview
+    gnumake
     go
     gopls
-    gnumake
     jq
     just
     neovim
@@ -31,8 +32,8 @@
     python311Packages.pip
     sops
     tree
+    virt-manager
     vscode
     yq
-    virt-manager
   ];
 }

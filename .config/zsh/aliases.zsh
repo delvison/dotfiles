@@ -27,6 +27,7 @@ alias open="xdg-open"
 alias lzd='docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/.config/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker'
 alias sb="cd ~/Nextcloud/40_Documents/42_Notes/42.01_Obsidian/"
 alias server="kitty -c ~/.config/kitty/themes/Red_Alert.conf -e ssh server &"
+alias webcam="ffplay /dev/video0"
 
 # Enable Ctrl-x-e to edit command line
 autoload -U edit-command-line
