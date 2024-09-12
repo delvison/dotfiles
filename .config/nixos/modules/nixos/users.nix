@@ -102,6 +102,7 @@
             wget
             wl-clipboard
             gammastep
+            vifm
             xclip
             xdg-utils
             xdotool
