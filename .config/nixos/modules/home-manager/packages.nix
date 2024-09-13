@@ -43,6 +43,7 @@
     mupdf
     pandoc
     nextcloud-client
+    zathura
 
     # media
     calibre

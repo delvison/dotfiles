@@ -16,6 +16,7 @@
       trustedInterfaces = [ "tailscale0" ];
       allowedTCPPorts = [
         22000 # syncthing
+        443
       ];
       allowedUDPPorts = [
         22000 # syncthing
