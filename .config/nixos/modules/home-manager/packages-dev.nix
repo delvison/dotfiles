@@ -24,10 +24,13 @@
     gnumake
     go
     gopls
+    hadolint
     jq
     just
     neovim
+    nodejs
     openssl
+    pre-commit
     python3
     python311Packages.pip
     sops

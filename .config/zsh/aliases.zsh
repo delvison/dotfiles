@@ -29,6 +29,14 @@ alias sb="cd ~/Nextcloud/40_Documents/42_Notes/42.01_Obsidian/"
 alias server="kitty -c ~/.config/kitty/themes/Red_Alert.conf -e ssh server &"
 alias webcam="ffplay /dev/video0"
 
+if [ -n "$(which nvim)" ]; then 
+  export VISUAL=$(which nvim)
+  alias vim=$(which nvim)
+else
+  export VISUAL=$(which vim)
+fi
+export EDITOR=$VISUAL
+
 # Enable Ctrl-x-e to edit command line
 autoload -U edit-command-line
 # Emacs style

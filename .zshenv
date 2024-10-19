@@ -1,13 +1,6 @@
 export XDG_CONFIG_HOME="$HOME/.config"
-export TERMINAL=kitty
+#export TERMINAL=kitty
 export ZDOTDIR="$HOME/.config/zsh"
-
-if [ -n "$(which nvim)" ]; then 
-  export VISUAL=$(which nvim)
-else
-  export VISUAL=$(which vim)
-fi
-export EDITOR=$VISUAL
 
 export TERM="xterm-256color"
 export PATH=$PATH:$HOME/.config/dotfiles/scripts
@@ -29,7 +22,7 @@ export BROWSER=librewolf
 
 export PASSWORD_STORE_DIR=${HOME}/.password-store
 export PASSWORD_STORE_TOMB_FILE=${HOME}/FILES/10_Data/11_Credentials/tomb/pass.tomb
-export PASSWORD_STORE_TOMB_KEY=${HOME}/FILES/10_Data/11_Credentials/tomb/.pass.tomb.key
+export PASSWORD_STORE_TOMB_KEY=${HOME}/FILES/10_Data/11_Credentials/tomb/keys/.pass.tomb.key
 
 export ZPLUG_HOME=${HOME}/.zplug
 export XDG_CONFIG_HOME="${HOME}/.config"

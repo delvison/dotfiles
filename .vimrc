@@ -386,4 +386,3 @@ augroup my_markdown
     autocmd!
     autocmd FileType markdown nnoremap <F9> :<c-u>silent call system('mdtopdf '.expand('%:p:S'))<cr>
 augroup END
-

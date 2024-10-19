@@ -42,6 +42,7 @@
     logseq
     mupdf
     pandoc
+    tectonic  # pdf engine for pandoc
     nextcloud-client
     zathura
 
@@ -102,6 +103,7 @@
     # smartcard utils
     pcsctools
     pcsclite
+    proxychains
     unstable.hyprlock
     wine64
     winetricks

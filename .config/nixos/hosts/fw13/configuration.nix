@@ -23,6 +23,15 @@
       inputs.home-manager.nixosModules.default
     ];
 
+
+  # Allow unfree packages
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "electron-27.3.11"
+    ];
+  };
+
   nixpkgs.overlays = [ (final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
       system = final.system;
@@ -50,7 +59,7 @@
 
   # Bootloader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_8;
+    kernelPackages = pkgs.linuxPackages_latest;
     loader = {
       systemd-boot.enable = true;
       efi = {
@@ -123,9 +132,6 @@
     # swaylock is used in hyprland
     pam.services.swaylock = {};
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs;
     [

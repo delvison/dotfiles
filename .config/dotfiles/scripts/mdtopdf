@@ -10,10 +10,8 @@ output="$(basename "${md}").pdf"
 mkdir -p ${target}
 
 pandoc \
-  --pdf-engine=wkhtmltopdf \
-  -F mermaid-filter \
+  --pdf-engine=tectonic \
   -V "geometry:margin=1in" \
-  -V "mainfont:FiraSans" \
-  -V "sansfont:FiraSans" \
-  -V "monofont:CascadiaCode" \
-  -o "${target}/${output}" "${md}" &
+  "${md}" -o "${target}/${output}"
+
+xdg-open "${target}/${output}"

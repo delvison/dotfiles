@@ -17,7 +17,7 @@
       };
     };
 
-    # https://github.com/gmodena/nix-flatpak
+    # src: https://github.com/gmodena/nix-flatpak
     flatpak = {
       enable = true;
       update.onActivation = true;
@@ -37,6 +37,7 @@
         "org.signal.Signal"
         "org.keepassxc.KeePassXC"
         "io.github.sigmasd.stimulator"  # keep desktop awake
+        "com.brave.Browser"
       ];
 
       overrides = {
@@ -44,7 +45,7 @@
           # Force Wayland by default
           Context.sockets = [
             "wayland" 
-            "!x11" 
+            "x11"
             "!fallback-x11"
             "gpg-agent" # Expose GPG agent
             "pcsc" # Expose smart cards (i.e. YubiKey)
@@ -215,6 +216,7 @@
         wantedBy = [ "multi-user.target" ];
       };
       opensnitch = {
+        enable = false;
         description = "Opensnitch Application Firewall Daemon";
         wants = ["network.target"]; 
         after = ["network.target"]; 
@@ -228,17 +230,16 @@
           Restart = "always";
           RestartSec = 30;
         };
-        enable = false;
       };
       flatpak-update = {
-        enable = false;
+        enable = true;
         description = "update flatpaks";
         unitConfig = {
           Type = "simple";
         };
         serviceConfig = {
-          User = "npc";
-          ExecStartPre = "${pkgs.bash}/bin/bash -c 'until ping -c 1 ip.me; do sleep 10; done;'";
+          User = "root";
+          ExecStartPre = "${pkgs.bash}/bin/bash -c 'until ${pkgs.iputils.out}/bin/ping -c 1 ip.me; do sleep 10; done;'";
           ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
         };
         wantedBy = [ "multi-user.target" ];
