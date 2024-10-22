@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+theme=$(ls ~/.config/kitty/themes/ | rofi -dmenu)
+
+kitty --detach -c ~/.config/kitty/themes/${theme}
