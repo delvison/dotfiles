@@ -56,6 +56,7 @@
     nicotine-plus
     picard
     rhythmbox
+    sonixd  # subsonic music client
     ueberzug
     vlc
     yt-dlp
