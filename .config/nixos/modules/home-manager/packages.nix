@@ -55,6 +55,7 @@
     ncmpcpp
     nicotine-plus
     picard
+    playerctl # media controls
     rhythmbox
     sonixd  # subsonic music client
     ueberzug

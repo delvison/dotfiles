@@ -28,16 +28,17 @@
         "com.obsproject.Studio"
         "in.srev.guiscrcpy"  # android screen mirroring
         "io.freetubeapp.FreeTube"
-        "io.github.martinrotter.rssguard"
+        # "io.github.martinrotter.rssguard"
         "md.obsidian.Obsidian"
-        "org.DolphinEmu.dolphin-emu"  # gamecube emulator
+        # "org.DolphinEmu.dolphin-emu"  # gamecube emulator
         # "org.fkoehler.KTailctl"
         "org.kde.neochat"
-        "org.ppsspp.PPSSPP"  # psp emulator
+        # "org.ppsspp.PPSSPP"  # psp emulator
         "org.signal.Signal"
         "org.keepassxc.KeePassXC"
         "io.github.sigmasd.stimulator"  # keep desktop awake
         "com.brave.Browser"
+        "io.github.hrkfdn.ncspot"
       ];
 
       overrides = {
