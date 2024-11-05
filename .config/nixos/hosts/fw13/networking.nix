@@ -16,7 +16,7 @@
       trustedInterfaces = [ "tailscale0" ];
       allowedTCPPorts = [
         22000 # syncthing
-        443
+        443   # https
         53317 # localsend 
       ];
       allowedUDPPorts = [

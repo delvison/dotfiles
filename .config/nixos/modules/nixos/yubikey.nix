@@ -10,6 +10,8 @@
     gnupg
     libykclient
     libyubikey
+    pcsctools  # smartcard util
+    pcsclite   # smartcard util
     yubico-pam
     yubico-piv-tool
     yubikey-agent

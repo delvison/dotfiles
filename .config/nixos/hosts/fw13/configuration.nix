@@ -13,6 +13,7 @@
       ./nix.nix
       ./networking.nix
       ./services.nix
+      ../../modules/nixos/common.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/yubikey.nix
       ../../modules/nixos/users.nix
@@ -132,13 +133,6 @@
     # swaylock is used in hyprland
     pam.services.swaylock = {};
   };
-
-  environment.systemPackages = with pkgs;
-    [
-      unstable.python3
-      vim
-      pinentry-curses
-    ];
 
   # xdg.portal = {
   #   enable = true;

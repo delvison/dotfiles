@@ -48,6 +48,7 @@
 
     # media
     calibre
+    digikam  # photos
     feh
     kdenlive
     mpc-cli
@@ -63,8 +64,8 @@
     yt-dlp
 
     # communication
-    cinny-desktop
-    gajim
+    cinny-desktop  # matrix client
+    gajim  # xmpp client
     # signal-desktop
     # slack
     # telegram-desktop
@@ -83,9 +84,6 @@
     zuki-themes
     ocs-url
 
-    # desktop QOL
-    digikam
-
     # gstreamer packages need for sound streaming while using SPICE on virt-viewer
     gst_all_1.gstreamer
     gst_all_1.gst-plugins-base
@@ -100,12 +98,9 @@
     magic-wormhole
     opensnitch
     opensnitch-ui
+    proxychains
     sensible-utils
     udisks2 
-    # smartcard utils
-    pcsctools
-    pcsclite
-    proxychains
     unstable.hyprlock
     wine64
     winetricks

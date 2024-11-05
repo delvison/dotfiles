@@ -1,5 +1,4 @@
 export XDG_CONFIG_HOME="$HOME/.config"
-#export TERMINAL=kitty
 export ZDOTDIR="$HOME/.config/zsh"
 
 export TERM="xterm-256color"
@@ -20,6 +19,7 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --color=dark,bg+:000099,fg+:232 --ans
 
 export BROWSER=librewolf
 
+# https://github.com/roddhjav/pass-tomb
 export PASSWORD_STORE_DIR=${HOME}/.password-store
 export PASSWORD_STORE_TOMB_FILE=${HOME}/FILES/10_Data/11_Credentials/tomb/pass.tomb
 export PASSWORD_STORE_TOMB_KEY=${HOME}/FILES/10_Data/11_Credentials/tomb/keys/.pass.tomb.key

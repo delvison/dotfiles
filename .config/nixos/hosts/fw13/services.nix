@@ -114,7 +114,7 @@
       # this config is needed to output hi-res audio to USB DAC
       extraConfig.pipewire.adjust-sample-rate = {
         "context.properties" = {
-          "default.clock.rate" = 192000;
+          "default.clock.rate" = 44100;
           "defautlt.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
           #"default.clock.quantum" = 32;
           #"default.clock.min-quantum" = 32;
@@ -194,6 +194,14 @@
           OnBootSec = "5m";
           OnUnitActiveSec = "5m";
           Unit = "battery-alert.service";
+        };
+      };
+      "flatpak-update" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true;
+          Unit = "flatpak-update.service";
         };
       };
     };

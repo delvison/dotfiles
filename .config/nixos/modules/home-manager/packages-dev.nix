@@ -11,7 +11,6 @@
   in
 {
   home.packages = with pkgs; [
-    # dev
     ansible
     bats
     delta  # pager for git
