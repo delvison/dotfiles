@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+set -e
+
+mkdir -p ~/VM
+vm_file="${HOME}/VM/debian-12-nocloud-amd64.qcow2"
+
+if [ ! -f "${vm_file}" ]; then
+  echo "downloading debian..."
+  wget -P "${HOME}/VM" https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-nocloud-amd64.qcow2
+fi
+
+echo "loading ${vm_file}"
+# default user=root password=""
+qemu-system-x86_64 \
+  -enable-kvm \
+  -m 1G \
+  -hda ${HOME}/VM/debian-12-nocloud-amd64.qcow2 \
+  -net nic,model=virtio \
+  -net user,hostfwd=tcp::5022-:22

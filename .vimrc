@@ -4,8 +4,8 @@ let g:polyglot_disabled = ['markdown']
 " $ vim +PlugInstall +qall
   call plug#begin('~/.vim/plugged')
     " for dev
-    Plug 'jvirtanen/vim-hcl'
-    Plug 'fatih/vim-go' 
+    Plug 'jvirtanen/vim-hcl'          " for terrform
+    Plug 'fatih/vim-go'               " for golang
     Plug 'airblade/vim-gitgutter'     " git diffs on left
     Plug 'w0rp/ale'                   " syntax linter
     Plug 'sheerun/vim-polyglot'
@@ -15,9 +15,12 @@ let g:polyglot_disabled = ['markdown']
     Plug 'neovim/nvim-lspconfig'
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
-    Plug 'mhinz/vim-startify'
+    " for markdown
+    Plug 'godlygeek/tabular'  " used for formatting tables
+    Plug 'preservim/vim-markdown'
 
     " QOL
+    Plug 'mhinz/vim-startify'
     Plug 'ryanoasis/vim-devicons' 
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -40,6 +43,9 @@ let g:polyglot_disabled = ['markdown']
     " Plug 'lighthaus-theme/vim-lighthaus'
     " Plug 'wadackel/vim-dogrun'
   call plug#end()
+
+" map leader to Space
+  let mapleader = " "
 
   " bootstrap vim-plug
   if empty(glob('~/.vim/autoload/plug.vim'))
@@ -94,9 +100,6 @@ let g:polyglot_disabled = ['markdown']
   set wildignore=*.swp,*.bak,*.pyc,*.class " ignore files
   set wildmenu                      " completion on mode-line
   set wrap                            " Wrap lines
-
-" map leader to Space
-  let mapleader = " "
 
 " leader shortcuts
   map <leader>\ :Magit<CR>
@@ -386,3 +389,36 @@ augroup my_markdown
     autocmd!
     autocmd FileType markdown nnoremap <F9> :<c-u>silent call system('mdtopdf '.expand('%:p:S'))<cr>
 augroup END
+
+" Enable folding.
+let g:vim_markdown_folding_disabled = 0
+
+" Fold heading in with the contents.
+let g:vim_markdown_folding_style_pythonic = 1
+
+" Don't use the shipped key bindings.
+let g:vim_markdown_no_default_key_mappings = 1
+
+" Autoshrink TOCs.
+let g:vim_markdown_toc_autofit = 1
+
+" Indentation for new lists. We don't insert bullets as it doesn't play
+" nicely with `gq` formatting. It relies on a hack of treating bullets
+" as comment characters.
+" See https://github.com/plasticboy/vim-markdown/issues/232
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_auto_insert_bullets = 0
+
+" Filetype names and aliases for fenced code blocks.
+let g:vim_markdown_fenced_languages = ['php', 'py=python', 'js=javascript', 'bash=sh', 'viml=vim']
+
+" Highlight front matter (useful for Hugo posts).
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+let g:vim_markdown_frontmatter = 1
+
+" Format strike-through text (wrapped in `~~`).
+let g:vim_markdown_strikethrough = 1
+
+" no bueno. hides '*' chars when bolding text...
+let g:vim_markdown_conceal = 0

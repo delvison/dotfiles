@@ -7,5 +7,5 @@ if [ ! -f "${f_override}" ]; then
   sleep 30
   hyprctl dispatch dpms off
 else
-  notify-send -t 10000 "Idling disabled" "Please remove ${f_override} to enable idling."  -u low
+  notify-send -t 3000 "Idling disabled" "Please remove ${f_override} to enable idling."  -u low
 fi

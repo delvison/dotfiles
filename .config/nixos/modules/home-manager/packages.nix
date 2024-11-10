@@ -38,6 +38,7 @@
 
     # office
     gnome-decoder
+    joplin
     libreoffice
     logseq
     mupdf

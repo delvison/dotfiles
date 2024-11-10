@@ -10,6 +10,8 @@ if [ "${action}" == "close" ] && [ "${monitor_count}" == 1 ]; then
     systemctl suspend
 elif [ "${action}" == "close" ] && [ "${monitor_count}" -gt 1 ]; then
     hyprctl keyword monitor "eDP-1,disable"
+    notify-send -t 2000 "Monitor" "eDP-1 has been disabled" -u low -r 9001
 elif [ "${action}" == "open" ] && [ "${monitor_count}" -gt 1 ]; then
     hyprctl keyword monitor "eDP-1,highres,auto,1.175"
+    notify-send -t 2000 "Monitor" "eDP-1 has been enabled" -u low -r 9001
 fi
