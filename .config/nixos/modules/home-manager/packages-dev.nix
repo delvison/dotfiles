@@ -33,6 +33,7 @@
     python3
     python311Packages.pip
     sops
+    tgpt  # chatgpt cli
     tree
     virt-manager
     vscode
