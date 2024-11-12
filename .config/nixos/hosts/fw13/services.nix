@@ -114,7 +114,7 @@
       # this config is needed to output hi-res audio to USB DAC
       extraConfig.pipewire.adjust-sample-rate = {
         "context.properties" = {
-          "default.clock.rate" = 44100;
+          # "default.clock.rate" = 48000;
           "defautlt.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
           #"default.clock.quantum" = 32;
           #"default.clock.min-quantum" = 32;
