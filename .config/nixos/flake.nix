@@ -7,6 +7,7 @@
     hypridle.url = "github:hyprwm/hypridle/?ref=v0.1.2";
     hyprlock.url = "github:hyprwm/hyprlock/?ref=v0.3.0";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.3.0";
+    musnix.url = "github:musnix/musnix";
 
     nixpkgs = {
       # url = "github:nixos/nixpkgs/nixos-unstable";
@@ -28,6 +29,7 @@
     darkmatter, 
     hypridle, 
     nix-flatpak,
+    musnix,
     ... 
   }@inputs:
     let
