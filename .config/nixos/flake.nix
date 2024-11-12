@@ -44,6 +44,7 @@
           ./hosts/fw13/configuration.nix
           darkmatter.nixosModule
           nix-flatpak.nixosModules.nix-flatpak
+          inputs.musnix.nixosModules.musnix
         ];
       };
     };
