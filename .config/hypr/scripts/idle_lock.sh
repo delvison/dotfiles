@@ -3,7 +3,8 @@
 f_override="/tmp/.nosleep"
 
 if [ ! -f "${f_override}" ]; then
-  swaylock -f
+  # swaylock -f
+  hyprlock
   sleep 30
   hyprctl dispatch dpms off
 else

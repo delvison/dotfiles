@@ -1,13 +1,23 @@
 { pkgs, config,... }:
 
 {
+  # for gnome-keyring to work properly with hyprland
+  # https://discourse.nixos.org/t/login-keyring-did-not-get-unlocked-hyprland/40869/10
+  security.pam.services.gdm.enableGnomeKeyring = true;
+  security.pam.services.gdm-password.enableGnomeKeyring = true;
+
   services = {
     atuin.enable = true;
     blueman.enable = true;
+    devmon.enable = true;
     fail2ban.enable = true;
+    gnome.gnome-keyring.enable = true;
+    gvfs.enable = true; # thunar - Mount, trash, and other functionalities
     pcscd.enable = true;
     power-profiles-daemon.enable = true;
     printing.enable = true;
+    tumbler.enable = true; # thunar - Thumbnail support for images
+    udisks2.enable = true;
     upower.enable = true;
 
     fwupd = {
@@ -39,6 +49,7 @@
         "io.github.sigmasd.stimulator"  # keep desktop awake
         "com.brave.Browser"
         "io.github.hrkfdn.ncspot"
+        # "com.nextcloud.desktopclient.nextcloud"
       ];
 
       overrides = {
@@ -114,7 +125,7 @@
       # this config is needed to output hi-res audio to USB DAC
       extraConfig.pipewire.adjust-sample-rate = {
         "context.properties" = {
-          # "default.clock.rate" = 48000;
+          "default.clock.rate" = 192000;
           "defautlt.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
           #"default.clock.quantum" = 32;
           #"default.clock.min-quantum" = 32;
@@ -127,13 +138,33 @@
           "bluez5.enable-sbc-xq" = true;
           "bluez5.enable-msbc" = true;
           "bluez5.enable-hw-volume" = true;
-          "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+          "bluez5.roles" = [
+            "a2dp_sink"
+            "a2dp_source"
+            "bap_sink"
+            "bap_source"
+          ];
+          "bluez5.codecs" = [
+            "ldac"
+            "aptx"
+            "aptx_ll_duplex"
+            "aptx_ll"
+            "aptx_hd"
+            "opus_05_pro"
+            "opus_05_71"
+            "opus_05_51"
+            "opus_05"
+            "opus_05_duplex"
+            "aac"
+            "sbc_xq"
+          ];
         };
       };
     };
 
     displayManager = {
       sddm.enable = false;
+      defaultSession = "cinnamon";
       # sddm.wayland.enable = true;
     };
 
@@ -151,8 +182,10 @@
       };
 
       desktopManager = {
+        cinnamon.enable = true;
+        gnome.enable = false;
+        mate.enable = false;
         xfce.enable = false;
-        gnome.enable = true;
       };
       displayManager = {
         gdm.enable = true;
@@ -187,6 +220,9 @@
   };
 
   systemd = {
+    user.extraConfig = ''
+      DefaultEnvironment="PATH=/run/current-system/sw/bin"
+    '';
     timers = {
       "battery-alert" = {
         wantedBy = [ "timers.target" ];
@@ -212,7 +248,7 @@
       };
 
       git-annex-assistant = {
-        enable = true;
+        enable = false;
         description = "git annex assistant";
         unitConfig = {
           Type = "simple";
@@ -226,19 +262,6 @@
       };
       opensnitch = {
         enable = false;
-        description = "Opensnitch Application Firewall Daemon";
-        wants = ["network.target"]; 
-        after = ["network.target"]; 
-        wantedBy = ["multi-user.target"];
-        path = [ pkgs.iptables ];
-        serviceConfig = {
-          Type = "simple";
-          PermissionsStartOnly = true;
-          ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /etc/opensnitch/rules"; 
-          ExecStart = "${pkgs.opensnitch}/bin/opensnitchd -rules-path /etc/opensnitch/rules"; 
-          Restart = "always";
-          RestartSec = 30;
-        };
       };
       flatpak-update = {
         enable = true;
@@ -265,6 +288,19 @@
           User = "root";
         };
       };
+      polkit-gnome-authentication-agent-1 = {
+        description = "polkit-gnome-authentication-agent-1";
+        wantedBy = [ "graphical-session.target" ];
+        wants = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+      };
     };
   };
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
@@ -274,4 +310,25 @@
     blur-my-shell
     pop-shell
   ]);
+
+  environment.etc = {
+    "xdg/gtk-2.0/gtkrc".text = "gtk-error-bell=0";
+    "xdg/gtk-3.0/settings.ini".text = ''
+      [Settings]
+      gtk-application-prefer-dark-theme=1
+    '';
+    "xdg/gtk-4.0/settings.ini".text = ''
+      [Settings]
+      gtk-application-prefer-dark-theme=1
+    '';
+    # https://nixos.wiki/wiki/PipeWire
+    "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+      bluez_monitor.properties = {
+        ["bluez5.enable-sbc-xq"] = true,
+        ["bluez5.enable-msbc"] = true,
+        ["bluez5.enable-hw-volume"] = true,
+        ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+      }
+    '';
+  };
 }

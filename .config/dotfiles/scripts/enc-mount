@@ -14,4 +14,4 @@ sudo cryptsetup luksOpen "${drive}" "${label}"
 mkdir -p "${HOME}/mnt/${label}" 
 sudo mount "/dev/mapper/${label}" "${HOME}/mnt/${label}"
 
-echo "${drive} has been decrypted and mounted to ${HOME}/mnt/${label}"
+echo "● ${drive} has been decrypted and mounted to ${HOME}/mnt/${label}"

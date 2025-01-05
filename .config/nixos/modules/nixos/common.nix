@@ -13,7 +13,12 @@
   environment.systemPackages = with pkgs;
     [
       unstable.python3
-      vim
+      # https://discourse.nixos.org/t/virt-manager-cannot-find-virtiofsd/26752
+      firefox-esr
       pinentry-curses
+      vim
+      virtiofsd
+      virt-manager
+      xdg-utils
     ];
 }

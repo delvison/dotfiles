@@ -19,10 +19,10 @@
     fira
     fira-code
     fira-mono
-    iosevka
+    # iosevka
     jetbrains-mono
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     ubuntu_font_family
 
@@ -37,10 +37,10 @@
     unstable.sparrow
 
     # office
-    gnome-decoder
+    # gnome-decoder
     joplin
     libreoffice
-    logseq
+    # logseq
     mupdf
     pandoc
     tectonic  # pdf engine for pandoc
@@ -49,41 +49,47 @@
 
     # media
     calibre
+    catt  # chromecast
     digikam  # photos
     feh
     kdenlive
     mpc-cli
     mpv
-    ncmpcpp
+    # ncmpcpp
     nicotine-plus
     picard
     playerctl # media controls
     rhythmbox
     sonixd  # subsonic music client
-    ueberzug
-    vlc
+    ueberzug # allows images on terminal
+    # vlc
     yt-dlp
 
     # communication
     cinny-desktop  # matrix client
     gajim  # xmpp client
     # signal-desktop
+    simplex-chat-desktop
     # slack
     # telegram-desktop
     thunderbird
     # webcord # discord
     zoom-us
 
-    # theme
+    # theme/desktop
     catppuccin-gtk
-    nightfox-gtk-theme
     catppuccin-kvantum
+    gnomeExtensions.yakuake
+    # gnomeExtensions.weather
+    # gnomeExtensions.weather-oclock
+    gnomeExtensions.unite
     libsForQt5.qtstyleplugin-kvantum
-    papirus-icon-theme
+    nightfox-gtk-theme
     nordzy-icon-theme
+    ocs-url
+    papirus-icon-theme
     vimix-icon-theme
     zuki-themes
-    ocs-url
 
     # gstreamer packages need for sound streaming while using SPICE on virt-viewer
     gst_all_1.gstreamer
@@ -96,14 +102,18 @@
     bashmount
     dig
     gvfs
-    magic-wormhole
-    opensnitch
-    opensnitch-ui
+    magic-wormhole # fileshare
+    lsof
+    # opensnitch
+    # opensnitch-ui
     proxychains
     sensible-utils
     udisks2 
+    udiskie  # for automounting usb drives when plugged in
     unstable.hyprlock
     wine64
     winetricks
+    # xdg-desktop-portal-gtk
+    xdg-desktop-portal-hyprland
   ];
 }

@@ -32,6 +32,10 @@ code(){
   cd $(ls -d ~/code/*/*/* | sort | fzf)
 }
 
+vopen() {
+  nvim $(fzf --preview="bat --color=always {}")
+}
+
 clone(){
   FULL=$(echo $1 | sed 's/git@//g; s/\.git//g; s/\:/\//g')
   BASE=$(echo $FULL | cut -d'/' -f1)

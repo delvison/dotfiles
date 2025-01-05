@@ -3,7 +3,7 @@
 # convert usd to sats and vice-versa
 
 p=$(wget -T2 -qO- https://blockchain.info/ticker | jq .USD.last)
-if [ -z $1 ]; then echo "${p}" && exit 0; fi
+if [ -z $1 ]; then echo "\$${p}" && exit 0; fi
 input=$(echo "${1}"|tr -d ',')
 
 if [[ "${input}" == *"usd" ]]; then

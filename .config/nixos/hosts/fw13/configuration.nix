@@ -17,6 +17,7 @@
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/yubikey.nix
       ../../modules/nixos/users.nix
+      ../../modules/nixos/firejail.nix
       # ../../modules/nixos/tlp.nix
       # ./fw13-amd-power.nix
       # ../../modules/nixos/ledger.nix
@@ -105,8 +106,25 @@
   };
 
   virtualisation = {
+    spiceUSBRedirection.enable = true;
     # https://libvirt.org/manpages/libvirtd.html
-    libvirtd.enable = true;
+    # https://nixos.wiki/wiki/Libvirt
+    libvirtd = {
+      enable = true;
+      qemu = {
+        vhostUserPackages = [ pkgs.virtiofsd ];
+        package = pkgs.qemu_kvm;
+        runAsRoot = true;
+        swtpm.enable = true;
+        ovmf = {
+          enable = true;
+          packages = [(pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd];
+        };
+      };
+    };
 
     # enable docker
     docker.enable = true;
@@ -134,10 +152,11 @@
     pam.services.swaylock = {};
   };
 
-  # xdg.portal = {
-  #   enable = true;
-  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  # };
+  xdg.portal = {
+    enable = true;
+    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    xdgOpenUsePortal = true;
+  };
 
   programs = {
     adb.enable = true;
@@ -163,36 +182,6 @@
         thunar-volman
       ];
     };
-
-    firejail = {
-      enable = true;
-      wrappedBinaries = {
-        firefox = {
-          executable = "${pkgs.firefox}/bin/firefox";
-          profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
-          extraArgs = [
-            # Required for U2F USB stick
-            "--ignore=private-dev"
-            # Enforce dark mode
-            "--env=GTK_THEME=Adwaita:dark"
-            # Enable system notifications
-            "--dbus-user.talk=org.freedesktop.Notifications"
-          ];
-        };
-        librewolf = {
-          executable = "${pkgs.librewolf}/bin/librewolf";
-          profile = "${pkgs.firejail}/etc/firejail/librewolf.profile";
-          extraArgs = [
-            # Required for U2F USB stick
-            "--ignore=private-dev"
-            # Enforce dark mode
-            "--env=GTK_THEME=Adwaita:dark"
-            # Enable system notifications
-            "--dbus-user.talk=org.freedesktop.Notifications"
-          ];
-        };
-      };
-    };
   };
 
   qt = {
@@ -203,8 +192,13 @@
 
   # https://github.com/musnix/musnix?tab=readme-ov-file#base-options
   musnix = {
-    enable = true;
+    enable = false;
   };
+
+  # https://discourse.nixos.org/t/login-keyring-did-not-get-unlocked-hyprland/40869/10
+  # environment.variables.XDG_RUNTIME_DIR = "/run/user/$UID"; # set the runtime directory
+
+  security.polkit.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

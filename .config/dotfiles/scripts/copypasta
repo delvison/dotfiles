@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+# clipboard review in rofi
+
 if [ "${XDG_BACKEND}" == "wayland" ]; then
   cliphist list | rofi -dmenu | cliphist decode | wl-copy
-  notify-send "  Copied to clipboard" -u low
+  notify-send "  Copied to clipboard" -u normal
 fi

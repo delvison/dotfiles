@@ -1,2 +1,8 @@
 build:
   ./scripts/build.sh 
+
+update:
+  nix flake update
+
+upgrade-nixos version:
+  ./scripts/upgrade_nixos.sh {{version}}

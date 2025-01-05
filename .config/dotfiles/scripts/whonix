@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+print -P -n "%F{green}🖧 Starting Whonix-Gateway...%F{reset}\n"
+gcheck=$(sudo virsh list | grep Whonix-Gateway | grep running)
+[ -z "${gcheck}" ] && sudo virsh --connect qemu:///system start "Whonix-Gateway"
+print -P -n "%F{green}Starting Whonix-Workstation %F{reset}\n"
+wcheck=$(sudo virsh list | grep Whonix-Workstation | grep running)
+[ -z "${wcheck}" ] && sudo virsh --connect qemu:///system start "Whonix-Workstation"
+print -P -n "%F{green}● Connecting to Whonix-Workstation %F{reset}\n"
+virt-manager --connect qemu:///system --show-domain-console "Whonix-Workstation"

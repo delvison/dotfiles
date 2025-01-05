@@ -10,7 +10,8 @@ if [ ! -f "${vm_file}" ]; then
   wget -P "${HOME}/VM" https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-nocloud-amd64.qcow2
 fi
 
-echo "loading ${vm_file}"
+print -P -n "%F{green} ● loading ${vm_file} %F{reset}\n"
+
 # default user=root password=""
 qemu-system-x86_64 \
   -enable-kvm \

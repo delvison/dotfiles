@@ -13,9 +13,9 @@
           extraGroups = [ 
             "networkmanager" 
           ];
-          packages = with pkgs; [
-            firefox-esr
-          ];
+          # packages = with pkgs; [
+          #   firefox-esr
+          # ];
         };
 
         npc = {
@@ -28,6 +28,7 @@
             "plugdev"
             "docker"
             "keyd"
+            "storage"
           ];
           packages = with pkgs; [
             # pass
@@ -51,17 +52,17 @@
             brightnessctl
             cliphist
             curl
-            dunst  # notifications
-            firefox
+            # dunst  # notifications
             flatpak
             fprintd
             fusuma
             fzf
-            gnome.gnome-software
+            gnome-software
             gopass
             gparted
             grim
             htop
+            hyprshot
             imagemagick
             # keepassxc
             kwallet-pam
@@ -91,6 +92,7 @@
             socat
             swayidle
             swaylock-effects
+            swaynotificationcenter  # notifications in hyperland
             swww
             syncthing-tray
             tailscale
@@ -104,7 +106,6 @@
             gammastep
             vifm
             xclip
-            xdg-utils
             xdotool
             # xfce.thunar
             zbar

@@ -35,7 +35,6 @@
     sops
     tgpt  # chatgpt cli
     tree
-    virt-manager
     vscode
     yq
   ];

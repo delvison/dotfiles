@@ -5,8 +5,10 @@
 pid=$(pgrep pcscd)
 
 if [ -n "${pid}" ]; then
-  echo "Killing pcscd process ${pid}..."
+  echo "● Killing pcscd process ${pid}..."
   sudo kill -9 $(pgrep pcscd)
 else
   echo "No pcscd process detected."
 fi
+
+sleep 5

@@ -11,7 +11,7 @@ function skaffold() {
   mkdir -p 10_Data/{11_Credentials,12_Config}
   mkdir -p 20_Software/{21_Code,22_Assets,23_pkg,24_Apps}
   mkdir -p 30_Media/{31_Images,32_Film,34_Audio}
-  mkdir -p 40_Documents/{41_Notes,42_Tickets,43_Receipts}
+  mkdir -p 40_Documents/{42_Notes,43_Tickets,44_Receipts}
   mkdir -p 100_Archive
   mkdir -p 110_Backups/
 }

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Whonix VM Launcher
+Exec=kitty --detach -c /bin/bash /home/npc/.config/dotfiles/scripts/whonix
+Icon=/home/npc/.local/share/icons/distrobox/debian.png
+Categories=Network;System;
