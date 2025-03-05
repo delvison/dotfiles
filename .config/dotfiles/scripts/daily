@@ -5,6 +5,7 @@ ds=$(date +%Y-%m-%d)
 note="${notes_dir}/${ds}.md"
 
 mkdir -p "${notes_dir}"
+find "${notes_dir}" -type f -name "*.md" -size 0 -delete
 
 if [ ! -f "${note}" ]; then
   echo "# ${ds}" > ${note}

@@ -10,7 +10,7 @@ if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
   # imagemagick command to select area on screen and take screenshot saved to file
   import "${file}" 
   # open dir
-  xdg-open "${dir}" &
+  # xdg-open "${dir}" &
   # copy to clipboard
   xclip -selection clipboard -t image/png -i "${file}"
 else

@@ -33,7 +33,7 @@ code(){
 }
 
 vopen() {
-  nvim $(fzf --preview="bat --color=always {}")
+  nvim "$(fzf --preview="bat --color=always {}")"
 }
 
 clone(){

@@ -18,7 +18,7 @@ function skaffold() {
 
 # make a scratch directory
 function mkscratch(){
-  echo "creating ~/scratch/$(date +"%Y%m%d")"
+  echo "~/scratch/$(date +"%Y%m%d")"
   mkdir -p ~/scratch/$(date +"%Y%m%d")
   cd ~/scratch/$(date +"%Y%m%d")
 }

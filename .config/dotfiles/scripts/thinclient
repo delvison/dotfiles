@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -e
 
 # info: connects to proxmox VMs via SPICE on virt-viewer
 
 # Set auth options
-USERNAME="$(pass homelab/proxmox/user01 | grep login | awk '{print $2}')@pve"
-PASSWORD="$(pass homelab/proxmox/user01 | head -n1)"
+PVE_USERNAME="$(pass homelab/proxmox/user01 | grep login | awk '{print $2}')@pve"
+PVE_PASSWORD="$(pass homelab/proxmox/user01 | head -n1)"
 
 # Set VM ID from the first and only argument
 VMID="$1"
@@ -23,14 +23,14 @@ PROXY=$(pass show homelab/proxmox/user01 | grep node | awk '{print $2}')
 #Strip the DNS name to get the node name
 NODE="${NODE%%\.*}"
 
-echo "[*] Authenticating to ${PROXY}..."
+echo "[*] Authenticating ${PVE_USERNAME} to ${PROXY}..."
 
 #Authenticate to the API and get a ticket and CSRF token
-DATA="$(curl -f -s -S -k --data-urlencode "username=$USERNAME" \
-  --data-urlencode "password=$PASSWORD" \
+DATA="$(curl -f -s -S -k -m 5 --data-urlencode "username=$PVE_USERNAME" \
+  --data-urlencode "password=$PVE_PASSWORD" \
   "https://$PROXY:8006/api2/json/access/ticket")"
 
-echo "[*] AUTH OK"
+print -P -n "%F{green}[*] AUTH OK %F{reset}\n"
 
 #Extract the ticket an CSRF token from the returned data
 TICKET="${DATA//\"/}"

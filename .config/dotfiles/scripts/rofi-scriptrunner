@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Takes in a dir. Lists all scripts in dir with rofi. executes chosen script.
+
+# Check if any arguments were passed
+if [ $# -eq 0 ]; then
+    echo "Error: No arguments provided."
+    echo "Usage: $0 <directory of scripts>"
+    exit 1
+fi
+
+directory="${1}"
+
+if [ ! -d "${directory}" ]; then
+    echo "Error: ${directory} is not a directory."
+    echo "Usage: $0 <directory of scripts>"
+    exit 1
+fi
+
+scripts=($(find "${directory}" -type f | sort))
+
+selected_option=$(printf "%s\n" "${scripts[@]}" | rofi -dmenu -p "Select Power Profile:")
+
+# Check if cancel was selected
+if [[ "$selected_option" == "" ]]; then
+    echo "Operation cancelled."
+else
+    # Execute the selected command
+    eval "${selected_option}"
+    
+    # Check if the command was executed successfully
+    if [ $? -eq 0 ]; then
+        echo "${selected_option} has been executed."
+        notify-send -t 2000 "${selected_option} has been executed" -u low
+    else
+        echo "Failed to execute ${selected_option}"
+    fi
+fi

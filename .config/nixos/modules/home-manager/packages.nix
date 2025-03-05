@@ -27,12 +27,12 @@
     ubuntu_font_family
 
     # blockchain
-    electrum
+    # electrum
     ledger_agent
-    ledger-live-desktop
+    # ledger-live-desktop
     ledger-udev-rules
-    monero-cli
-    monero-gui
+    # monero-cli
+    # monero-gui
     python311Packages.ckcc-protocol
     unstable.sparrow
 
@@ -59,15 +59,16 @@
     nicotine-plus
     picard
     playerctl # media controls
-    rhythmbox
+    rhythmbox  # music
     sonixd  # subsonic music client
+    quodlibet  # music
     ueberzug # allows images on terminal
     # vlc
     yt-dlp
 
     # communication
-    cinny-desktop  # matrix client
-    gajim  # xmpp client
+    # cinny-desktop  # matrix client
+    # gajim  # xmpp client
     # signal-desktop
     simplex-chat-desktop
     # slack
@@ -79,10 +80,10 @@
     # theme/desktop
     catppuccin-gtk
     catppuccin-kvantum
-    gnomeExtensions.yakuake
+    gnomeExtensions.unite
     # gnomeExtensions.weather
     # gnomeExtensions.weather-oclock
-    gnomeExtensions.unite
+    gnomeExtensions.yakuake
     libsForQt5.qtstyleplugin-kvantum
     nightfox-gtk-theme
     nordzy-icon-theme
@@ -99,6 +100,7 @@
     gst_all_1.gst-plugins-bad
 
     # util
+    arandr
     bashmount
     dig
     gvfs
@@ -107,6 +109,7 @@
     # opensnitch
     # opensnitch-ui
     proxychains
+    redshift
     sensible-utils
     udisks2 
     udiskie  # for automounting usb drives when plugged in

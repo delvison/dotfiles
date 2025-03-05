@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# menu defined as an associative array
+typeset -A menu
+
+# Define the menu array
+menu=(
+ ["󰍃 Logout"]="i3-msg 'exit'"
+ ["󰤄 Suspend"]="systemctl suspend"
+ ["󰜉 Reboot"]="systemctl Reboot"
+ [" Shutdown"]="systemctl halt"
+)
+
+selected_option=$(printf "%s\n" "${!menu[@]}" | rofi -dmenu -p "Select action:")
+
+# Check if cancel was selected
+if [[ "$selected_option" == "" ]]; then
+    echo "Operation cancelled."
+else
+    # Execute the selected command
+    eval "${menu[$selected_option]}"
+    
+    # Check if the command was executed successfully
+    if [ $? -eq 0 ]; then
+        notify-send -t 2000 "Bye!" "Executing $selected_option" -u low
+    else
+        echo "Failed to execute."
+    fi
+fi

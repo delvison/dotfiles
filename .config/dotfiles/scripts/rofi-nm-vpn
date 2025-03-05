@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+connect_vpn() {
+  vpn_conn=$(nmcli connection show | grep vpn | awk '{print $1}' | rofi -dmenu -p "Select VPN connection:")
+  nmcli connection up "${vpn_conn}"
+  notify-send -t 2000 " VPN" "Connected to ${vpn_conn}" -u low
+}
+
+reconnect_vpn() {
+  vpn_conn=$(nmcli connection show --active | grep vpn | awk '{print $1}' | head -n 1)
+  nmcli connection down "${vpn_conn}"
+  notify-send -t 2000 " VPN" "Reconnecting ${vpn_conn}" -u low
+  sleep 2
+  nmcli connection up "${vpn_conn}"
+}
+
+active_connections=$(nmcli connection show --active | grep vpn | awk '{print $1}')
+if echo "$active_connections" | grep -q "vpn"; then
+  # nmcli connection down "${active_connections}"
+  # notify-send -t 2000 "  VPN" "Disconnected ${active_connections}" -u low
+  reconnect_vpn
+else
+  connect_vpn
+fi

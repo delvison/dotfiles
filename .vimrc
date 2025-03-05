@@ -13,6 +13,7 @@ let g:polyglot_disabled = ['markdown']
     Plug 'williamboman/mason.nvim'
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'neovim/nvim-lspconfig'
+    Plug 'hashivim/vim-terraform'
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
     " for markdown
@@ -104,6 +105,7 @@ let g:polyglot_disabled = ['markdown']
 " leader shortcuts
   map <leader>\ :Magit<CR>
   map <leader>t :tabnew<CR>
+  map <leader>x :tabclose<CR>
   map <leader>f :%s///g
   map <leader>q :q<CR>
 
@@ -125,7 +127,7 @@ let g:polyglot_disabled = ['markdown']
 
 " custom highlight color
   function! MyHighlights() abort
-    highlight Visual     cterm=NONE ctermbg=76  ctermfg=16  gui=NONE guibg=#9999ff guifg=#000000
+    highlight Visual     cterm=NONE ctermbg=76  ctermfg=16  gui=NONE guibg=#a7c080 guifg=#000000
     highlight search     cterm=NONE ctermbg=76  ctermfg=16  gui=NONE guibg=#33cc33 guifg=#000000
   endfunction
   augroup MyColors
@@ -150,7 +152,12 @@ let g:polyglot_disabled = ['markdown']
   nnoremap Q <nop> " disable ex-mode
 
 " grep
+  :set grepprg=grep\ -HRIn\ $*
   vnoremap <F8> y:vimgrep "<c-r>"" %<CR>
+  map <leader>gg :copen \| :grep 
+  ":cnext
+  ":cprev
+
 
 " vim pane navigation
   nnoremap <C-J> <C-W><C-J>
@@ -382,6 +389,9 @@ inoremap <C-k> []()
 " file history in fzf
 map <leader>h :History<CR>  
 
+" shortcuts for git
+cnoremap ga :!git add %<CR>
+
 " autostart NERDTree
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * 2wincmd w
@@ -422,3 +432,4 @@ let g:vim_markdown_strikethrough = 1
 
 " no bueno. hides '*' chars when bolding text...
 let g:vim_markdown_conceal = 0
+" TODO: Markdown, show ` chars

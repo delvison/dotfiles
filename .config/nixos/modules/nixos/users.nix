@@ -22,13 +22,14 @@
           isNormalUser = true;
           description = "npc";
           extraGroups = [ 
-            "networkmanager" 
-            "wheel"
-            "libvirtd"
-            "plugdev"
             "docker"
+            "input"
             "keyd"
+            "libvirtd"
+            "networkmanager" 
+            "plugdev"
             "storage"
+            "wheel"
           ];
           packages = with pkgs; [
             # pass
@@ -41,9 +42,33 @@
             (pass.withExtensions (ext: with ext; [ pass-audit pass-otp pass-import pass-genphrase pass-update pass-tomb]))
             pass
 
+            # desktop tools
+            autotiling  # i3wm
+            libinput-gestures  # touchpad gestures - i3wm
+            libnotify
+            lxappearance  # i3wm
+            networkmanagerapplet
+            pasystray  # volume in systray -- i3wm
+            pavucontrol
+            picom  # compositor -- i3wm
+            pinentry-rofi
+            polybar  # i3wm
+            rofi
+            rofi-emoji
+            rofi-pass
+            # rofi-pass-wayland
+            rofi-power-menu
+            # rofi-wayland
+            slurp
+            swayidle
+            swaylock-effects
+            swaynotificationcenter  # notifications in hyperland
+            swww
+            xss-lock  # i3wm
+
+
             # utils
             acpi
-            # alacritty
             atuin
             bat
             bc
@@ -52,7 +77,7 @@
             brightnessctl
             cliphist
             curl
-            # dunst  # notifications
+            dunst  # notifications -- i3wm
             flatpak
             fprintd
             fusuma
@@ -64,16 +89,11 @@
             htop
             hyprshot
             imagemagick
-            # keepassxc
             kwallet-pam
-            libnotify
             # libsForQt5.kdeconnect-kde
             libsForQt5.krdc
             libsForQt5.qt5ct
             localsend
-            networkmanagerapplet
-            pavucontrol
-            pinentry-rofi
             plasma5Packages.plasma-thunderbolt
             # power-profiles-daemon
             # protonmail-bridge
@@ -82,18 +102,7 @@
             ranger
             rclone
             restic
-            # rofi
-            rofi-emoji
-            # rofi-pass
-            rofi-pass-wayland
-            rofi-power-menu
-            rofi-wayland
-            slurp
             socat
-            swayidle
-            swaylock-effects
-            swaynotificationcenter  # notifications in hyperland
-            swww
             syncthing-tray
             tailscale
             tmux

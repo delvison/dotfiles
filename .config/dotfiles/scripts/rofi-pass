@@ -2,6 +2,28 @@
 
 # /home/npc/.nix-profile/bin/rofi-sensible-terminal -e /home/npc/.config/dotfiles/scripts/p "${@}"
 
-[[ $1 == "otp" ]] && cmd="otp"
+launch_pass() {
+  if [[ $1 == "otp" ]]; then
+    $TERMINAL -e "${HOME}/.config/dotfiles/scripts/p" otp -c
+  else
+    $TERMINAL -e "${HOME}/.config/dotfiles/scripts/p" -c
+  fi
+}
 
-rofi-sensible-terminal -e "/run/current-system/sw/bin/bash ${HOME}/.config/dotfiles/scripts/p $cmd -c"
+cmd="show"
+
+
+if [ ! -d "$PASSWORD_STORE_DIR" ]; then
+    echo "Password store directory does not exist."
+    exit 1
+else
+  count=$(ls -A "$PASSWORD_STORE_DIR" | grep -v '^\.' | wc -l)
+
+  if [ $count -gt 1 ]; then
+        launch_pass
+    else
+    echo $count
+        $TERMINAL -e pass open
+        launch_pass
+    fi
+fi

@@ -1,4 +1,4 @@
-{ pkgs, config,... }:
+{ pkgs, config, lib,... }:
 
 {
   # for gnome-keyring to work properly with hyprland
@@ -32,24 +32,25 @@
       enable = true;
       update.onActivation = true;
       packages = [
-        "com.belmoussaoui.Decoder"  # QR scanner
+        # "com.belmoussaoui.Decoder"  # QR scanner
+        "com.brave.Browser"
         "com.github.iwalton3.jellyfin-media-player"
         "com.ktechpit.whatsie"  # whatsapp
+        "com.logseq.Logseq"
+        # "com.nextcloud.desktopclient.nextcloud"
         "com.obsproject.Studio"
         "in.srev.guiscrcpy"  # android screen mirroring
         "io.freetubeapp.FreeTube"
+        "io.github.hrkfdn.ncspot"  # spotify
         # "io.github.martinrotter.rssguard"
+        # "io.github.sigmasd.stimulator"  # keep desktop awake
         "md.obsidian.Obsidian"
         # "org.DolphinEmu.dolphin-emu"  # gamecube emulator
         # "org.fkoehler.KTailctl"
         "org.kde.neochat"
+        "org.keepassxc.KeePassXC"
         # "org.ppsspp.PPSSPP"  # psp emulator
         "org.signal.Signal"
-        "org.keepassxc.KeePassXC"
-        "io.github.sigmasd.stimulator"  # keep desktop awake
-        "com.brave.Browser"
-        "io.github.hrkfdn.ncspot"
-        # "com.nextcloud.desktopclient.nextcloud"
       ];
 
       overrides = {
@@ -163,9 +164,13 @@
     };
 
     displayManager = {
-      sddm.enable = false;
-      defaultSession = "cinnamon";
-      # sddm.wayland.enable = true;
+      sddm = {
+        enable = false;
+        wayland.enable = true;
+      };
+      ly.enable = false;
+      # defaultSession = "cinnamon";
+      defaultSession = "none+i3";
     };
 
     desktopManager = {
@@ -175,6 +180,8 @@
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
+      # ref: https://nixos.wiki/wiki/AMD_GPU
+      videoDrivers = [ "amdgpu" ];
       # Configure keymap in X11
       xkb= {
         variant = "";
@@ -185,10 +192,40 @@
         cinnamon.enable = true;
         gnome.enable = false;
         mate.enable = false;
-        xfce.enable = false;
+        pantheon.enable = false;
+        xfce = {
+          enable = false;
+          noDesktop = true;
+          enableXfwm = false;
+        };
+        xterm.enable = false;
       };
       displayManager = {
-        gdm.enable = true;
+        gdm.enable = false;
+      };
+
+      # ref: https://nixos.wiki/wiki/I3
+      windowManager.i3 = {
+        enable = true;
+        package = pkgs.i3-gaps;
+        # config = {
+        #   modifier = "Mod4";
+        #   gaps = {
+        #     inner = 10;
+        #     outer = 5;
+        #   };
+        # };
+        extraPackages = with pkgs; [
+          dmenu #application launcher most people use
+          i3status # gives you the default i3 status bar
+          i3lock #default i3 screen locker
+          betterlockscreen
+          i3blocks #if you are planning on using i3blocks over i3status
+          xfce.xfce4-power-manager
+          nitrogen  # wallpapers
+          libinput
+          lxde.lxsession  # for lxpolkit
+       ];
       };
     };
 
@@ -215,6 +252,36 @@
         enable = true;
         addresses = true;
         workstation = true;
+      };
+    };
+    # ref: https://wiki.nixos.org/wiki/OpenSnitch
+    opensnitch = {
+      enable = true;
+      rules = {
+        systemd-timesyncd = {
+          name = "systemd-timesyncd";
+          enabled = true;
+          action = "allow";
+          duration = "always";
+          operator = {
+            type ="simple";
+            sensitive = false;
+            operand = "process.path";
+            data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-timesyncd";
+          };
+        };
+        systemd-resolved = {
+          name = "systemd-resolved";
+          enabled = true;
+          action = "allow";
+          duration = "always";
+          operator = {
+            type ="simple";
+            sensitive = false;
+            operand = "process.path";
+            data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-resolved";
+          };
+        };
       };
     };
   };
@@ -259,9 +326,6 @@
           ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart";
         };
         wantedBy = [ "multi-user.target" ];
-      };
-      opensnitch = {
-        enable = false;
       };
       flatpak-update = {
         enable = true;

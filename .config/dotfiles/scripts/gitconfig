@@ -4,7 +4,16 @@
 
 [[ $1 ]] && num="${1}" || num="01"
 
-set -xe
-git config user.name "$(pass git/gitconfig${num} | grep name | awk '{print $2}')"
-git config user.email "$(pass git/gitconfig${num} | grep email | awk '{print $2}')"
-git config user.signingkey "$(pass git/gitconfig${num} | grep signingkey | awk '{print $2}')"
+git rev-parse --is-inside-work-tree 2>/dev/null >/dev/null
+
+if [ "$?" == 0 ]; then
+  set -xe
+  echo "Loading git/gitconfig${num}"
+  git config user.name "$(pass git/gitconfig${num} | grep name | awk '{print $2}')"
+  git config user.email "$(pass git/gitconfig${num} | grep email | awk '{print $2}')"
+  git config user.signingkey "$(pass git/gitconfig${num} | grep signingkey | awk '{print $2}')"
+else
+  echo "$(pwd) is not a git repository."
+  exit 1
+fi
+

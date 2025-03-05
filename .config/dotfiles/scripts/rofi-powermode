@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# menu defined as an associative array
+typeset -A menu
+
+# Define the menu array
+menu=(
+ ["Power Saver"]="powerprofilesctl set power-saver"
+ ["Balanced"]="powerprofilesctl set balanced"
+ ["Performance"]="powerprofilesctl set performance"
+)
+
+# Function to display rofi menu and get selected option
+selected_option=$(printf "%s\n" "${!menu[@]}" | rofi -dmenu -p "Select Power Profile:")
+
+# Check if cancel was selected
+if [[ "$selected_option" == "" ]]; then
+    echo "Operation cancelled."
+else
+    # Execute the selected command
+    eval "${menu[$selected_option]}"
+    
+    # Check if the command was executed successfully
+    if [ $? -eq 0 ]; then
+        echo "Profile changed successfully."
+        notify-send -t 2000 "󰠠 Power Mode" "Set to $selected_option" -u low
+    else
+        echo "Failed to change profile."
+    fi
+fi

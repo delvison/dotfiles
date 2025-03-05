@@ -27,11 +27,52 @@
 
   home.file = {
     ".gitconfig".text = ''
+    [column]
+      ui = auto
+    [branch]
+      sort = -committerdate
+    [tag]
+      sort = version:refname
+    [init]
+      defaultBranch = main
+    [diff]
+      algorithm = histogram
+      colorMoved = plain
+      mnemonicPrefix = true
+      renames = true
+    [push]
+      default = simple
+      autoSetupRemote = true
+      followTags = true
+    [fetch]
+      prune = true
+      pruneTags = true
+      all = true
+    [help]
+      autocorrect = prompt
+    [commit]
+      verbose = true
+    [rerere]
+      enabled = true
+      autoupdate = true
+    [core]
+      excludesfile = ~/.gitignore
+    [rebase]
+      autoSquash = true
+      autoStash = true
+      updateRefs = true
+    [merge]
+      conflictstyle = zdiff3
     [credential "https://gitea.donttrackme.xyz"]
       helper = "!f() { test \"$1\" = get && echo \"username=$(pass homelab/server/gitea/personal | grep login | awk '{print $2}')\npassword=$(pass homelab/server/gitea/personal | grep token | awk '{print $2}')\"; }; f"
 
     [credential "https://github.com"]
       helper = "!f() { test \"$1\" = get && echo \"username=$(pass github.com/personal | grep login | awk '{print $2}')\npassword=$(pass github.com/personal | grep api-key | awk '{print $2}')\"; }; f"
+    '';
+
+    # global gitignore
+    ".gitignore".text = ''
+      .env
     '';
 
     # directories for git-annex assistant to monitor
@@ -117,6 +158,9 @@
       size = 11;
     };
   };
+
+  # ref: https://wiki.nixos.org/wiki/OpenSnitch
+  services.opensnitch-ui.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

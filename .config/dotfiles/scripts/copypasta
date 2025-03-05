@@ -4,5 +4,8 @@
 
 if [ "${XDG_BACKEND}" == "wayland" ]; then
   cliphist list | rofi -dmenu | cliphist decode | wl-copy
-  notify-send "  Copied to clipboard" -u normal
+else
+  cliphist list | rofi -dmenu | cliphist decode | xclip -i -selection clipboard
 fi
+
+notify-send "  Copied to clipboard" -u normal

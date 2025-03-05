@@ -166,9 +166,11 @@
       enableSSHSupport = true;
     };
 
+    # ref: https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
     hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
 
     zsh.enable = true;
@@ -194,6 +196,10 @@
   musnix = {
     enable = false;
   };
+
+  # for i3wm
+  # ref: https://nixos.wiki/wiki/I3
+  environment.pathsToLink = [ "/libexec" ];
 
   # https://discourse.nixos.org/t/login-keyring-did-not-get-unlocked-hyprland/40869/10
   # environment.variables.XDG_RUNTIME_DIR = "/run/user/$UID"; # set the runtime directory
