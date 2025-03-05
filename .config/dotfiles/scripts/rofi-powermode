@@ -10,8 +10,10 @@ menu=(
  ["Performance"]="powerprofilesctl set performance"
 )
 
+current_mode=$(powerprofilesctl get)
+
 # Function to display rofi menu and get selected option
-selected_option=$(printf "%s\n" "${!menu[@]}" | rofi -dmenu -p "Select Power Profile:")
+selected_option=$(printf "%s\n" "${!menu[@]}" | rofi -dmenu -p "Select Power Profile (${current_mode}):" -select "${current_mode}")
 
 # Check if cancel was selected
 if [[ "$selected_option" == "" ]]; then
