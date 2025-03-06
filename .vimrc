@@ -184,6 +184,7 @@ let g:polyglot_disabled = ['markdown']
 "" buffer navigation
   nnoremap <C-N> :bnext<CR>
   nnoremap <C-P> :bprev<CR>
+  nnoremap <C-W> :bdelete<CR>
 
 " color config
   highlight NonText ctermbg=none
@@ -432,4 +433,4 @@ let g:vim_markdown_strikethrough = 1
 
 " no bueno. hides '*' chars when bolding text...
 let g:vim_markdown_conceal = 0
-" TODO: Markdown, show ` chars
+let g:vim_markdown_conceal_code_blocks = 0
