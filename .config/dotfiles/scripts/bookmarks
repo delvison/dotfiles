@@ -21,7 +21,12 @@ insert_bookmark() {
   if [ "${XDG_BACKEND}" == "wayland" ]; then
     exit 1
   else
-    xdotool type $(cat "${BOOKMARKS_FILE}" | grep -v '^#' | rofi -dmenu -p "Select snippet to insert:" | cut -f1 -d' ')
+    choice=$(cat "${BOOKMARKS_FILE}" | grep -v '^#' | rofi -dmenu -p "Select snippet to insert:" | cut -f1 -d' ')
+    if [ "$choice" == "EDIT" ]; then
+        kitty --class bookmarks -e vim $BOOKMARKS_FILE
+    else
+      xdotool type $choice
+    fi
   fi
 }
 
