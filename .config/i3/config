@@ -112,6 +112,7 @@ assign [class="Signal"] $workspace4
 assign [class="Mail"] $workspace9
 assign [class="thunderbird"] $workspace9
 assign [class="Rhythmbox"] $workspace10
+assign [class=".quodlibet-wrapped"] $workspace10
 assign [class="tidal-hifi"] $workspace10
 assign [class="spotify"] $workspace10
 
