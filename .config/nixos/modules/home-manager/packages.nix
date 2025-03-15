@@ -106,6 +106,7 @@
     gvfs
     magic-wormhole # fileshare
     lsof
+    lua51Packages.luarocks  # for nvim
     # opensnitch
     # opensnitch-ui
     proxychains
