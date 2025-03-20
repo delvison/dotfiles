@@ -26,17 +26,20 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- 'airblade/vim-gitgutter',
+  'ap/vim-buftabline',
+  'ap/vim-css-color',
+  'artempyanykh/marksman',
   'fatih/vim-go',
+  'jiangmiao/auto-pairs',
   'jvirtanen/vim-hcl',
   'mhinz/vim-startify',
   'neovim/nvim-lspconfig',
-  'williamboman/mason-lspconfig.nvim',
-  'williamboman/mason.nvim',
-  'artempyanykh/marksman',
+  'sindrets/diffview.nvim',
+  'tpope/vim-commentary',
   'tpope/vim-fugitive',
   'tpope/vim-surround',
-  'tpope/vim-commentary',
-  'ap/vim-buftabline',
+  'williamboman/mason-lspconfig.nvim',
+  'williamboman/mason.nvim',
   require 'plugins.neotree',
   require 'plugins.gitsigns',
   require 'plugins.colortheme',
@@ -59,8 +62,6 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     vim.api.nvim_set_hl(0, 'Search', { bg = '#33cc33', fg = '#000000' })
  end,
 })
-
-vim.cmd([[colorscheme everforest]])
 
 require('lualine').setup {
   options = {
