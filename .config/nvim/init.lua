@@ -25,7 +25,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  'airblade/vim-gitgutter',
+  -- 'airblade/vim-gitgutter',
   'fatih/vim-go',
   'jvirtanen/vim-hcl',
   'mhinz/vim-startify',
@@ -35,11 +35,15 @@ require('lazy').setup({
   'artempyanykh/marksman',
   'tpope/vim-fugitive',
   'tpope/vim-surround',
+  'tpope/vim-commentary',
+  'ap/vim-buftabline',
   require 'plugins.neotree',
+  require 'plugins.gitsigns',
   require 'plugins.colortheme',
   require 'plugins.lualine',
   require 'plugins.blink',
   require 'plugins.markdown_nvim',
+  require 'plugins.oil',
   require 'plugins.telescope'
 })
 
