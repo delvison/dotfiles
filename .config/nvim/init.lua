@@ -29,6 +29,7 @@ require('lazy').setup({
   'ap/vim-buftabline',
   'ap/vim-css-color',
   'artempyanykh/marksman',
+  'bullets-vim/bullets.vim',
   'fatih/vim-go',
   'jiangmiao/auto-pairs',
   'jvirtanen/vim-hcl',

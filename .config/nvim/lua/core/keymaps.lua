@@ -89,7 +89,32 @@ vim.keymap.set("n", "<leader>d", ":put =strftime('%Y-%m-%d')<CR>", opts)
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Map Ctrl+L to insert - [ ]
-vim.keymap.set('i', '<C-l>', '-[ ] ', { noremap = true })
+vim.keymap.set('i', '<C-l>', '- [ ] ', { noremap = true })
 
 -- Map Ctrl+K to insert []()
 vim.keymap.set('i', '<C-k>', '[]()', { noremap = true })
+
+-- Function to replace content inside <think> tags with empty tags
+function toggle_checkbox()
+    vim.cmd('normal! 0')
+    local cur_pos = vim.fn.getcurpos()
+    local current_line = vim.fn.getline(cur_pos.line)
+    local found = string.find(current_line, '- \\[ \\]')
+    if found == 0 then
+        vim.notify("No list item found", vim.log.levels.INFO)
+        return
+    end
+
+    vim.cmd('normal! 0')
+    -- Enter visual mode, search for closing tag and select content
+    vim.cmd('normal! v')
+    vim.cmd('normal! f]')
+
+    -- Replace with empty tags
+    vim.cmd('normal! c- [x]')
+
+    -- Move down one line and to the beginning
+    vim.cmd('normal! j0')
+end
+
+vim.keymap.set('n', '<leader>l', '<cmd>lua toggle_checkbox()<CR>', { noremap = true, silent = true })
