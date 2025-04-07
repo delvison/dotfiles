@@ -111,6 +111,7 @@
     # opensnitch-ui
     proxychains
     redshift
+    ripgrep
     sensible-utils
     udisks2 
     udiskie  # for automounting usb drives when plugged in

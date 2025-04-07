@@ -27,6 +27,8 @@
 
   home.file = {
     ".gitconfig".text = ''
+    [gcrypt]
+      require-explicit-force-push = false
     [column]
       ui = auto
     [branch]

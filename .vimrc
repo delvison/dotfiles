@@ -6,8 +6,8 @@ let g:polyglot_disabled = ['markdown']
     " for dev
     Plug 'jvirtanen/vim-hcl'          " for terrform
     Plug 'fatih/vim-go'               " for golang
-    Plug 'airblade/vim-gitgutter'     " git diffs on left
-    Plug 'w0rp/ale'                   " syntax linter
+    Plug 'airblade/vim-gitgutter'     " git diffs on left gutter
+    Plug 'dense-analysis/ale'         " syntax linter
     Plug 'sheerun/vim-polyglot'
     Plug 'Yggdroot/indentLine'
     Plug 'williamboman/mason.nvim'
@@ -19,6 +19,7 @@ let g:polyglot_disabled = ['markdown']
     " for markdown
     Plug 'godlygeek/tabular'  " used for formatting tables
     Plug 'preservim/vim-markdown'
+    Plug 'artempyanykh/marksman'  " for linking
 
     " QOL
     Plug 'mhinz/vim-startify'

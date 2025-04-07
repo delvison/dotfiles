@@ -38,8 +38,6 @@ require('lazy').setup({
   'tpope/vim-commentary',
   'tpope/vim-fugitive',
   'tpope/vim-surround',
-  'williamboman/mason-lspconfig.nvim',
-  'williamboman/mason.nvim',
   require 'plugins.neotree',
   require 'plugins.git-tools',
   require 'plugins.colortheme',
@@ -47,6 +45,8 @@ require('lazy').setup({
   require 'plugins.blink',
   require 'plugins.markdown_nvim',
   require 'plugins.oil',
+  require 'plugins.treesitter',
+  require 'plugins.mason',
   require 'plugins.telescope'
 })
 
