@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# view git history in fzf
+
+commit=$(git log --pretty=format:"%h %ad %s (%cn)" --date=short |\
+  fzf --delimiter=' ' -n 2.. --preview 'git show {1}' |\
+  awk '{print $1}')
+
+echo ${commit}
