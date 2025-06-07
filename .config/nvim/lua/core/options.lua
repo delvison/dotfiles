@@ -41,6 +41,6 @@ vim.o.termguicolors = true
 vim.o.textwidth = 80
 vim.o.updatetime = 100
 vim.o.wildmenu = true
-vim.o.wrap = false
+vim.o.wrap = true
 vim.o.writebackup = false
 vim.wo.number = true

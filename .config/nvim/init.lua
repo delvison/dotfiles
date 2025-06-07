@@ -34,6 +34,7 @@ require('lazy').setup({
   'jiangmiao/auto-pairs',
   'jvirtanen/vim-hcl',
   'mhinz/vim-startify',
+  -- 'neoclide/coc.nvim',
   'neovim/nvim-lspconfig',
   'tpope/vim-commentary',
   'tpope/vim-fugitive',
@@ -47,6 +48,8 @@ require('lazy').setup({
   require 'plugins.oil',
   require 'plugins.treesitter',
   require 'plugins.mason',
+  require 'plugins.floaterm',
+  require 'plugins.minifiles',
   require 'plugins.telescope'
 })
 

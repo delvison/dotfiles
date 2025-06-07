@@ -27,6 +27,7 @@
     ubuntu_font_family
 
     # blockchain
+    unstable.bitcoind-knots
     # electrum
     ledger_agent
     # ledger-live-desktop

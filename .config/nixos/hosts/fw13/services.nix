@@ -1,6 +1,10 @@
 { pkgs, config, lib,... }:
 
 {
+  imports = [
+      ../../modules/nixos/systemd/flatpak-update.nix
+  ];
+
   # for gnome-keyring to work properly with hyprland
   # https://discourse.nixos.org/t/login-keyring-did-not-get-unlocked-hyprland/40869/10
   security.pam.services.gdm.enableGnomeKeyring = true;
@@ -299,14 +303,6 @@
           Unit = "battery-alert.service";
         };
       };
-      "flatpak-update" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
-          Unit = "flatpak-update.service";
-        };
-      };
     };
     services = {
       mpd.environment = {
@@ -324,19 +320,6 @@
           User = "npc";
           ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/npc/FILES"; 
           ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart";
-        };
-        wantedBy = [ "multi-user.target" ];
-      };
-      flatpak-update = {
-        enable = true;
-        description = "update flatpaks";
-        unitConfig = {
-          Type = "simple";
-        };
-        serviceConfig = {
-          User = "root";
-          ExecStartPre = "${pkgs.bash}/bin/bash -c 'until ${pkgs.iputils.out}/bin/ping -c 1 ip.me; do sleep 10; done;'";
-          ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
         };
         wantedBy = [ "multi-user.target" ];
       };

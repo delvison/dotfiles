@@ -2,20 +2,49 @@
 
 set -e
 
-mkdir -p ~/VM
 vm_file="${HOME}/VM/debian-12-nocloud-amd64.qcow2"
+base_file="${HOME}/VM/BASE_debian-12-nocloud-amd64.qcow2"
 
-if [ ! -f "${vm_file}" ]; then
+nuke() {
+  cp "${base_file}" "${vm_file}"
+  echo "VM state reset back to ${base_file}"
+}
+
+update_base() {
+  cp "${vm_file}" "${base_file}"
+  echo "Snapshot taken to ${base_file}"
+}
+
+start_vm() {
+  mkdir -p ~/VM
+
+  if [ ! -f "${vm_file}" ]; then
+    download
+  fi
+  print -P -n "%F{green} ● loading ${vm_file} %F{reset}\n"
+
+  # default user=root password=""
+  qemu-system-x86_64 \
+    -enable-kvm \
+    -m 4096M \
+    -hda ${HOME}/VM/debian-12-nocloud-amd64.qcow2 \
+    -net nic,model=virtio \
+    -net user,hostfwd=tcp::5022-:22
+}
+
+download() {
   echo "downloading debian..."
   wget -P "${HOME}/VM" https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-nocloud-amd64.qcow2
-fi
+}
 
-print -P -n "%F{green} ● loading ${vm_file} %F{reset}\n"
-
-# default user=root password=""
-qemu-system-x86_64 \
-  -enable-kvm \
-  -m 4096M \
-  -hda ${HOME}/VM/debian-12-nocloud-amd64.qcow2 \
-  -net nic,model=virtio \
-  -net user,hostfwd=tcp::5022-:22
+case "$1" in
+ nuke)
+    nuke
+    ;;
+ snapshot)
+    update_base
+    ;;
+ *)
+    start_vm
+    ;;
+esac
