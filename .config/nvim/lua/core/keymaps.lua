@@ -72,6 +72,9 @@ vim.keymap.set('v', '>', '>gv', opts)
 -- Keep last yanked when pasting
 vim.keymap.set('v', 'p', '"_dP', opts)
 
+-- mark todo done
+vim.keymap.set('n', '<leader>x', ':norm 0f]hsx<CR>', opts)
+
 -- copy paste x11
 vim.api.nvim_set_keymap('v', '<C-c>', '"+y', opts)
 vim.api.nvim_set_keymap('n', '<C-b>', '"+p', opts)

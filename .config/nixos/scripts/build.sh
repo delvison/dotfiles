@@ -3,7 +3,7 @@ set -eu
 
 pushd ~/.config/nixos
 git --git-dir=$HOME/.dotfiles --work-tree=$HOME diff . | delta --side-by-side
-sudo NIXPKGS_ALLOW_INSECURE=1 nixos-rebuild switch --impure --flake ~/.config/nixos#$HOST
+sudo NIXPKGS_ALLOW_INSECURE=1 nixos-rebuild ${1} --impure --flake ~/.config/nixos#$HOST
 print -P -n "%F{green}● Nix config successfully built.%F{reset}\n"
 
 # Prompt for confirmation before committing changes

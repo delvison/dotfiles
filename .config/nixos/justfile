@@ -1,5 +1,8 @@
 build:
-  ./scripts/build.sh 
+  ./scripts/build.sh switch
+
+build-boot:
+  ./scripts/build.sh boot
 
 update:
   nix flake update
