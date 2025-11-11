@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  unstablePkgs,
   inputs,
   ...
 }:
@@ -43,7 +44,6 @@
   ];
 
   hardware = {
-    pulseaudio.enable = false;
     ledger.enable = true;
     bluetooth = {
       enable = true;
@@ -84,7 +84,7 @@
     plymouth.enable = true;
 
     # kernelParams = ["quiet"];
-    kernelParams = [ "mem_sleep_default=deep" ];
+    kernelParams = [ "mem_sleep_default=deep" "amd_iommu=on" ];
 
     initrd.luks.devices."luks-f2147384-d376-46e6-af7d-7549d4d3773b".device = "/dev/disk/by-uuid/f2147384-d376-46e6-af7d-7549d4d3773b";
   };

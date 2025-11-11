@@ -21,11 +21,15 @@
         npc = {
           isNormalUser = true;
           description = "npc";
-          extraGroups = [ 
+          extraGroups = [
+	    "audio"
             "docker"
             "input"
             "keyd"
+            "kvm"
+            "libvirt"
             "libvirtd"
+            "qemu-libvirtd"
             "networkmanager" 
             "plugdev"
             "storage"
@@ -66,7 +70,6 @@
             swww
             xss-lock  # i3wm
 
-
             # utils
             acpi
             atuin
@@ -89,7 +92,7 @@
             htop
             hyprshot
             imagemagick
-            kwallet-pam
+            kdePackages.kwallet-pam
             # libsForQt5.kdeconnect-kde
             libsForQt5.krdc
             libsForQt5.qt5ct
@@ -103,7 +106,8 @@
             rclone
             restic
             socat
-            syncthing-tray
+            # TODO fix syncthing-tray for 25.05
+            # syncthing-tray
             tailscale
             tmux
             torsocks

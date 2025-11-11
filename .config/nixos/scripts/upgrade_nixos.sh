@@ -17,6 +17,7 @@ If things go wrong you can reboot, select the previous generation, use nix-chann
 
 if [ $# -eq 0 ]; then
     echo "Error: Please provide a version number as an argument."
+    echo "See https://nixos.org/manual/nixos/stable/release-notes"
     exit 1
 fi
 

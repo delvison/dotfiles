@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Get the list of available SSIDs
+SSIDS=$(nmcli -t -f ssid dev wifi | sort | uniq)
+
+# Use rofi to display the SSIDs
+SELECTED_SSID=$(echo "$SSIDS" | rofi -dmenu -p "Select Wi-Fi SSID:")
+
+# Connect to the selected SSID
+if [ -n "$SELECTED_SSID" ]; then
+    nmcli d wifi connect "$SELECTED_SSID"
+else
+    echo "No SSID selected."
+fi

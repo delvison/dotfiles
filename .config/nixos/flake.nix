@@ -4,20 +4,16 @@
   inputs = {
     darkmatter.url = "gitlab:VandalByte/darkmatter-grub-theme";
     hyprland.url = "github:hyprwm/Hyprland";
-    hypridle.url = "github:hyprwm/hypridle/?ref=v0.1.2";
-    hyprlock.url = "github:hyprwm/hyprlock/?ref=v0.3.0";
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.3.0";
+    hypridle.url = "github:hyprwm/hypridle/?ref=v0.1.7";  # https://github.com/hyprwm/hypridle
+    hyprlock.url = "github:hyprwm/hyprlock/?ref=v0.9.0";  # https://github.com/hyprwm/hyprlock/
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.6.0";  # https://github.com/gmodena/nix-flatpak
     musnix.url = "github:musnix/musnix";
 
-    nixpkgs = {
-      # url = "github:nixos/nixpkgs/nixos-unstable";
-      url = "github:nixos/nixpkgs/nixos-24.11";
-    };
-
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -34,7 +30,14 @@
   }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config = { allowUnfree = true; };
+      };
+      unstablePkgs = import nixpkgs-unstable {
+        inherit system;
+        config = { allowUnfree = true; };
+      };
     in
   {
     nixosConfigurations = {

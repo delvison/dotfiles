@@ -21,7 +21,7 @@
         };
         serviceConfig = {
           User = "root";
-          ExecStartPre = "${pkgs.bash}/bin/bash -c 'until ${pkgs.iputils.out}/bin/ping -c 1 ip.me; do sleep 10; done;'";
+          ExecStartPre = "${pkgs.bash}/bin/bash -c 'until ${pkgs.iputils.out}/bin/ping -c 1 9.9.9.9; do sleep 10; done;'";
           ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
 	  # ExecStartPost = "${pkgs.libnotify}/bin/notify-send 'Flatpak Update completed successfully'";
         };

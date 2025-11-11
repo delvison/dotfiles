@@ -44,6 +44,7 @@ require('lazy').setup({
   require 'plugins.colortheme',
   require 'plugins.lualine',
   require 'plugins.blink',
+  require 'plugins.live-preview',
   require 'plugins.markdown_nvim',
   require 'plugins.oil',
   require 'plugins.treesitter',

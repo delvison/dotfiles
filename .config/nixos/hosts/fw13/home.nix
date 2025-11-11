@@ -11,7 +11,7 @@
   ];
 
   home = {
-    stateVersion = "23.11";
+    stateVersion = "25.05";
     username = "npc";
     homeDirectory = "/home/npc";
   };

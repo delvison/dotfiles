@@ -11,6 +11,7 @@
   security.pam.services.gdm-password.enableGnomeKeyring = true;
 
   services = {
+    pulseaudio.enable = false;
     atuin.enable = true;
     blueman.enable = true;
     devmon.enable = true;
@@ -51,10 +52,12 @@
         "md.obsidian.Obsidian"
         # "org.DolphinEmu.dolphin-emu"  # gamecube emulator
         # "org.fkoehler.KTailctl"
-        "org.kde.neochat"
+        # "org.kde.neochat"
         "org.keepassxc.KeePassXC"
         # "org.ppsspp.PPSSPP"  # psp emulator
         "org.signal.Signal"
+        # "re.sonny.Junction"
+        "com.mastermindzh.tidal-hifi"
       ];
 
       overrides = {
@@ -310,19 +313,19 @@
         XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.npc.uid}"; 
       };
 
-      git-annex-assistant = {
-        enable = false;
-        description = "git annex assistant";
-        unitConfig = {
-          Type = "simple";
-        };
-        serviceConfig = {
-          User = "npc";
-          ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/npc/FILES"; 
-          ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart";
-        };
-        wantedBy = [ "multi-user.target" ];
-      };
+      # git-annex-assistant = {
+      #   enable = false;
+      #   description = "git annex assistant";
+      #   unitConfig = {
+      #     Type = "simple";
+      #   };
+      #   serviceConfig = {
+      #     User = "npc";
+      #     ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/npc/FILES"; 
+      #     ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart";
+      #   };
+      #   wantedBy = [ "multi-user.target" ];
+      # };
       "battery-alert" = {
         enable = false;
         description = "battery alert notifications";

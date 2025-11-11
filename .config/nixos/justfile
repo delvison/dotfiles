@@ -1,11 +1,19 @@
+# build and switch
 build:
   ./scripts/build.sh switch
 
+# build for next boot
 build-boot:
   ./scripts/build.sh boot
 
+# build dry-run
+dry-run:
+  ./scripts/build.sh dry-run
+
+# update flake
 update:
   nix flake update
 
+# upgrade nix version: Ex: just upgrade-nixos 25.05
 upgrade-nixos version:
   ./scripts/upgrade_nixos.sh {{version}}
