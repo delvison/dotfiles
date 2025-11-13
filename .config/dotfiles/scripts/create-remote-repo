@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Creates a git bare repo on remote server
+
+repo="$1"
+
+ssh server-git create-repo "${repo}"
+git remote add server-git "server-git:repositories/${repo}"
