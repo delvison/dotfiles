@@ -47,11 +47,13 @@ require('lazy').setup({
   require 'plugins.live-preview',
   require 'plugins.markdown_nvim',
   require 'plugins.oil',
+  require 'plugins.oil-git-status',
   require 'plugins.treesitter',
   require 'plugins.mason',
   require 'plugins.floaterm',
   require 'plugins.minifiles',
-  require 'plugins.telescope'
+  require 'plugins.telescope',
+  require 'plugins.lazygit'
 })
 
 -- Custom highlight color
