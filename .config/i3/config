@@ -61,7 +61,7 @@ bindsym $mod+v exec --no-startup-id i3-msg 'split toggle'
 bindsym $mod+f fullscreen
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+# bindsym $mod+s layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+y layout toggle split
 
@@ -116,11 +116,11 @@ assign [class=".quodlibet-wrapped"] $workspace10
 assign [class="tidal-hifi"] $workspace10
 assign [class="spotify"] $workspace10
 
-set $bg-color 	         #2f343f
+set $bg-color 	         #3F4F27
 set $inactive-bg-color   #2f343f
-set $text-color          #a7c080
+set $text-color          C0B180
 set $inactive-text-color #676E7D
-set $urgent-bg-color     #ff9756
+set $urgent-bg-color     #a7c080
 
 # window colors
 #                       border              background         text                 indicator

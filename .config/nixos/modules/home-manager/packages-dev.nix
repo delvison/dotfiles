@@ -4,24 +4,28 @@
   unstablePkgs,
   inputs,
   ...
-}:
-  let
-    packages = with pkgs; [
+}: let
+  unstablePackages = with unstablePkgs; [
+    vscode
+  ];
+in {
+  home.packages = with pkgs; ([
       ansible
       bats
-      delta  # pager for git
+      delta # pager for git
       distrobox
       gh
       git
       git-annex
       git-remote-gcrypt
-      glow  # markdown preview
+      glow # markdown preview
       gnumake
       go
       gopls
       hadolint
       jq
       just
+      lazygit
       neovim
       nodejs
       openssl
@@ -29,14 +33,9 @@
       python3
       python311Packages.pip
       sops
-      tgpt  # chatgpt cli
+      tgpt # chatgpt cli
       tree
       yq
-    ];
-    unstablePackages = with unstablePkgs; [
-      vscode
-    ];
-    home.packages = packages ++ unstablePackages;
-  in
-{
+    ]
+    ++ unstablePackages);
 }

@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs.ssh.startAgent = false;
 
   services.pcscd.enable = true;
@@ -10,8 +13,9 @@
     gnupg
     libykclient
     libyubikey
-    pcsctools  # smartcard util
-    pcsclite   # smartcard util
+    # pcsctools # 25.05 smartcard util
+    pcsc-tools # smartcard util
+    pcsclite # smartcard util
     yubico-pam
     yubico-piv-tool
     yubikey-agent

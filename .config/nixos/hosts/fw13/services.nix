@@ -1,8 +1,11 @@
-{ pkgs, config, lib,... }:
-
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   imports = [
-      ../../modules/nixos/systemd/flatpak-update.nix
+    ../../modules/nixos/systemd/flatpak-update.nix
   ];
 
   # for gnome-keyring to work properly with hyprland
@@ -40,13 +43,13 @@
         # "com.belmoussaoui.Decoder"  # QR scanner
         "com.brave.Browser"
         "com.github.iwalton3.jellyfin-media-player"
-        "com.ktechpit.whatsie"  # whatsapp
+        "com.ktechpit.whatsie" # whatsapp
         "com.logseq.Logseq"
         # "com.nextcloud.desktopclient.nextcloud"
         "com.obsproject.Studio"
-        "in.srev.guiscrcpy"  # android screen mirroring
+        "in.srev.guiscrcpy" # android screen mirroring
         "io.freetubeapp.FreeTube"
-        "io.github.hrkfdn.ncspot"  # spotify
+        "io.github.hrkfdn.ncspot" # spotify
         # "io.github.martinrotter.rssguard"
         # "io.github.sigmasd.stimulator"  # keep desktop awake
         "md.obsidian.Obsidian"
@@ -64,7 +67,7 @@
         global = {
           # Force Wayland by default
           Context.sockets = [
-            "wayland" 
+            "wayland"
             "x11"
             "!fallback-x11"
             "gpg-agent" # Expose GPG agent
@@ -134,7 +137,7 @@
       extraConfig.pipewire.adjust-sample-rate = {
         "context.properties" = {
           "default.clock.rate" = 192000;
-          "defautlt.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
+          "defautlt.allowed-rates" = [44100 48000 88200 96000 176400 192000];
           #"default.clock.quantum" = 32;
           #"default.clock.min-quantum" = 32;
           #"default.clock.max-quantum" = 32;
@@ -188,9 +191,9 @@
       # Enable the X11 windowing system.
       enable = true;
       # ref: https://nixos.wiki/wiki/AMD_GPU
-      videoDrivers = [ "amdgpu" ];
+      videoDrivers = ["amdgpu"];
       # Configure keymap in X11
-      xkb= {
+      xkb = {
         variant = "";
         layout = "us";
       };
@@ -209,12 +212,15 @@
       };
       displayManager = {
         gdm.enable = false;
+        lightdm.enable = true;
+        lightdm.greeters.slick.enable = true;
       };
 
       # ref: https://nixos.wiki/wiki/I3
       windowManager.i3 = {
         enable = true;
-        package = pkgs.i3-gaps;
+        # package = pkgs.i3-gaps; # 25.05
+        package = pkgs.i3;
         # config = {
         #   modifier = "Mod4";
         #   gaps = {
@@ -229,10 +235,10 @@
           betterlockscreen
           i3blocks #if you are planning on using i3blocks over i3status
           xfce.xfce4-power-manager
-          nitrogen  # wallpapers
+          nitrogen # wallpapers
           libinput
-          lxde.lxsession  # for lxpolkit
-       ];
+          lxsession # for lxpolkit
+        ];
       };
     };
 
@@ -271,7 +277,7 @@
           action = "allow";
           duration = "always";
           operator = {
-            type ="simple";
+            type = "simple";
             sensitive = false;
             operand = "process.path";
             data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-timesyncd";
@@ -283,7 +289,7 @@
           action = "allow";
           duration = "always";
           operator = {
-            type ="simple";
+            type = "simple";
             sensitive = false;
             operand = "process.path";
             data = "${lib.getBin pkgs.systemd}/lib/systemd/systemd-resolved";
@@ -299,7 +305,7 @@
     '';
     timers = {
       "battery-alert" = {
-        wantedBy = [ "timers.target" ];
+        wantedBy = ["timers.target"];
         timerConfig = {
           OnBootSec = "5m";
           OnUnitActiveSec = "5m";
@@ -310,7 +316,7 @@
     services = {
       mpd.environment = {
         # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
-        XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.npc.uid}"; 
+        XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.npc.uid}";
       };
 
       # git-annex-assistant = {
@@ -321,7 +327,7 @@
       #   };
       #   serviceConfig = {
       #     User = "npc";
-      #     ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/npc/FILES"; 
+      #     ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/npc/FILES";
       #     ExecStart = "${pkgs.git-annex}/bin/git-annex assistant --autostart";
       #   };
       #   wantedBy = [ "multi-user.target" ];
@@ -340,26 +346,26 @@
       };
       polkit-gnome-authentication-agent-1 = {
         description = "polkit-gnome-authentication-agent-1";
-        wantedBy = [ "graphical-session.target" ];
-        wants = [ "graphical-session.target" ];
-        after = [ "graphical-session.target" ];
+        wantedBy = ["graphical-session.target"];
+        wants = ["graphical-session.target"];
+        after = ["graphical-session.target"];
         serviceConfig = {
-            Type = "simple";
-            ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
-          };
+          Type = "simple";
+          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
       };
     };
   };
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     konsole
   ];
-  environment.systemPackages = (with pkgs.gnomeExtensions; [
+  environment.systemPackages = with pkgs.gnomeExtensions; [
     blur-my-shell
     pop-shell
-  ]);
+  ];
 
   environment.etc = {
     "xdg/gtk-2.0/gtkrc".text = "gtk-error-bell=0";

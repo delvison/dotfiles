@@ -4,28 +4,24 @@
   unstablePkgs,
   inputs,
   ...
-}:
-{
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./fw13-fingerprint-reader.nix
-      ./fw13-palm-rejection.nix
-      ./nix.nix
-      ./networking.nix
-      ./services.nix
-      ../../modules/nixos/common.nix
-      ../../modules/nixos/keyboard.nix
-      ../../modules/nixos/yubikey.nix
-      ../../modules/nixos/users.nix
-      ../../modules/nixos/firejail.nix
-      # ../../modules/nixos/tlp.nix
-      # ./fw13-amd-power.nix
-      # ../../modules/nixos/ledger.nix
-      # <nixos-hardware/framework/13-inch/7040-amd>
-      inputs.home-manager.nixosModules.default
-    ];
-
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    ./fw13-fingerprint-reader.nix
+    ./fw13-palm-rejection.nix
+    ./nix.nix
+    ./networking.nix
+    ./services.nix
+    ../../modules/nixos/common.nix
+    ../../modules/nixos/keyboard.nix
+    ../../modules/nixos/yubikey.nix
+    ../../modules/nixos/users.nix
+    ../../modules/nixos/firejail.nix
+    # ../../modules/nixos/tlp.nix
+    # ./fw13-amd-power.nix
+    # ../../modules/nixos/ledger.nix
+    # <nixos-hardware/framework/13-inch/7040-amd>
+  ];
 
   # Allow unfree packages
   nixpkgs.config = {
@@ -35,12 +31,13 @@
     ];
   };
 
-  nixpkgs.overlays = [ (final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
-      config.allowUnfree = true;
-    };
-    }) 
+  nixpkgs.overlays = [
+    (final: _prev: {
+      unstable = import inputs.nixpkgs-unstable {
+        system = final.system;
+        config.allowUnfree = true;
+      };
+    })
   ];
 
   hardware = {
@@ -50,8 +47,8 @@
       powerOnBoot = false;
       settings = {
         General = {
-		      Experimental = true;
-	      };
+          Experimental = true;
+        };
       };
     };
   };
@@ -84,7 +81,7 @@
     plymouth.enable = true;
 
     # kernelParams = ["quiet"];
-    kernelParams = [ "mem_sleep_default=deep" "amd_iommu=on" ];
+    kernelParams = ["mem_sleep_default=deep" "amd_iommu=on"];
 
     initrd.luks.devices."luks-f2147384-d376-46e6-af7d-7549d4d3773b".device = "/dev/disk/by-uuid/f2147384-d376-46e6-af7d-7549d4d3773b";
   };
@@ -112,33 +109,28 @@
     libvirtd = {
       enable = true;
       qemu = {
-        vhostUserPackages = [ pkgs.virtiofsd ];
+        vhostUserPackages = [pkgs.virtiofsd];
         package = pkgs.qemu_kvm;
         runAsRoot = true;
         swtpm.enable = true;
-        ovmf = {
-          enable = true;
-          packages = [(pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd];
-        };
+        # ovmf = {
+        #   enable = true;
+        #   packages = [
+        #     (pkgs.OVMF.override {
+        #       secureBoot = true;
+        #       tpmSupport = true;
+        #     }).fd
+        #   ];
+        # };
       };
     };
 
-    # enable docker
+    # enable docker - https://nixos.wiki/wiki/Docker
     docker.enable = true;
 
     # enable waydroid for android emulation
     # https://nixos.wiki/wiki/WayDroid
     #waydroid.enable = true;
-  };
-
-  home-manager = {
-	  extraSpecialArgs = { inherit inputs; };
-	  users = {
-		  "npc" = import ./home.nix;
-	  };
   };
 
   security = {
@@ -192,14 +184,9 @@
     style = "adwaita-dark";
   };
 
-  # https://github.com/musnix/musnix?tab=readme-ov-file#base-options
-  musnix = {
-    enable = false;
-  };
-
   # for i3wm
   # ref: https://nixos.wiki/wiki/I3
-  environment.pathsToLink = [ "/libexec" ];
+  environment.pathsToLink = ["/libexec"];
 
   # https://discourse.nixos.org/t/login-keyring-did-not-get-unlocked-hyprland/40869/10
   # environment.variables.XDG_RUNTIME_DIR = "/run/user/$UID"; # set the runtime directory

@@ -1,8 +1,11 @@
-{ pkgs ? import <nixpkgs> {} }:
-
+{pkgs ? import <nixpkgs> {}}:
 pkgs.mkShell {
- buildInputs = with pkgs; [
-    just
+  buildInputs = with pkgs; [
+    alejandra
     delta
- ];
+    git
+    home-manager
+    just
+    neovim
+  ];
 }

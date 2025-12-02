@@ -1,11 +1,9 @@
 # nix.nix
 # block access to the NixOS cache CDN with an external firewall rule by blocking the fastly IP range 151.101.0.0/16.
-{ ... }:
-
-{
+{...}: {
   nix = {
     settings = {
-      allowed-users = [ "@wheel" ];
+      allowed-users = ["@wheel"];
       experimental-features = [
         "nix-command"
         "flakes"

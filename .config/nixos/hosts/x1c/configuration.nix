@@ -1,16 +1,17 @@
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ 
-      /etc/nixos/hardware-configuration.nix
-      /etc/nixos/keyboard.nix
-      /etc/nixos/ledger.nix
-      # /etc/nixos/network-drives.nix
-      /etc/nixos/xfce.nix
-      /etc/nixos/yubikey.nix
-      /etc/nixos/users.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+    /etc/nixos/keyboard.nix
+    /etc/nixos/ledger.nix
+    # /etc/nixos/network-drives.nix
+    /etc/nixos/xfce.nix
+    /etc/nixos/yubikey.nix
+    /etc/nixos/users.nix
+  ];
 
   # Bootloader.
   boot.kernelParams = ["quiet"];
@@ -31,26 +32,32 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.nameservers = [ 
+  networking.nameservers = [
     "100.100.100.100" # https://tailscale.com/kb/1063/install-nixos/#using-magicdns
-    "192.168.50.3" 
-    "192.168.1.224" 
+    "192.168.50.3"
+    "192.168.1.224"
     "192.168.1.1"
-    "9.9.9.9" 
+    "9.9.9.9"
   ];
-  networking.search = [ "local.lan" ];
+  networking.search = ["local.lan"];
 
-  networking.firewall = { 
+  networking.firewall = {
     enable = true;
-    allowedTCPPortRanges = [ 
-      { from = 1714; to = 1764; } # KDE Connect
-    ];  
-    allowedUDPPortRanges = [ 
-      { from = 1714; to = 1764; } # KDE Connect
-    ];  
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
   };
 
-# Automatic Garbage Collection
+  # Automatic Garbage Collection
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -132,10 +139,11 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; 
-    let myPkgs = import (builtins.fetchTarball {
+  environment.systemPackages = with pkgs; let
+    myPkgs = import (builtins.fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/9957cd48326fe8dbd52fdc50dd2502307f188b0d.tar.gz";
-    }) {};  in [
+    }) {};
+  in [
     myPkgs.signal-desktop
     # pass
     passExtensions.pass-audit
@@ -144,7 +152,7 @@
     passExtensions.pass-otp
     passExtensions.pass-tomb
     passExtensions.pass-update
-    (pass.withExtensions (ext: with ext; [ pass-audit pass-otp pass-import pass-genphrase pass-update pass-tomb]))
+    (pass.withExtensions (ext: with ext; [pass-audit pass-otp pass-import pass-genphrase pass-update pass-tomb]))
     pass
 
     # utils
@@ -205,10 +213,10 @@
 
     # access syncthing via http://localhost:8384/
     syncthing = {
-        enable = true;
-        user = "npc";
-        dataDir = "/home/npc/Syncthing";
-        configDir = "/home/npc/.config/syncthing";
+      enable = true;
+      user = "npc";
+      dataDir = "/home/npc/Syncthing";
+      configDir = "/home/npc/.config/syncthing";
     };
 
     # enable tor

@@ -1,10 +1,13 @@
-{ pkgs, config, lib,... }:
-
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   systemd = {
     timers = {
       "flatpak-update" = {
-        wantedBy = [ "timers.target" ];
+        wantedBy = ["timers.target"];
         timerConfig = {
           OnCalendar = "daily";
           Persistent = true;
@@ -23,9 +26,9 @@
           User = "root";
           ExecStartPre = "${pkgs.bash}/bin/bash -c 'until ${pkgs.iputils.out}/bin/ping -c 1 9.9.9.9; do sleep 10; done;'";
           ExecStart = "${pkgs.flatpak}/bin/flatpak update -y";
-	  # ExecStartPost = "${pkgs.libnotify}/bin/notify-send 'Flatpak Update completed successfully'";
+          ExecStartPost = "${pkgs.libnotify}/bin/notify-send 'Flatpak Update completed successfully'";
         };
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = ["multi-user.target"];
       };
     };
   };

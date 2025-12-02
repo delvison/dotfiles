@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   options = {};
   config = {
     users = {
@@ -10,8 +13,8 @@
         user = {
           isNormalUser = true;
           description = "user";
-          extraGroups = [ 
-            "networkmanager" 
+          extraGroups = [
+            "networkmanager"
           ];
           # packages = with pkgs; [
           #   firefox-esr
@@ -22,7 +25,7 @@
           isNormalUser = true;
           description = "npc";
           extraGroups = [
-	    "audio"
+            "audio"
             "docker"
             "input"
             "keyd"
@@ -30,7 +33,7 @@
             "libvirt"
             "libvirtd"
             "qemu-libvirtd"
-            "networkmanager" 
+            "networkmanager"
             "plugdev"
             "storage"
             "wheel"
@@ -43,20 +46,20 @@
             passExtensions.pass-otp
             passExtensions.pass-tomb
             passExtensions.pass-update
-            (pass.withExtensions (ext: with ext; [ pass-audit pass-otp pass-import pass-genphrase pass-update pass-tomb]))
+            (pass.withExtensions (ext: with ext; [pass-audit pass-otp pass-import pass-genphrase pass-update pass-tomb]))
             pass
 
             # desktop tools
-            autotiling  # i3wm
-            libinput-gestures  # touchpad gestures - i3wm
+            autotiling # i3wm
+            libinput-gestures # touchpad gestures - i3wm
             libnotify
-            lxappearance  # i3wm
+            lxappearance # i3wm
             networkmanagerapplet
-            pasystray  # volume in systray -- i3wm
+            pasystray # volume in systray -- i3wm
             pavucontrol
-            picom  # compositor -- i3wm
+            picom # compositor -- i3wm
             pinentry-rofi
-            polybar  # i3wm
+            polybar # i3wm
             rofi
             rofi-emoji
             rofi-pass
@@ -66,9 +69,9 @@
             slurp
             swayidle
             swaylock-effects
-            swaynotificationcenter  # notifications in hyperland
+            swaynotificationcenter # notifications in hyperland
             swww
-            xss-lock  # i3wm
+            xss-lock # i3wm
 
             # utils
             acpi
@@ -80,7 +83,8 @@
             brightnessctl
             cliphist
             curl
-            dunst  # notifications -- i3wm
+            delta # diff
+            dunst # notifications -- i3wm
             flatpak
             fprintd
             fusuma
@@ -94,10 +98,10 @@
             imagemagick
             kdePackages.kwallet-pam
             # libsForQt5.kdeconnect-kde
-            libsForQt5.krdc
+            # libsForQt5.krdc
             libsForQt5.qt5ct
             localsend
-            plasma5Packages.plasma-thunderbolt
+            # plasma5Packages.plasma-thunderbolt
             # power-profiles-daemon
             # protonmail-bridge
             # protonvpn-gui
@@ -130,7 +134,7 @@
             openssh
             openvpn
             sshfs
-            tor-browser-bundle-bin
+            tor-browser
             tomb
             mullvad-browser
           ];

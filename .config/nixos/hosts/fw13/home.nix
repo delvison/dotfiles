@@ -6,8 +6,8 @@
   ...
 }: {
   imports = [
-      ../../modules/home-manager/packages.nix
-      ../../modules/home-manager/packages-dev.nix
+    ../../modules/home-manager/packages.nix
+    ../../modules/home-manager/packages-dev.nix
   ];
 
   home = {
@@ -16,65 +16,49 @@
     homeDirectory = "/home/npc";
   };
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    config.permittedInsecurePackages = [
-      "openssl-1.1.1w"
-      "electron-24.8.6"
-      "electron-25.9.0"
-    ];
-  };
-
   home.file = {
     ".gitconfig".text = ''
-    [gcrypt]
-      require-explicit-force-push = false
-    [column]
-      ui = auto
-    [branch]
-      sort = -committerdate
-    [tag]
-      sort = version:refname
-    [init]
-      defaultBranch = main
-    [diff]
-      algorithm = histogram
-      colorMoved = plain
-      mnemonicPrefix = true
-      renames = true
-    [push]
-      default = simple
-      autoSetupRemote = true
-      followTags = true
-    [fetch]
-      prune = true
-      pruneTags = true
-      all = true
-    [help]
-      autocorrect = prompt
-    [commit]
-      verbose = true
-    [rerere]
-      enabled = true
-      autoupdate = true
-    [core]
-      excludesfile = ~/.gitignore
-    [rebase]
-      autoSquash = true
-      autoStash = true
-      updateRefs = true
-    [merge]
-      conflictstyle = zdiff3
-    [credential "https://gitea.donttrackme.xyz"]
-      helper = "!f() { test \"$1\" = get && echo \"username=$(pass homelab/server/gitea/personal | grep login | awk '{print $2}')\npassword=$(pass homelab/server/gitea/personal | grep token | awk '{print $2}')\"; }; f"
+      [gcrypt]
+        require-explicit-force-push = false
+      [column]
+        ui = auto
+      [branch]
+        sort = -committerdate
+      [tag]
+        sort = version:refname
+      [init]
+        defaultBranch = main
+      [diff]
+        algorithm = histogram
+        colorMoved = plain
+        mnemonicPrefix = true
+        renames = true
+      [push]
+        default = simple
+        autoSetupRemote = true
+        followTags = true
+      [fetch]
+        prune = true
+        pruneTags = true
+        all = true
+      [help]
+        autocorrect = prompt
+      [commit]
+        verbose = true
+      [rerere]
+        enabled = true
+        autoupdate = true
+      [core]
+        excludesfile = ~/.gitignore
+      [rebase]
+        autoSquash = true
+        autoStash = true
+        updateRefs = true
+      [merge]
+        conflictstyle = zdiff3
 
-    [credential "https://github.com"]
-      helper = "!f() { test \"$1\" = get && echo \"username=$(pass github.com/personal | grep login | awk '{print $2}')\npassword=$(pass github.com/personal | grep api-key | awk '{print $2}')\"; }; f"
-    '';
-
-    # global gitignore
-    ".gitignore".text = ''
-      .env
+      [credential "https://github.com"]
+        helper = "!f() { test \"$1\" = get && echo \"username=$(pass github.com/personal | grep login | awk '{print $2}')\npassword=$(pass github.com/personal | grep api-key | awk '{print $2}')\"; }; f"
     '';
 
     # directories for git-annex assistant to monitor
@@ -115,7 +99,7 @@
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     # SDL_VIDEODRIVER = "wayland";
     TERMINAL = "kitty";
-    WLR_NO_HARDWARE_CURSORS = "1"; # if no cursor,uncomment this line  
+    WLR_NO_HARDWARE_CURSORS = "1"; # if no cursor,uncomment this line
     XDG_BIN_HOME = "\${HOME}/.local/bin";
     XDG_CACHE_HOME = "\${HOME}/.cache";
     XDG_CONFIG_HOME = "\${HOME}/.config";
@@ -132,8 +116,6 @@
       uris = ["qemu:///system"];
     };
   };
-
-  fonts.fontconfig.enable = true;
 
   home.pointerCursor = {
     gtk.enable = true;

@@ -645,3 +645,6 @@ set classify+=' ::*.log::'
 set classify+=' ::*.doc,,*.docx,,*.adoc::'
 set classify+=' ::*.xls,,*.xlsmx::'
 set classify+=' ::*.pptx,,*.ppt::'
+
+" copy files to the opposite pane (using rsync)
+nmap ry :!rsync -a %f %D<cr>

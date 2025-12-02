@@ -4,29 +4,28 @@
   unstablePkgs,
   inputs,
   ...
-}:
-  let
-    packages = with pkgs; [
-      # fonts
-      nerd-fonts
-      nerd-fonts-fira-mono
-      nerd-fonts-ubuntu
-      nerd-fonts-jetbrains-mono
-      nerd-fonts-fira-code
+}: let
+  unstablePackages = with unstablePkgs; [
+    sparrow
+    simplex-chat-desktop
+    hyprlock
+  ];
+in {
+  home.packages = with pkgs; ([
       cascadia-code
       fira
       fira-code
       fira-mono
-      iosevka
+      # iosevka
       jetbrains-mono
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      ubuntu_font_family
+      # noto-fonts
+      # noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+      ubuntu-classic
 
       # blockchain
       # electrum
-      ledger_agent
+      # ledger-agent  # broken in 25.11
       # ledger-live-desktop
       ledger-udev-rules
       # monero-cli
@@ -40,28 +39,28 @@
       # logseq
       mupdf
       pandoc
-      tectonic  # pdf engine for pandoc
+      tectonic # pdf engine for pandoc
       nextcloud-client
       zathura
 
       # media
       calibre
-      catt  # chromecast
-      digikam  # photos
-      feh  # image viewer
+      catt # chromecast
+      digikam # photos
+      feh # image viewer
       kdePackages.kdenlive
-      mpc-cli
+      mpc
       mpv
       # ncmpcpp
-      nicotine-plus  # music
-      picard  # music metadata
+      nicotine-plus # music
+      picard # music metadata
       playerctl # media controls
-      rhythmbox  # music
-      sonixd  # subsonic music client
-      quodlibet  # music
+      rhythmbox # music
+      sonixd # subsonic music client
+      quodlibet # music
       ueberzug # allows images on terminal
       # vlc
-      yt-dlp  # youtube downloader
+      yt-dlp # youtube downloader
 
       # communication
       # cinny-desktop  # matrix client
@@ -100,29 +99,24 @@
       bashmount
       dig
       gvfs
-      seahorse  # keyring
+      seahorse # keyring
       magic-wormhole # fileshare
       lsof
-      lua51Packages.luarocks  # for nvim
+      lua51Packages.luarocks # for nvim
       # opensnitch
       # opensnitch-ui
       proxychains
       redshift
       ripgrep
       sensible-utils
-      udisks2 
-      udiskie  # for automounting usb drives when plugged in
-      wine64
-      winetricks
+      udisks2
+      udiskie # for automounting usb drives when plugged in
+      # wine64
+      # wineWowPackages.full
+      # winetricks
+      wireguard-tools
       # xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
-    ];
-    unstablePackages = with unstablePkgs; [
-	sparrow
-	simplex-chat-desktop
-	hyprlock
-    ];
-    home.packages = packages ++ unstablePackages;
-  in
-{
+    ]
+    ++ unstablePackages);
 }

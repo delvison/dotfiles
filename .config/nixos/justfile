@@ -17,3 +17,7 @@ update:
 # upgrade nix version: Ex: just upgrade-nixos 25.05
 upgrade-nixos version:
   ./scripts/upgrade_nixos.sh {{version}}
+
+# Run alejandra to format nix files
+format:
+  nix-shell -p alejandra --run "alejandra ."

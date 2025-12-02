@@ -1,8 +1,11 @@
-{ ... }:
-
-{
+{pkgs, ...}: {
   networking = {
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      plugins = with pkgs; [
+        networkmanager-openvpn
+      ];
+    };
     hostName = "fw13";
     nameservers = [
       "192.168.50.3"
@@ -17,10 +20,10 @@
     # };
     firewall = {
       enable = true;
-      trustedInterfaces = [ "tailscale0" ];
+      trustedInterfaces = ["tailscale0"];
       allowedTCPPorts = [
         22000 # syncthing
-        443   # https
+        443 # https
         53317 # localsend
       ];
       allowedUDPPorts = [
@@ -29,10 +32,16 @@
         53317 # localsend
       ];
       allowedTCPPortRanges = [
-        { from = 1714; to = 1764; } # KDE Connect
+        {
+          from = 1714;
+          to = 1764;
+        } # KDE Connect
       ];
       allowedUDPPortRanges = [
-        { from = 1714; to = 1764; } # KDE Connect
+        {
+          from = 1714;
+          to = 1764;
+        } # KDE Connect
       ];
     };
   };
