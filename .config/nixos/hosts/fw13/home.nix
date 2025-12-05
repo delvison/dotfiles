@@ -14,6 +14,7 @@
     stateVersion = "25.05";
     username = "npc";
     homeDirectory = "/home/npc";
+    sessionPath = ["$HOME/.local/bin"];
   };
 
   home.file = {
@@ -80,6 +81,16 @@
     #   [preferred]
     #   default=hyprland;gtk
     # '';
+
+    # https://github.com/netbrain/zwift/discussions/38
+    "zwift.sh" = {
+      source = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/netbrain/zwift/master/zwift.sh";
+        hash = "sha256-Xh3mOwOOWeE1QBHz1mN14crOvetYxXZBCsix1Hd0Gdk=";
+      };
+      target = ".local/bin/zwift";
+      executable = true;
+    };
   };
 
   home.sessionVariables = {

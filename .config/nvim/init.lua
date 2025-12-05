@@ -35,7 +35,6 @@ require('lazy').setup({
   'jvirtanen/vim-hcl',
   'mhinz/vim-startify',
   -- 'neoclide/coc.nvim',
-  'neovim/nvim-lspconfig',
   'tpope/vim-commentary',
   'tpope/vim-fugitive',
   'tpope/vim-surround',
@@ -53,7 +52,9 @@ require('lazy').setup({
   require 'plugins.floaterm',
   require 'plugins.minifiles',
   require 'plugins.telescope',
-  require 'plugins.lazygit'
+  require 'plugins.lazygit',
+  require 'plugins.lsp.lsp'
+  -- require 'plugins.lsp'
 })
 
 -- Custom highlight color
