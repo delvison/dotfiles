@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-# aplay ~/.config/hypr/assets/pop2.wav
-if [ -f "/tmp/.airplanemode" ]; then
-  nmcli r all on
-  rm -f /tmp/.airplanemode
-  notify-send -t 1000 "Airplane mode" "off" -u low -r 9000
+# Check the current status of all network interfaces
+if nmcli radio all | grep -q 'enabled'; then
+  nmcli radio all off  # Disable all network interfaces
+  notify-send -t 1000 "Airplane mode" "turned on" -u low -r 9000  # Notify the user
 else
-  touch /tmp/.airplanemode
-  nmcli r all off
-  notify-send -t 1000 "Airplane mode" "on" -u low -r 9000
+  nmcli radio all on  # Enable all network interfaces
+  notify-send -t 1000 "Airplane mode" "turned off" -u low -r 9000  # Notify the user
 fi
+

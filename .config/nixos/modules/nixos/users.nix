@@ -16,9 +16,6 @@
           extraGroups = [
             "networkmanager"
           ];
-          # packages = with pkgs; [
-          #   firefox-esr
-          # ];
         };
 
         npc = {
@@ -48,6 +45,7 @@
             passExtensions.pass-update
             (pass.withExtensions (ext: with ext; [pass-audit pass-otp pass-import pass-genphrase pass-update pass-tomb]))
             pass
+            gopass
 
             # desktop tools
             autotiling # i3wm
@@ -90,7 +88,6 @@
             fusuma
             fzf
             gnome-software
-            gopass
             gparted
             grim
             htop
@@ -103,8 +100,9 @@
             localsend
             # plasma5Packages.plasma-thunderbolt
             # power-profiles-daemon
-            # protonmail-bridge
-            # protonvpn-gui
+            protonvpn-gui
+            proton-pass
+            protonmail-desktop
             qrencode
             ranger
             rclone

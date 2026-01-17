@@ -17,7 +17,7 @@
     };
     services = {
       flatpak-update = {
-        enable = true;
+        enable = false;
         description = "update flatpaks";
         unitConfig = {
           Type = "oneshot";
