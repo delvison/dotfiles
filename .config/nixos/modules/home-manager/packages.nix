@@ -97,6 +97,7 @@ in {
       # util
       arandr
       bashmount
+      bluetui  # bluetooth
       dig
       gvfs
       seahorse # keyring
