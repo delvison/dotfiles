@@ -44,3 +44,11 @@ vim.o.wildmenu = true
 vim.o.wrap = true
 vim.o.writebackup = false
 vim.wo.number = true
+
+-- Disable auto line break at 80 for markdown files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.textwidth = 0
+  end,
+})

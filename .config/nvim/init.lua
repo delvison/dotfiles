@@ -53,7 +53,8 @@ require('lazy').setup({
   require 'plugins.minifiles',
   require 'plugins.telescope',
   require 'plugins.lazygit',
-  require 'plugins.lsp.lsp'
+  require 'plugins.lsp.lsp',
+  require 'plugins.image'
   -- require 'plugins.lsp'
 })
 
