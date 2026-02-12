@@ -1,0 +1,368 @@
+#!/usr/bin/env bash
+
+# todo - Simple TODO file manager with timestamps
+# Usage: TODO_FILE=todo.txt todo [command] [args]
+
+set -e
+
+# Config
+TODO_FILE="${TODO_FILE:-$HOME/TODO.md}"
+
+# Helpers
+today() { date +%Y-%m-%d; }
+
+# Ensure file exists with proper structure
+init_file() {
+    if [[ ! -f "$TODO_FILE" ]]; then
+        cat > "$TODO_FILE" << 'EOF'
+# TODO
+
+# DOING
+
+# DONE
+EOF
+    fi
+}
+
+# Normalize file - ensure proper spacing between sections
+normalize_file() {
+    local temp_file=$(mktemp)
+    local prev_line=""
+    local in_section=false
+    
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Section headers
+        if [[ "$line" =~ ^#\ (TODO|DOING|DONE)$ ]]; then
+            # Add blank line before section if previous line wasn't blank and wasn't a section header
+            if [[ -n "$prev_line" && "$prev_line" != "" && ! "$prev_line" =~ ^# ]]; then
+                echo "" >> "$temp_file"
+            fi
+            echo "$line" >> "$temp_file"
+            echo "" >> "$temp_file"
+            in_section=true
+            prev_line=""
+            continue
+        fi
+        
+        # Skip empty lines at section start (we just added one)
+        if [[ "$in_section" == true && -z "$line" && -z "$prev_line" ]]; then
+            continue
+        fi
+        
+        # Task lines
+        if [[ "$line" =~ ^-\ \[ ]]; then
+            echo "$line" >> "$temp_file"
+            in_section=false
+            prev_line="$line"
+            continue
+        fi
+        
+        # Other content
+        if [[ -n "$line" ]]; then
+            echo "$line" >> "$temp_file"
+            prev_line="$line"
+        fi
+    done < "$TODO_FILE"
+    
+    mv "$temp_file" "$TODO_FILE"
+}
+
+# List all todos (except done section)
+list_todos() {
+    init_file
+    local in_done=false
+    while IFS= read -r line; do
+        if [[ "$line" == "# DONE" ]]; then
+            in_done=true
+        fi
+        if [[ "$in_done" == false ]]; then
+            echo "$line"
+        fi
+    done < "$TODO_FILE"
+}
+
+# Add new todo with timestamp
+add_todo() {
+    init_file
+    local task="$1"
+    local date_str=$(today)
+    local full_task="$task (+[[$date_str]])"
+    
+    # Read file and add task after # TODO header
+    local temp_file=$(mktemp)
+    local in_todo=false
+    local added=false
+    local last_was_todo_header=false
+    local prev_line=""
+    
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Check for section headers
+        if [[ "$line" == "# TODO" ]]; then
+            echo "$line" >> "$temp_file"
+            echo "" >> "$temp_file"
+            last_was_todo_header=true
+            in_todo=true
+            continue
+        fi
+        
+        if [[ "$line" == "# DOING" || "$line" == "# DONE" ]]; then
+            # If we haven't added the task yet, add it now (end of TODO section)
+            if [[ "$in_todo" == true && "$added" == false ]]; then
+                echo "- [ ] $full_task" >> "$temp_file"
+                echo "" >> "$temp_file"
+                added=true
+            fi
+            in_todo=false
+            last_was_todo_header=false
+            
+            # Add blank line before section if needed
+            if [[ -n "$prev_line" && ! "$prev_line" =~ ^# ]]; then
+                echo "" >> "$temp_file"
+            fi
+            echo "$line" >> "$temp_file"
+            echo "" >> "$temp_file"
+            prev_line="$line"
+            continue
+        fi
+        
+        # Skip blank lines during processing
+        if [[ -z "$line" ]]; then
+            continue
+        fi
+        
+        last_was_todo_header=false
+        
+        # Write the line
+        echo "$line" >> "$temp_file"
+        prev_line="$line"
+    done < "$TODO_FILE"
+    
+    # If we still haven't added the task (file might be malformed)
+    if [[ "$added" == false ]]; then
+        # Find or create TODO section
+        if grep -q "^# TODO$" "$TODO_FILE" 2>/dev/null; then
+            # Insert after # TODO
+            awk -v task="$full_task" '/^# TODO$/ { print; print ""; print "- [ ] " task; print ""; next } { print }' "$TODO_FILE" > "$temp_file"
+        else
+            # Add at beginning
+            echo "# TODO" > "$temp_file"
+            echo "" >> "$temp_file"
+            echo "- [ ] $full_task" >> "$temp_file"
+            echo "" >> "$temp_file"
+            cat "$TODO_FILE" >> "$temp_file"
+        fi
+    fi
+    
+    mv "$temp_file" "$TODO_FILE"
+    echo "Added: $task (+[[$date_str]])"
+}
+
+# Strip timestamp suffix from a task
+strip_timestamps() {
+    local task="$1"
+    # Remove all timestamp patterns
+    echo "$task" | sed -E 's/ \(+%\[\[[0-9]{4}-[0-9]{2}-[0-9]{2}\]\]\)//g' | sed -E 's/ \(doing: \[\[[0-9]{4}-[0-9]{2}-[0-9]{2}\]\]\)//g' | sed -E 's/ \(done: \[\[[0-9]{4}-[0-9]{2}-[0-9]{2}\]\]\)//g'
+}
+
+# Extract base task name (without checkbox)
+get_task_name() {
+    local line="$1"
+    # Remove checkbox and trim
+    echo "$line" | sed -E 's/^- \[.\] //' | sed -E 's/[[:space:]]+$//' | sed -E 's/^[[:space:]]+//'
+}
+
+# Extract just the base description (no timestamps)
+get_base_task() {
+    local full="$1"
+    strip_timestamps "$full"
+}
+
+# Get the actual task content from a line for matching
+extract_task_content() {
+    local line="$1"
+    # Remove checkbox prefix
+    local content=$(echo "$line" | sed -E 's/^- \[.\] //')
+    # Get base (no timestamps)
+    get_base_task "$content"
+}
+
+# Move from TODO to DOING
+start_todo() {
+    init_file
+    
+    # Extract TODO items (for fzf display)
+    local todos=$(awk '/^# TODO$/{found=1; next} /^#/{found=0} found && /^- \[ \]/{sub(/^- \[ \] /, ""); print}' "$TODO_FILE" | grep -v '^$')
+    
+    if [[ -z "$todos" ]]; then
+        echo "No todos to start"
+        return 1
+    fi
+    
+    local selected=$(echo "$todos" | fzf --prompt="Start: " --height=10 --border)
+    
+    if [[ -z "$selected" ]]; then
+        return 0
+    fi
+    
+    # Get base task without timestamps
+    local base_task=$(get_base_task "$selected")
+    local date_str=$(today)
+    
+    # Update file
+    local temp_file=$(mktemp)
+    local in_todo=false
+    local in_doing=false
+    local added_to_doing=false
+    local prev_line=""
+    
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Track sections
+        if [[ "$line" == "# TODO" ]]; then
+            in_todo=true
+            in_doing=false
+            echo "$line" >> "$temp_file"
+            echo "" >> "$temp_file"
+            prev_line=""
+            continue
+        elif [[ "$line" == "# DOING" ]]; then
+            in_todo=false
+            in_doing=true
+            echo "$line" >> "$temp_file"
+            # Add the task right after # DOING header
+            echo "- [ ] $base_task (doing: [[$date_str]])" >> "$temp_file"
+            added_to_doing=true
+            prev_line="done"
+            continue
+        elif [[ "$line" == "# DONE" ]]; then
+            in_todo=false
+            in_doing=false
+            # Add blank line before DONE if previous was a task
+            if [[ -n "$prev_line" && "$prev_line" =~ ^-\ \[ ]]; then
+                echo "" >> "$temp_file"
+            fi
+            echo "$line" >> "$temp_file"
+            echo "" >> "$temp_file"
+            prev_line=""
+            continue
+        fi
+        
+        # Skip blank lines during processing
+        if [[ -z "$line" ]]; then
+            continue
+        fi
+        
+        # Check if this is the task we're moving
+        if [[ "$in_todo" == true && "$line" =~ ^-\ \[ ]]; then
+            local line_content=$(extract_task_content "$line")
+            if [[ "$line_content" == "$base_task" ]]; then
+                continue  # Skip this line (moving it)
+            fi
+        fi
+        
+        echo "$line" >> "$temp_file"
+        prev_line="$line"
+    done < "$TODO_FILE"
+    
+    mv "$temp_file" "$TODO_FILE"
+    echo "Started: $base_task (doing: [[$date_str]])"
+}
+
+# Move from DOING to DONE
+complete_todo() {
+    init_file
+    
+    # Extract DOING items (for fzf display)
+    local doing=$(awk '/^# DOING$/{found=1; next} /^#/{found=0} found && /^- \[ \]/{sub(/^- \[ \] /, ""); print}' "$TODO_FILE" | grep -v '^$')
+    
+    if [[ -z "$doing" ]]; then
+        echo "No active tasks to complete"
+        return 1
+    fi
+    
+    local selected=$(echo "$doing" | fzf --prompt="Complete: " --height=10 --border)
+    
+    if [[ -z "$selected" ]]; then
+        return 0
+    fi
+    
+    # Get base task (remove all timestamps)
+    local base_task=$(strip_timestamps "$selected")
+    local date_str=$(today)
+    
+    # Update file
+    local temp_file=$(mktemp)
+    local in_doing=false
+    local in_done=false
+    local prev_line=""
+    
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        # Track sections
+        if [[ "$line" == "# DOING" ]]; then
+            in_doing=true
+            in_done=false
+            echo "$line" >> "$temp_file"
+            echo "" >> "$temp_file"
+            prev_line=""
+            continue
+        elif [[ "$line" == "# DONE" ]]; then
+            in_doing=false
+            in_done=true
+            echo "$line" >> "$temp_file"
+            # Add the task right after # DONE header
+            echo "- [x] $base_task (done: [[$date_str]])" >> "$temp_file"
+            prev_line="done"
+            continue
+        fi
+        
+        # Skip blank lines during processing
+        if [[ -z "$line" ]]; then
+            continue
+        fi
+        
+        # Check if this is the task we're completing
+        if [[ "$in_doing" == true && "$line" =~ ^-\ \[ ]]; then
+            local line_content=$(extract_task_content "$line")
+            local line_base=$(strip_timestamps "$line_content")
+            if [[ "$line_base" == "$base_task" ]]; then
+                continue  # Skip this line (moving it)
+            fi
+        fi
+        
+        echo "$line" >> "$temp_file"
+        prev_line="$line"
+    done < "$TODO_FILE"
+    
+    mv "$temp_file" "$TODO_FILE"
+    echo "Completed: $base_task (done: [[$date_str]])"
+}
+
+# Main
+if [[ $# -eq 0 ]]; then
+    list_todos
+else
+    case "$1" in
+        start|s)
+            start_todo
+            ;;
+        complete|done|finish|c|d)
+            complete_todo
+            ;;
+        list|ls|l)
+            list_todos
+            ;;
+        help|-h|--help)
+            echo "Usage: todo [command] [args]"
+            echo "Commands:"
+            echo "  todo 'task description'  Add new todo (+[[YYYY-MM-DD]])"
+            echo "  todo                     List todos (except DONE)"
+            echo "  todo start               Pick todo to start (fzf)"
+            echo "  todo complete            Pick doing to complete (fzf)"
+            echo ""
+            echo "Set TODO_FILE env var to change file (default: todo.txt)"
+            ;;
+        *)
+            # Treat all args as a task description
+            add_todo "$*"
+            ;;
+    esac
+fi
