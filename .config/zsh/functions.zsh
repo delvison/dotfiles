@@ -36,14 +36,14 @@ vopen() {
   nvim "$(fzf --preview="bat --color=always {}")"
 }
 
-clone(){
-  FULL=$(echo $1 | sed 's/git@//g; s/\.git//g; s/\:/\//g')
-  BASE=$(echo $FULL | cut -d'/' -f1)
-  USER=$(echo $FULL | cut -d'/' -f2)
-  REPO=$(echo $FULL | cut -d'/' -f3)
-  mkdir -p $HOME/code/$BASE/$USER
-  git clone $1 $HOME/code/$BASE/$USER/$REPO
-  cd $HOME/code/$BASE/$USER/$REPO
+clone () {
+	FULL=$(echo $1 | sed 's|^git@||; s|^https\?://||; s|\.git$||; s|:|/|g')
+	BASE=$(echo $FULL | cut -d'/' -f1)
+	USER=$(echo $FULL | cut -d'/' -f2)
+	REPO=$(echo $FULL | cut -d'/' -f3)
+	mkdir -p $HOME/code/$BASE/$USER
+	git clone $1 $HOME/code/$BASE/$USER/$REPO
+	cd $HOME/code/$BASE/$USER/$REPO
 }
 
 qr() { qrencode "$1" -t ANSIUTF8 -o -; }
