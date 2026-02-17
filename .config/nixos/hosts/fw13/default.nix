@@ -180,11 +180,11 @@
     };
   };
 
-  # qt = {
-  #   enable = true;
-  #   platformTheme = "gnome";
-  #   style = "adwaita-dark";
-  # };
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
 
   # for i3wm
   # ref: https://nixos.wiki/wiki/I3
