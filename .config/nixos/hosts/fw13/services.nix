@@ -268,6 +268,18 @@
     opensnitch = {
       enable = true;
       rules = {
+        ssh-client = {
+          name = "ssh-client";
+          enabled = true;
+          action = "allow";
+          duration = "always";
+          operator = {
+            type = "simple";
+            sensitive = false;
+            operand = "process.path";
+            data = "${lib.getBin pkgs.openssh}/bin/ssh";
+          };
+        };
         systemd-timesyncd = {
           name = "systemd-timesyncd";
           enabled = true;
