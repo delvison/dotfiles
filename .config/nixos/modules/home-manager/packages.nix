@@ -12,6 +12,7 @@
   ];
 in {
   home.packages = with pkgs; ([
+      kitty
       cascadia-code
       fira
       fira-code
@@ -81,7 +82,6 @@ in {
       # gnomeExtensions.yakuake
       libsForQt5.qtstyleplugin-kvantum
       nightfox-gtk-theme
-      nordzy-icon-theme
       ocs-url
       papirus-icon-theme
       vimix-icon-theme
@@ -97,7 +97,7 @@ in {
       # util
       arandr
       bashmount
-      bluetui  # bluetooth
+      bluetui # bluetooth
       dig
       gvfs
       seahorse # keyring
@@ -118,7 +118,7 @@ in {
       wireguard-tools
       # xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
-      remmina  # remote desktop
+      remmina # remote desktop
     ]
     ++ unstablePackages);
 }

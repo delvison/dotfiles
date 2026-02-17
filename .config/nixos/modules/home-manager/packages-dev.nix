@@ -26,8 +26,10 @@ in {
       jq
       just
       lazygit
-      neovim
+      markdown-oxide # https://github.com/Feel-ix-343/markdown-oxide
+      # neovim
       nodejs
+      opencode
       openssl
       pre-commit
       python3

@@ -17,6 +17,8 @@
     ../../modules/nixos/yubikey.nix
     ../../modules/nixos/users.nix
     ../../modules/nixos/firejail.nix
+    ../../modules/nixos/desktop-gnome.nix
+    # ../../modules/nixos/desktop-cosmic.nix
     # ../../modules/nixos/tlp.nix
     # ./fw13-amd-power.nix
     # ../../modules/nixos/ledger.nix
@@ -34,7 +36,7 @@
   nixpkgs.overlays = [
     (final: _prev: {
       unstable = import inputs.nixpkgs-unstable {
-        system = final.system;
+        system = final.stdenv.hostPlatform.system;
         config.allowUnfree = true;
       };
     })
@@ -178,11 +180,11 @@
     };
   };
 
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
-  };
+  # qt = {
+  #   enable = true;
+  #   platformTheme = "gnome";
+  #   style = "adwaita-dark";
+  # };
 
   # for i3wm
   # ref: https://nixos.wiki/wiki/I3

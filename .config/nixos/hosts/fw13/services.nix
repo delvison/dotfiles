@@ -45,7 +45,7 @@
         "com.github.iwalton3.jellyfin-media-player"
         "com.ktechpit.whatsie" # whatsapp
         "com.logseq.Logseq"
-        # "com.nextcloud.desktopclient.nextcloud"
+        "com.nextcloud.desktopclient.nextcloud"
         "com.obsproject.Studio"
         "in.srev.guiscrcpy" # android screen mirroring
         "io.freetubeapp.FreeTube"
@@ -79,7 +79,8 @@
             XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
 
             # Force correct theme for some GTK apps
-            GTK_THEME = "Adwaita:dark";
+            # GTK_THEME = "Adwaita:dark";
+            GTK_APPLICATION_PREFER_DARK_THEME = "1";
           };
         };
 
@@ -199,10 +200,6 @@
       };
 
       desktopManager = {
-        cinnamon.enable = true;
-        gnome.enable = false;
-        mate.enable = false;
-        pantheon.enable = false;
         xfce = {
           enable = false;
           noDesktop = true;
@@ -211,9 +208,9 @@
         xterm.enable = false;
       };
       displayManager = {
-        gdm.enable = false;
-        lightdm.enable = true;
-        lightdm.greeters.slick.enable = true;
+        # gdm.enable = false;
+        lightdm.enable = false;
+        lightdm.greeters.slick.enable = false;
       };
 
       # ref: https://nixos.wiki/wiki/I3

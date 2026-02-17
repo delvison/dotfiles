@@ -11,4 +11,4 @@ else
   echo "No pcscd process detected."
 fi
 
-sleep 5
+# sleep 2

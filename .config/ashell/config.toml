@@ -1,0 +1,42 @@
+log_level = "warn"
+# status bar on all monitors
+outputs = "All"
+
+# https://malpenzibo.github.io/ashell/docs/configuration/modules
+[modules]
+left = [ [ "Updates", "Workspaces" ] ]
+center = [ "WindowTitle" ]
+# right = [ "Clipboard", [ "Clock", "Tray", "Settings" ] ]
+right = [ "Clipboard", [  "Tray", "Clock", "Privacy", "Settings" ] ]
+clipboard_cmd = "cliphist-rofi-img | wl-copy"
+
+[settings]
+bluetooth_more_cmd = "blueman-manager"
+
+[appearance]
+scale_factor = 1.15
+opacity = 0.7
+success_color = "#A7C080"
+text_color = "#D3C6AA"
+
+workspace_colors = [ "#E67E80", "#A7C080", "#7FBBB3" ]
+
+[appearance.primary_color]
+base = "#A7C080"
+text = "#2D353B"
+
+[appearance.danger_color]
+base = "#E67E80"
+weak = "#DBBC7F"
+
+[appearance.background_color]
+base = "#2D353B"
+weak = "#343F44"
+strong = "#5C6A72"
+
+[appearance.secondary_color]
+base = "#232A2E"
+strong = "#2D353B"
+
+[window_title]
+truncate_title_after_length = 100

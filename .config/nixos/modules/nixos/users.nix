@@ -70,6 +70,8 @@
             swaynotificationcenter # notifications in hyperland
             swww
             xss-lock # i3wm
+            wofi
+            wofi-pass
 
             # utils
             acpi
@@ -115,7 +117,9 @@
             torsocks
             usbutils
             virt-viewer
-            waybar
+            waybar  # bar for hyprland
+            waypaper # set wallpaper for hyprland
+            ashell # bar for hyprland
             wget
             wl-clipboard
             gammastep

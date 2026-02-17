@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+if [ -n "$WAYLAND_DISPLAY" ]; then
+  MENU="wofi --dmenu --prompt"
+else
+  MENU="rofi -dmenu -p"
+fi
+
 connect_vpn() {
-  vpn_conn=$(nmcli connection show | grep vpn | awk '{print $1}' | rofi -dmenu -p "Select VPN connection:")
+  vpn_conn=$(nmcli connection show | grep vpn | awk '{print $1}' | $MENU "Select VPN connection:")
   nmcli connection up "${vpn_conn}"
   notify-send -t 2000 " VPN" "Connected to ${vpn_conn}" -u low
 }
