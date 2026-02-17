@@ -118,7 +118,7 @@ in {
       wireguard-tools
       # xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
-      remmina # remote desktop
+      # remmina # remote desktop
     ]
     ++ unstablePackages);
 }

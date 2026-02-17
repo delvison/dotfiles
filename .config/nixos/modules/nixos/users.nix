@@ -94,6 +94,7 @@
             grim
             htop
             hyprshot
+            hypridle
             imagemagick
             kdePackages.kwallet-pam
             # libsForQt5.kdeconnect-kde
