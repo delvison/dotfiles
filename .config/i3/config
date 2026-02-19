@@ -116,11 +116,11 @@ assign [class=".quodlibet-wrapped"] $workspace10
 assign [class="tidal-hifi"] $workspace10
 assign [class="spotify"] $workspace10
 
-set $bg-color 	         #3F4F27
-set $inactive-bg-color   #2f343f
-set $text-color          C0B180
-set $inactive-text-color #676E7D
-set $urgent-bg-color     #a7c080
+set $bg-color 	         #2D353B
+set $inactive-bg-color   #343F44
+set $text-color          #D3C6AA
+set $inactive-text-color #5C6A72
+set $urgent-bg-color     #A7C080
 
 # window colors
 #                       border              background         text                 indicator
